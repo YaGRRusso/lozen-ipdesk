@@ -1,6 +1,5 @@
 import zendesk from './domain'
-import { randomCategory } from "../helpers/loremIpsum";
-import { CategoryTS, CategoriesTS } from "../types/types";
+import { CategoryTS, NewCategoryTS, CategoriesTS } from "../types/types";
 
 export const categoriesApi = {
    getCategories: async (): Promise<CategoriesTS> => {
@@ -11,7 +10,7 @@ export const categoriesApi = {
       })
       return res.json();
    },
-   createCategory: async (category: CategoryTS | void): Promise<CategoryTS> => {
+   createCategory: async (category: CategoryTS): Promise<NewCategoryTS> => {
       const res = await fetch(`https://${zendesk.subdomain}.zendesk.com/api/v2/help_center/categories.json`, {
          method: 'POST',
          headers: {
@@ -19,7 +18,7 @@ export const categoriesApi = {
             'Authorization': 'Basic ' + btoa(`${zendesk.email_address}:${zendesk.password}`)
          },
          body: JSON.stringify({
-            category: category ?? randomCategory
+            category: category
          })
       })
       return res.json();

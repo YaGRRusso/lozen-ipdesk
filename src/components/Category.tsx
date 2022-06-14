@@ -1,19 +1,16 @@
-import { categoriesApi } from '../api/categories';
 import { CategoryTS } from '../types/types';
 
 type Props = {
-   data: CategoryTS
+   data: CategoryTS,
+   deleteFunction: (id: number) => void
 }
 
-export const Category = ({ data }: Props) => {
-   const delCategory = (id: number) => {
-      categoriesApi.deleteCategories(id)
-   }
+export const Category = ({ data, deleteFunction }: Props) => {
 
    return (
       <h2>
          {data.name} - {data.description}
-         <button onClick={() => { delCategory(data.id as number) }}>Delete</button>
+         <button onClick={() => { deleteFunction(data.id as number) }}>Delete</button>
       </h2>
    )
 }
