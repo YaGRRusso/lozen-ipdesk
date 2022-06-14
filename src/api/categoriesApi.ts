@@ -8,7 +8,7 @@ export const categoriesApi = {
             'Authorization': 'Basic ' + btoa(`${zendesk.email_address}:${zendesk.password}`)
          }
       })
-      return res.json();
+      return res.json()
    },
    createCategory: async (category: CategoryTS): Promise<NewCategoryTS> => {
       const res = await fetch(`https://${zendesk.subdomain}.zendesk.com/api/v2/help_center/categories.json`, {
