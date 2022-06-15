@@ -13,7 +13,6 @@ export default {
          locale: 'pt-br',
          name: randomGen.sentence({ words: randomNum(2, 4) }).replace('.', ''),
       }
-      console.log(category)
       return category
    }
 }

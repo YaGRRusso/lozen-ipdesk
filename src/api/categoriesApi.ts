@@ -1,21 +1,20 @@
-import zendesk from './domain'
-import { CategoryTS, NewCategoryTS, CategoriesTS } from "../types/types";
+import { CategoryTS, NewCategoryTS, CategoriesTS, DomainTS } from "../types/types";
 
 export const categoriesApi = {
-   getCategories: async (): Promise<CategoriesTS> => {
-      const res = await fetch(`https://${zendesk.subdomain}.zendesk.com/api/v2/help_center/${zendesk.locale}/categories.json`, {
+   getCategories: async (zd: DomainTS): Promise<CategoriesTS> => {
+      const res = await fetch(`https://${zd.subdomain}.zendesk.com/api/v2/help_center/${zd.locale}/categories.json`, {
          headers: {
-            'Authorization': 'Basic ' + btoa(`${zendesk.email_address}:${zendesk.password}`)
+            'Authorization': 'Basic ' + btoa(`${zd.email_address}:${zd.password}`)
          }
       })
       return res.json()
    },
-   createCategory: async (category: CategoryTS): Promise<NewCategoryTS> => {
-      const res = await fetch(`https://${zendesk.subdomain}.zendesk.com/api/v2/help_center/categories.json`, {
+   createCategory: async (zd: DomainTS, category: CategoryTS): Promise<NewCategoryTS> => {
+      const res = await fetch(`https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories.json`, {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(`${zendesk.email_address}:${zendesk.password}`)
+            'Authorization': 'Basic ' + btoa(`${zd.email_address}:${zd.password}`)
          },
          body: JSON.stringify({
             category: category
@@ -23,11 +22,11 @@ export const categoriesApi = {
       })
       return res.json();
    },
-   deleteCategories: async (id: number) => {
-      await fetch(`https://${zendesk.subdomain}.zendesk.com/api/v2/help_center/categories/${id}`, {
+   deleteCategories: async (zd: DomainTS, id: number) => {
+      await fetch(`https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories/${id}`, {
          method: 'DELETE',
          headers: {
-            'Authorization': 'Basic ' + btoa(`${zendesk.email_address}:${zendesk.password}`)
+            'Authorization': 'Basic ' + btoa(`${zd.email_address}:${zd.password}`)
          }
       })
    }
