@@ -22,7 +22,7 @@ export const categoriesApi = {
       })
       return res.json();
    },
-   deleteCategories: async (zd: DomainTS, id: number) => {
+   deleteCategory: async (zd: DomainTS, id: number) => {
       await fetch(`https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories/${id}`, {
          method: 'DELETE',
          headers: {

@@ -8,7 +8,7 @@ export type DomainTS = {
 export type CategoryTS = {
    id?: number,
    position?: number,
-   locale: 'pt-br' | 'en-us' | string,
+   locale?: string,
    name: string,
    description: string
 }
@@ -19,5 +19,5 @@ export type NewCategoryTS = {
 
 export type CategoriesTS = {
    categories: CategoryTS[],
-   count?: number
+   count: number
 }
