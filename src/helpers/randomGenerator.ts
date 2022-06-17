@@ -1,17 +1,17 @@
 import Chance from "chance";
 import { CategoryTS } from "../types/types";
 
-const randomGen = new Chance()
-const randomNum = (min: number, max: number) => {
+const chance = new Chance()
+const randomNumber = (min: number, max: number) => {
    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export default {
+export const randomGenerator = {
    randomCategory: () => {
       const category: CategoryTS = {
-         description: randomGen.sentence({ words: randomNum(4, 6) }),
+         description: chance.sentence({ words: randomNumber(4, 6) }),
          locale: 'pt-br',
-         name: randomGen.sentence({ words: randomNum(2, 4) }).replace('.', ''),
+         name: chance.sentence({ words: randomNumber(2, 4) }).replace('.', ''),
       }
       return category
    }

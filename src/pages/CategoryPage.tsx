@@ -1,11 +1,10 @@
-import { Plugs } from 'phosphor-react'
 import { FormEvent, useState } from 'react'
 import { CategoriesTS, CategoryTS } from '../types/types'
-
-import randomGen from '../helpers/dataGen'
-import { categoriesApi } from '../api/categoriesApi'
 import { useForm } from '../context/DomainContext'
+import { randomGenerator } from '../helpers/randomGenerator'
+import { categoriesApi } from '../api/categoriesApi'
 
+import { Plugs } from 'phosphor-react'
 import { InfoTable } from '../components/InfoTable'
 import { FormInput } from '../components/FormInputs/FormInput'
 import { FormButton } from '../components/FormInputs/FormButton'
@@ -34,7 +33,7 @@ export const CategoryPage = () => {
          locale: state.locale
       }
       if (newCategory.name === '') {
-         newCategory = randomGen.randomCategory()
+         newCategory = randomGenerator.randomCategory()
       }
 
       setCategoryNameInput('')

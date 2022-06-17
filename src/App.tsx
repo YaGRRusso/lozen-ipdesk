@@ -1,11 +1,11 @@
 import { FormProvider } from './context/DomainContext'
-import { CategoryPage } from './pages/CategoryPage'
 import { PagesLayout } from './pages/PagesLayout'
+import { RouteList } from './router'
 
 const App = () => {
   return (
     <FormProvider>
-      <PagesLayout children={<CategoryPage />} />
+      <PagesLayout children={<RouteList />} />
     </FormProvider>
   )
 }
