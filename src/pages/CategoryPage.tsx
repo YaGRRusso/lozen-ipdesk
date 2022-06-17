@@ -1,10 +1,10 @@
+import { Plugs } from 'phosphor-react'
 import { FormEvent, useState } from 'react'
 import { CategoriesTS, CategoryTS } from '../types/types'
 
 import randomGen from '../helpers/dataGen'
 import { categoriesApi } from '../api/categoriesApi'
 import { useForm } from '../context/DomainContext'
-import { Plugs } from 'phosphor-react'
 
 import { InfoTable } from '../components/InfoTable'
 import { FormInput } from '../components/FormInputs/FormInput'
@@ -13,17 +13,21 @@ import { FormButton } from '../components/FormInputs/FormButton'
 export const CategoryPage = () => {
    const { state } = useForm()
    const [categories, setCategories] = useState<CategoriesTS | null>(null)
+   const [loading, setLoading] = useState(false)
 
    const [categoryNameInput, setCategoryNameInput] = useState('')
    const [categoryDescInput, setCategoryDescInput] = useState('')
 
    const getCategories = async () => {
+      setLoading(true)
       setCategories(await categoriesApi.getCategories(state))
+      setLoading(false)
    }
 
    const postCategory = async (ev: FormEvent<HTMLFormElement>) => {
       ev.preventDefault()
 
+      setLoading(true)
       let newCategory: CategoryTS = {
          name: categoryNameInput,
          description: categoryDescInput,
@@ -43,6 +47,7 @@ export const CategoryPage = () => {
             count: categories.count + 1
          })
       }
+      setLoading(false)
    }
 
    const deleteCategory = async (id: number) => {
@@ -62,16 +67,17 @@ export const CategoryPage = () => {
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Categoria</h2>
             <FormInput placeholder='Nome...' onChange={setCategoryNameInput} />
             <FormInput placeholder='Descrição...' onChange={setCategoryDescInput} />
-            <FormButton />
+            <FormButton disable={loading} />
          </form>
          <br />
          {
             categories &&
-            <InfoTable data={categories} deleteFunction={deleteCategory} />
+            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} info={categories} />
          }
          {
             !categories &&
-            <button className='border border-sky-800 rounded-full p-2 mx-auto block' onClick={() => getCategories()}>
+            <button onClick={() => getCategories()}
+               className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
                <Plugs size={26} color='#075985' />
             </button>
          }
