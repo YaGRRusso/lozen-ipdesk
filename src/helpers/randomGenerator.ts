@@ -1,5 +1,5 @@
 import Chance from "chance";
-import { CategoryTS } from "../types/types";
+import { CategoryTS } from "../types/categoriesType";
 
 const chance = new Chance()
 const randomNumber = (min: number, max: number) => {

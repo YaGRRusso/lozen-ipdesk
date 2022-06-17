@@ -8,11 +8,24 @@ import { FormButton } from '../components/FormInputs/FormButton'
 
 export const ArticlePage = () => {
    const { state } = useForm()
+   const [articlesList, setArticlesList] = useState()
    const [loading, setLoading] = useState(false)
 
    const [articleCategoryInput, setArticleSectionInput] = useState('')
    const [articleNameInput, setArticleNameInput] = useState('')
    const [articleDescInput, setArticleDescInput] = useState('')
+
+   const getArticles = () => {
+
+   }
+
+   const postArticle = () => {
+
+   }
+
+   const deleteArticle = () => {
+
+   }
 
    return (
       <>
@@ -24,6 +37,17 @@ export const ArticlePage = () => {
             <FormButton disable={loading} />
          </form>
          <br />
+         {/* {
+            articlesList &&
+            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} categoriesList={categoriesList} />
+         } */}
+         {
+            !articlesList &&
+            <button onClick={() => { }}
+               className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
+               <Plugs size={26} color='#075985' />
+            </button>
+         }
       </>
    )
 }

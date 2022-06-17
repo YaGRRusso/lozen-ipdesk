@@ -1,14 +1,14 @@
-import { CategoriesTS } from '../types/types';
+import { CategoriesTS } from '../types/categoriesType';
 import { Trash } from 'phosphor-react'
 
 type Props = {
    titles: string[],
-   info: CategoriesTS,
+   categoriesList: CategoriesTS,
    deleteFunction: (id: number) => void
 }
 
-export const InfoTable = ({ titles, info, deleteFunction }: Props) => {
-   const { categories: data, count } = info
+export const InfoTable = ({ titles, categoriesList, deleteFunction }: Props) => {
+   const { categories: data, count } = categoriesList
 
    return (
       <table className='w-full border-separate border-spacing-0 shadow rounded overflow-hidden'>

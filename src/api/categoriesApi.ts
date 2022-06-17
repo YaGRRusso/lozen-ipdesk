@@ -1,4 +1,5 @@
-import { CategoryTS, NewCategoryTS, CategoriesTS, DomainTS } from "../types/types";
+import { DomainTS } from "../types/domainType";
+import { CategoryTS, NewCategoryTS, CategoriesTS } from "../types/categoriesType";
 
 export const categoriesApi = {
    getCategories: async (zd: DomainTS): Promise<CategoriesTS> => {

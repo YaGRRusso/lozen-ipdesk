@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { CategoriesTS, CategoryTS } from '../types/types'
+import { CategoriesTS, CategoryTS } from '../types/categoriesType'
 import { useForm } from '../context/DomainContext'
 import { randomGenerator } from '../helpers/randomGenerator'
 import { categoriesApi } from '../api/categoriesApi'
@@ -11,7 +11,7 @@ import { FormButton } from '../components/FormInputs/FormButton'
 
 export const CategoryPage = () => {
    const { state } = useForm()
-   const [categories, setCategories] = useState<CategoriesTS | null>(null)
+   const [categoriesList, setCategoriesList] = useState<CategoriesTS | null>(null)
    const [loading, setLoading] = useState(false)
 
    const [categoryNameInput, setCategoryNameInput] = useState('')
@@ -19,7 +19,7 @@ export const CategoryPage = () => {
 
    const getCategories = async () => {
       setLoading(true)
-      setCategories(await categoriesApi.getCategories(state))
+      setCategoriesList(await categoriesApi.getCategories(state))
       setLoading(false)
    }
 
@@ -40,10 +40,10 @@ export const CategoryPage = () => {
       setCategoryDescInput('')
 
       const createdCategory = await categoriesApi.createCategory(state, newCategory)
-      if (categories) {
-         setCategories({
-            categories: [createdCategory.category, ...categories.categories],
-            count: categories.count + 1
+      if (categoriesList) {
+         setCategoriesList({
+            categories: [createdCategory.category, ...categoriesList.categories],
+            count: categoriesList.count + 1
          })
       }
       setLoading(false)
@@ -51,11 +51,11 @@ export const CategoryPage = () => {
 
    const deleteCategory = async (id: number) => {
       categoriesApi.deleteCategory(state, id)
-      if (categories) {
-         const newList = categories.categories.filter(item => item.id !== id)
-         setCategories({
+      if (categoriesList) {
+         const newList = categoriesList.categories.filter(item => item.id !== id)
+         setCategoriesList({
             categories: newList,
-            count: categories.count - 1
+            count: categoriesList.count - 1
          })
       }
    }
@@ -70,11 +70,11 @@ export const CategoryPage = () => {
          </form>
          <br />
          {
-            categories &&
-            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} info={categories} />
+            categoriesList &&
+            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} categoriesList={categoriesList} />
          }
          {
-            !categories &&
+            !categoriesList &&
             <button onClick={() => getCategories()}
                className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
                <Plugs size={26} color='#075985' />

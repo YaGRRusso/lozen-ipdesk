@@ -8,11 +8,24 @@ import { FormButton } from '../components/FormInputs/FormButton'
 
 export const SectionPage = () => {
    const { state } = useForm()
+   const [sectionsList, setSectionsList] = useState()
    const [loading, setLoading] = useState(false)
 
    const [sectionCategoryInput, setSectionCategoryInput] = useState('')
    const [sectionNameInput, setSectionNameInput] = useState('')
    const [sectionDescInput, setSectionDescInput] = useState('')
+
+   const getSections = () => {
+
+   }
+
+   const postSection = () => {
+
+   }
+
+   const deleteSection = () => {
+
+   }
 
    return (
       <>
@@ -24,6 +37,17 @@ export const SectionPage = () => {
             <FormButton disable={loading} />
          </form>
          <br />
+         {/* {
+            sectionsList &&
+            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} categoriesList={categoriesList} />
+         } */}
+         {
+            !sectionsList &&
+            <button onClick={() => { }}
+               className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
+               <Plugs size={26} color='#075985' />
+            </button>
+         }
       </>
    )
 }
