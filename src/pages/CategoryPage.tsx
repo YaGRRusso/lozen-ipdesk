@@ -49,7 +49,7 @@ export const CategoryPage = () => {
       setLoading(false)
    }
 
-   const deleteCategory = async (id: number) => {
+   const deleteCategory = (id: number) => {
       categoriesApi.deleteCategory(state, id)
       if (categoriesList) {
          const newList = categoriesList.categories.filter(item => item.id !== id)
@@ -64,14 +64,14 @@ export const CategoryPage = () => {
       <>
          <form className='my-24 rounded flex flex-col gap-4 justify-center items-center' onSubmit={(ev) => { postCategory(ev) }}>
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Categoria</h2>
-            <FormInput placeholder='Nome...' onChange={setCategoryNameInput} />
-            <FormInput placeholder='Descrição...' onChange={setCategoryDescInput} />
+            <FormInput placeholder='nome (deixe vazio para gerar automaticamente)...' onChange={setCategoryNameInput} />
+            <FormInput placeholder='descrição...' onChange={setCategoryDescInput} />
             <FormButton disable={loading} />
          </form>
          <br />
          {
             categoriesList &&
-            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} categoriesList={categoriesList} />
+            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} infoList={categoriesList} />
          }
          {
             !categoriesList &&

@@ -1,14 +1,18 @@
 import { CategoriesTS } from '../types/categoriesType';
 import { Trash } from 'phosphor-react'
+import { ArticlesTS } from '../types/articleType';
+import { SectionsTS } from '../types/sectionsType';
+import { ApiTS } from '../types/apiType';
 
 type Props = {
    titles: string[],
-   categoriesList: CategoriesTS,
+   infoList: CategoriesTS | SectionsTS | ArticlesTS,
    deleteFunction: (id: number) => void
 }
 
-export const InfoTable = ({ titles, categoriesList, deleteFunction }: Props) => {
-   const { categories: data, count } = categoriesList
+export const InfoTable = ({ titles, infoList, deleteFunction }: Props) => {
+   const data = Object.values(infoList)[0] as ApiTS[]
+   const count = infoList.count
 
    return (
       <table className='w-full border-separate border-spacing-0 shadow rounded overflow-hidden'>
@@ -23,9 +27,15 @@ export const InfoTable = ({ titles, categoriesList, deleteFunction }: Props) => 
          <tbody>
             {data.map(item => (
                <tr className='hover:bg-slate-100 transition-all' key={item.id}>
-                  <td className='p-2'><span className='block sm:hidden'>{item.name}</span> {item.id}</td>
+                  <td className='p-2'>
+                     {item.category_id && <span className='block sm:hidden text-xs text-gray-500'>{item.category_id}</span>}
+                     {item.section_id && <span className='block sm:hidden text-xs text-gray-500'>{item.section_id}</span>}
+                     <span className='block sm:hidden'>{item.name}</span>
+                     {item.id}
+                  </td>
                   <td className='p-2 hidden sm:table-cell'>{item.name}</td>
-                  {/* {item.foreign && <td className='p-2 hidden sm:table-cell'>{item.name}</td>} */}
+                  {item.category_id && <td className='p-2 hidden sm:table-cell'>{item.category_id}</td>}
+                  {item.section_id && <td className='p-2 hidden sm:table-cell text-sm'>{item.section_id}</td>}
                   <td className='p-2 text-center'>
                      <button className='hover:bg-red-300 p-1 rounded transition-all' onClick={() => { deleteFunction(item.id as number) }}>
                         <Trash size={24} />

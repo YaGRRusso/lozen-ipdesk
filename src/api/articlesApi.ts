@@ -1,4 +1,4 @@
-import { DomainTS } from "../types/domainType";
+import { DomainTS } from "../types/apiType";
 
 export const articlesApi = {
    getArticles: async (zd: DomainTS) => {

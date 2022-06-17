@@ -1,4 +1,4 @@
-import { DomainTS } from "../types/domainType";
+import { DomainTS } from "../types/apiType";
 import { CategoryTS, NewCategoryTS, CategoriesTS } from "../types/categoriesType";
 
 export const categoriesApi = {
@@ -18,7 +18,7 @@ export const categoriesApi = {
             'Authorization': 'Basic ' + btoa(`${zd.email_address}:${zd.password}`)
          },
          body: JSON.stringify({
-            category: category
+            category
          })
       })
       return res.json();

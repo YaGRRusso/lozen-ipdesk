@@ -1,6 +1,6 @@
 // Context, Reducer, Provider, Hook
 import { createContext, ReactNode, useContext, useReducer } from 'react'
-import { DomainTS } from '../types/domainType'
+import { DomainTS } from '../types/apiType'
 
 type ActionType = {
    type: FormAction,
