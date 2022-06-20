@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { Eye, EyeSlash } from 'phosphor-react'
-import { FormAction, useForm } from "../../context/DomainContext"
+import { DomainAction, useDomainContext } from "../../context/DomainContext"
 
 type PropsTS = {
    data: {
       type: 'text' | 'email' | 'password' | 'select',
       placeholder?: string,
       value: string,
-      dispatch: FormAction,
+      dispatch: DomainAction,
       options?: {
          value: string,
          name: string
@@ -17,7 +17,7 @@ type PropsTS = {
 
 export const HeaderFormInput = ({ data }: PropsTS) => {
    const [showingPass, setShowingPass] = useState(false)
-   const { dispatch } = useForm()
+   const { dispatch } = useDomainContext()
 
    switch (data.type) {
       case 'password': return (

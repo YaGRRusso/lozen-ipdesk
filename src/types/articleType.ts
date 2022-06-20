@@ -1,10 +1,12 @@
 export type ArticleTS = {
-   section_id: number,
+   permission_group_id?: number,
    id?: number,
    position?: number,
    locale?: string,
-   name: string,
-   description: string
+   title: string,
+   body: string,
+   description: string,
+   section_id: number
 }
 
 export type NewArticleTS = {

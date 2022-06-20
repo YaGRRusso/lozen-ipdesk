@@ -6,13 +6,16 @@ import { ApiTS } from '../types/apiType';
 
 type Props = {
    titles: string[],
-   infoList: CategoriesTS | SectionsTS | ArticlesTS,
+   infoList: {
+      data: ApiTS[],
+      count: number
+   }
    deleteFunction: (id: number) => void
 }
 
 export const InfoTable = ({ titles, infoList, deleteFunction }: Props) => {
-   const data = Object.values(infoList)[0] as ApiTS[]
-   const count = infoList.count
+   const { data, count } = infoList
+   console.log(data)
 
    return (
       <table className='w-full border-separate border-spacing-0 shadow rounded overflow-hidden'>
@@ -30,7 +33,7 @@ export const InfoTable = ({ titles, infoList, deleteFunction }: Props) => {
                   <td className='p-2'>
                      {item.category_id && <span className='block sm:hidden text-xs text-gray-500'>{item.category_id}</span>}
                      {item.section_id && <span className='block sm:hidden text-xs text-gray-500'>{item.section_id}</span>}
-                     <span className='block sm:hidden'>{item.name}</span>
+                     <span className='block sm:hidden'>{item.name ?? item.title}</span>
                      {item.id}
                   </td>
                   <td className='p-2 hidden sm:table-cell'>{item.name}</td>

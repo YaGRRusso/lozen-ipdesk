@@ -3,14 +3,14 @@ import { createContext, ReactNode, useContext, useReducer } from 'react'
 import { DomainTS } from '../types/apiType'
 
 type ActionType = {
-   type: FormAction,
+   type: DomainAction,
    payload: any
 }
 type ContextType = {
    state: DomainTS,
    dispatch: (action: ActionType) => void
 }
-type FormProviderType = {
+type DomainProviderType = {
    children: ReactNode
 }
 
@@ -23,10 +23,10 @@ const initialData: DomainTS = {
 
 
 // Context
-const FormContext = createContext<ContextType | undefined>(undefined)
+const DomainContext = createContext<ContextType | undefined>(undefined)
 
 //Reducer
-export enum FormAction {
+export enum DomainAction {
    setEmail,
    setLocale,
    setPassword,
@@ -34,13 +34,13 @@ export enum FormAction {
 }
 const formReducer = (state: DomainTS, action: ActionType) => {
    switch (action.type) {
-      case FormAction.setEmail:
+      case DomainAction.setEmail:
          return { ...state, email_address: action.payload }
-      case FormAction.setLocale:
+      case DomainAction.setLocale:
          return { ...state, locale: action.payload }
-      case FormAction.setPassword:
+      case DomainAction.setPassword:
          return { ...state, password: action.payload }
-      case FormAction.setSubdomain:
+      case DomainAction.setSubdomain:
          return { ...state, subdomain: action.payload }
       default:
          return state
@@ -48,20 +48,20 @@ const formReducer = (state: DomainTS, action: ActionType) => {
 }
 
 // Provider
-export const FormProvider = ({ children }: FormProviderType) => {
+export const DomainProvider = ({ children }: DomainProviderType) => {
    const [state, dispatch] = useReducer(formReducer, initialData)
    const value = { state, dispatch }
 
    return (
-      <FormContext.Provider value={value}>
+      <DomainContext.Provider value={value}>
          {children}
-      </FormContext.Provider>
+      </DomainContext.Provider>
    )
 }
 
 // Hook
-export const useForm = () => {
-   const context = useContext(FormContext)
+export const useDomainContext = () => {
+   const context = useContext(DomainContext)
    if (context === undefined) {
       throw new Error('Precisa ser usado dentro do provider')
    }

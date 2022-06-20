@@ -1,17 +1,17 @@
 import { FormEvent, useState } from 'react'
-import { CategoriesTS, CategoryTS } from '../types/categoriesType'
-import { useForm } from '../context/DomainContext'
+import { CategoryTS } from '../types/categoriesType'
+import { useDomainContext } from '../context/DomainContext'
 import { randomGenerator } from '../helpers/randomGenerator'
 import { categoriesApi } from '../api/categoriesApi'
-
 import { Plugs } from 'phosphor-react'
 import { InfoTable } from '../components/InfoTable'
 import { FormInput } from '../components/FormInputs/FormInput'
 import { FormButton } from '../components/FormInputs/FormButton'
+import { ApiAction, useApiContext } from '../context/ApiContext'
 
 export const CategoryPage = () => {
-   const { state } = useForm()
-   const [categoriesList, setCategoriesList] = useState<CategoriesTS | null>(null)
+   const { state } = useDomainContext()
+   const { state: apiState, dispatch: apiDispatch } = useApiContext()
    const [loading, setLoading] = useState(false)
 
    const [categoryNameInput, setCategoryNameInput] = useState('')
@@ -19,7 +19,7 @@ export const CategoryPage = () => {
 
    const getCategories = async () => {
       setLoading(true)
-      setCategoriesList(await categoriesApi.getCategories(state))
+      apiDispatch({ type: ApiAction.setCategories, payload: await categoriesApi.getCategories(state) })
       setLoading(false)
    }
 
@@ -40,10 +40,12 @@ export const CategoryPage = () => {
       setCategoryDescInput('')
 
       const createdCategory = await categoriesApi.createCategory(state, newCategory)
-      if (categoriesList) {
-         setCategoriesList({
-            categories: [createdCategory.category, ...categoriesList.categories],
-            count: categoriesList.count + 1
+      if (apiState.categories && createdCategory) {
+         apiDispatch({
+            type: ApiAction.setCategories, payload: {
+               categories: [createdCategory.category, ...apiState.categories.categories],
+               count: apiState.categories.count + 1
+            }
          })
       }
       setLoading(false)
@@ -51,11 +53,13 @@ export const CategoryPage = () => {
 
    const deleteCategory = (id: number) => {
       categoriesApi.deleteCategory(state, id)
-      if (categoriesList) {
-         const newList = categoriesList.categories.filter(item => item.id !== id)
-         setCategoriesList({
-            categories: newList,
-            count: categoriesList.count - 1
+      if (apiState.categories) {
+         const newList = apiState.categories.categories.filter(item => item.id !== id)
+         apiDispatch({
+            type: ApiAction.setCategories, payload: {
+               categories: newList,
+               count: apiState.categories.count - 1
+            }
          })
       }
    }
@@ -70,11 +74,13 @@ export const CategoryPage = () => {
          </form>
          <br />
          {
-            categoriesList &&
-            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} infoList={categoriesList} />
+            apiState.categories &&
+            <InfoTable titles={['Identificação', 'Nome']} deleteFunction={deleteCategory} infoList={{
+               data: apiState.categories.categories, count: apiState.categories.count
+            }} />
          }
          {
-            !categoriesList &&
+            !apiState.categories &&
             <button onClick={() => getCategories()}
                className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
                <Plugs size={26} color='#075985' />

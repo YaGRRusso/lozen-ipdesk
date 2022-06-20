@@ -1,3 +1,7 @@
+import { ArticlesTS } from "./articleType"
+import { CategoriesTS } from "./categoriesType"
+import { SectionsTS } from "./sectionsType"
+
 export type DomainTS = {
    subdomain: string,
    email_address: string,
@@ -9,8 +13,16 @@ export type ApiTS = {
    category_id?: number,
    section_id?: number,
    id?: number,
-   position?: number,
    locale?: string,
    name?: string,
-   description?: string
+   title?: string,
+   description?: string,
+   body?: string,
+   permission_group_id?: number
+}
+
+export type ApiContextTS = {
+   categories?: CategoriesTS | null,
+   sections?: SectionsTS | null,
+   articles?: ArticlesTS | null
 }
