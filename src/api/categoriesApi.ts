@@ -16,10 +16,11 @@ export const categoriesApi = {
    },
    createCategory: async (zd: DomainTS, category: CategoryTS): Promise<NewCategoryTS | undefined> => {
       try {
-
          const res = await fetch(`https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories.json`, {
             method: 'POST',
+            mode: 'cors',
             headers: {
+               'Access-Control-Allow-Origin': '*',
                'Content-Type': 'application/json',
                'Authorization': 'Basic ' + btoa(`${zd.email_address}:${zd.password}`)
             },
