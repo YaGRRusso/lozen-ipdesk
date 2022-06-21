@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useDomainContext } from '../context/DomainContext'
 import { Plugs } from 'phosphor-react'
 import { InfoTable } from '../components/InfoTable'
@@ -8,6 +8,8 @@ import { ApiAction, useApiContext } from '../context/ApiContext'
 import { articlesApi } from '../api/articlesApi'
 import { ArticleTS } from '../types/articleType'
 import { randomGenerator } from '../helpers/randomGenerator'
+import { FormSelect } from '../components/FormInputs/FormSelect'
+import { sectionsApi } from '../api/sectionsApi'
 
 export const ArticlePage = () => {
    const { state } = useDomainContext()
@@ -18,6 +20,18 @@ export const ArticlePage = () => {
    const [articleTitleInput, setArticleTitleInput] = useState('')
    const [articleDescInput, setArticleDescInput] = useState('')
    const [articleBodyInput, setArticleBodyInput] = useState('')
+
+   useEffect(() => {
+      if (apiState.articles) {
+         startCheck()
+      }
+   }, [apiState.articles])
+
+   const startCheck = async () => {
+      if (!apiState.sections) {
+         apiDispatch({ type: ApiAction.setSections, payload: await sectionsApi.getSections(state) })
+      }
+   }
 
    const getArticles = async () => {
       setLoading(true)
@@ -30,13 +44,17 @@ export const ArticlePage = () => {
 
       setLoading(true)
       let newArticle: ArticleTS = {
+         permission_group_id: 2059393,
+         user_segment_id: 360001790033,
+         section_id: parseInt(articleSectionInput),
          title: articleTitleInput,
          description: articleDescInput,
-         section_id: parseInt(articleSectionInput),
          body: articleBodyInput
       }
       if (newArticle.title === '') {
-         newArticle = randomGenerator.randomArticle(newArticle.section_id)
+         newArticle = randomGenerator.randomArticle(
+            newArticle.section_id, newArticle.permission_group_id, newArticle.user_segment_id
+         )
       }
 
       setArticleTitleInput('')
@@ -55,15 +73,24 @@ export const ArticlePage = () => {
       setLoading(false)
    }
 
-   const deleteArticle = () => {
-
+   const deleteArticle = (id: number) => {
+      articlesApi.deleteArticle(state, id)
+      if (apiState.articles) {
+         const newList = apiState.articles.articles.filter(item => item.id !== id)
+         apiDispatch({
+            type: ApiAction.setArticles, payload: {
+               articles: newList,
+               count: apiState.articles.count - 1
+            }
+         })
+      }
    }
 
    return (
       <>
          <form className='my-24 rounded flex flex-col gap-4 justify-center items-center' onSubmit={(ev) => { postArticle(ev) }}>
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Article</h2>
-            <FormInput placeholder='ID da section...' onChange={setArticleSectionInput} />
+            <FormSelect onChange={setArticleSectionInput} options={apiState.sections?.sections} />
             <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setArticleTitleInput} />
             <FormInput placeholder='Descrição...' onChange={setArticleDescInput} />
             <FormInput placeholder='Corpo...' onChange={setArticleBodyInput} />

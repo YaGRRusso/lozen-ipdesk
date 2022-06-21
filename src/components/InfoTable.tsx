@@ -15,15 +15,14 @@ type Props = {
 
 export const InfoTable = ({ titles, infoList, deleteFunction }: Props) => {
    const { data, count } = infoList
-   console.log(data)
 
    return (
       <table className='w-full border-separate border-spacing-0 shadow rounded overflow-hidden'>
          <thead className='bg-sky-800 text-white text-left'>
             <tr>
-               <th className='py-4 px-2'>{titles[0]}</th>
-               <th className='py-4 px-2 hidden sm:table-cell'>{titles[1]}</th>
-               {titles[2] && <th className='py-4 px-2 hidden sm:table-cell'>{titles[2]}</th>}
+               {titles.map((item, index) => (
+                  <th key={index} className={`py-4 px-2 ${index > 0 ? 'hidden sm:table-cell' : ''}`}>{item}</th>
+               ))}
                <th className='py-4 px-2 w-14'><span className='flex items-center justify-center border w-12 rounded'>{count}</span></th>
             </tr>
          </thead>

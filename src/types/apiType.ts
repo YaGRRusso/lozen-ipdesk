@@ -18,7 +18,8 @@ export type ApiTS = {
    title?: string,
    description?: string,
    body?: string,
-   permission_group_id?: number
+   permission_group_id?: number,
+   user_segment_id?: number
 }
 
 export type ApiContextTS = {

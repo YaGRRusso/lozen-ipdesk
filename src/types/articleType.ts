@@ -1,5 +1,6 @@
 export type ArticleTS = {
-   permission_group_id?: number,
+   permission_group_id: number,
+   user_segment_id: number,
    id?: number,
    position?: number,
    locale?: string,

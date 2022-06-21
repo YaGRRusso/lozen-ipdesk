@@ -9,10 +9,12 @@ type PropsTS = {
 export const FormSelect = ({ onChange, options }: PropsTS) => {
    return (
       <select
-         className="bg-transparent border border-sky-800 rounded px-2 py-1 invalid:border-red-800 invalid:border-2
+         className="bg-transparent border border-sky-800 rounded px-2 py-1 invalid:border-red-600 invalid:border-2
          block w-full max-w-screen-md text-ellipsis hover:cursor-pointer"
          onChange={ev => { onChange(ev.target.value) }} required
       >
+         <option value=''>Selecione uma opção</option>
+         <hr />
          {options?.map(item => (
             <option key={item.id} value={item.id}>{item.name}</option>
          ))}

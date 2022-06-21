@@ -26,9 +26,11 @@ export const randomGenerator = {
       }
       return category
    },
-   randomArticle: (sectionId: number) => {
+   randomArticle: (sectionId: number, permissionId: number, userId: number) => {
       const article: ArticleTS = {
          section_id: sectionId,
+         permission_group_id: permissionId,
+         user_segment_id: userId,
          title: chance.sentence({ words: randomNumber(2, 4) }).replace('.', ''),
          description: chance.sentence({ words: randomNumber(4, 6) }),
          body: chance.sentence({ words: randomNumber(24, 56) }),
