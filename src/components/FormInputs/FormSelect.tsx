@@ -14,7 +14,7 @@ export const FormSelect = ({ onChange, options }: PropsTS) => {
          invalid:text-gray-400 block w-full max-w-screen-md text-ellipsis hover:cursor-pointer"
          defaultValue='' placeholder="Selecione uma opção..." onChange={ev => { onChange(ev.target.value) }} required
       >
-         <option className="text-gray-400" disabled value=''>Selecione uma opção</option>
+         <option className="text-gray-400" disabled value=''>Selecione uma opção (deve estar conectado)...</option>
          {options?.map(item => (
             <option className="text-black" key={item.id} value={item.id}>{item.name ?? item.id}</option>
          ))}
