@@ -1,4 +1,4 @@
-import { PermissionListTS } from "../../helpers/gambiarra"
+import { PermissionListTS } from "../../helpers/filter"
 import { CategoryTS } from "../../types/categoriesType"
 import { SectionTS } from "../../types/sectionsType"
 

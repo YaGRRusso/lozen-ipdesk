@@ -11,7 +11,7 @@ import { FormSelect } from '../components/FormInputs/FormSelect'
 import { sectionsApi } from '../api/sectionsApi'
 import { RefreshButton } from '../components/RefreshButton'
 import { TextAreaInput } from '../components/FormInputs/TextAreaInput'
-import { getPermissionList } from '../helpers/gambiarra'
+import { getPermissionList } from '../helpers/filter'
 
 export const ArticlePage = () => {
    const { state } = useDomainContext()
@@ -32,9 +32,7 @@ export const ArticlePage = () => {
 
    const startCheck = async () => {
       if (apiState.articles?.articles) {
-         console.log(
-            getPermissionList(apiState.articles)
-         )
+         getPermissionList(apiState.articles)
       }
       if (!apiState.sections) {
          apiDispatch({ type: ApiAction.setSections, payload: await sectionsApi.getSections(state) })
@@ -98,7 +96,7 @@ export const ArticlePage = () => {
       <>
          <form className='my-24 rounded flex flex-col gap-4 justify-center items-center' onSubmit={(ev) => { postArticle(ev) }}>
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Article</h2>
-            {/* <FormSelect onChange={setArticlePermissionInput} options={articlePermissionList} /> */}
+            <FormSelect onChange={setArticlePermissionInput} options={getPermissionList(apiState.articles)} />
             <FormSelect onChange={setArticleSectionInput} options={apiState.sections?.sections} />
             <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setArticleTitleInput} />
             <FormInput placeholder='Descrição...' onChange={setArticleDescInput} />
