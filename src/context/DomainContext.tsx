@@ -15,10 +15,10 @@ type DomainProviderType = {
 }
 
 const initialData: DomainTS = {
-   email_address: import.meta.env.VITE_EMAIL ?? '',
-   locale: import.meta.env.VITE_LOCALE ?? 'pt-br',
-   password: import.meta.env.VITE_PASSWORD ?? '',
-   subdomain: import.meta.env.VITE_SUBDOMAIN ?? ''
+   email_address: import.meta.env.VITE_EMAIL ?? localStorage.getItem('zd_email') ?? '',
+   locale: import.meta.env.VITE_LOCALE ?? localStorage.getItem('zd_locale') ?? 'pt-br',
+   password: import.meta.env.VITE_PASSWORD ?? localStorage.getItem('zd_password') ?? '',
+   subdomain: import.meta.env.VITE_SUBDOMAIN ?? localStorage.getItem('zd_subdomain') ?? ''
 }
 
 
@@ -63,7 +63,7 @@ export const DomainProvider = ({ children }: DomainProviderType) => {
 export const useDomainContext = () => {
    const context = useContext(DomainContext)
    if (context === undefined) {
-      throw new Error('Precisa ser usado dentro do provider')
+      throw new Error
    }
    return context
 }

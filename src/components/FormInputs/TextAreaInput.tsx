@@ -3,7 +3,7 @@ type PropsTS = {
    onChange: (value: string) => void
 }
 
-export const FormInput = ({ placeholder, onChange }: PropsTS) => {
+export const TextAreaInput = ({ placeholder, onChange }: PropsTS) => {
    return (
       <textarea
          className="bg-transparent border border-sky-800 rounded px-2 py-1 invalid:border-red-800 invalid:border-2

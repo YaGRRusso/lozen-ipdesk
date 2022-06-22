@@ -3,11 +3,11 @@ import { CategoryTS } from '../types/categoriesType'
 import { useDomainContext } from '../context/DomainContext'
 import { randomGenerator } from '../helpers/randomGenerator'
 import { categoriesApi } from '../api/categoriesApi'
-import { Plugs } from 'phosphor-react'
 import { InfoTable } from '../components/InfoTable'
 import { FormInput } from '../components/FormInputs/FormInput'
 import { FormButton } from '../components/FormInputs/FormButton'
 import { ApiAction, useApiContext } from '../context/ApiContext'
+import { RefreshButton } from '../components/RefreshButton'
 
 export const CategoryPage = () => {
    const { state } = useDomainContext()
@@ -81,10 +81,7 @@ export const CategoryPage = () => {
          }
          {
             !apiState.categories &&
-            <button onClick={() => getCategories()}
-               className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
-               <Plugs size={26} color='#075985' />
-            </button>
+            <RefreshButton loading={loading} onclick={getCategories} />
          }
       </>
    )

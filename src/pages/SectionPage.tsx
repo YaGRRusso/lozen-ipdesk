@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useDomainContext } from '../context/DomainContext'
-import { Plugs } from 'phosphor-react'
 import { InfoTable } from '../components/InfoTable'
 import { FormInput } from '../components/FormInputs/FormInput'
 import { FormButton } from '../components/FormInputs/FormButton'
@@ -10,6 +9,7 @@ import { randomGenerator } from '../helpers/randomGenerator'
 import { ApiAction, useApiContext } from '../context/ApiContext'
 import { FormSelect } from '../components/FormInputs/FormSelect'
 import { categoriesApi } from '../api/categoriesApi'
+import { RefreshButton } from '../components/RefreshButton'
 
 export const SectionPage = () => {
    const { state } = useDomainContext()
@@ -98,10 +98,7 @@ export const SectionPage = () => {
          }
          {
             !apiState.sections &&
-            <button onClick={() => { getSections() }}
-               className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
-               <Plugs size={26} color='#075985' />
-            </button>
+            <RefreshButton loading={loading} onclick={getSections} />
          }
       </>
    )

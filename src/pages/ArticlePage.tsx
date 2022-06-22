@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useDomainContext } from '../context/DomainContext'
-import { Plugs } from 'phosphor-react'
 import { InfoTable } from '../components/InfoTable'
 import { FormInput } from '../components/FormInputs/FormInput'
 import { FormButton } from '../components/FormInputs/FormButton'
@@ -10,6 +9,9 @@ import { ArticleTS } from '../types/articleType'
 import { randomGenerator } from '../helpers/randomGenerator'
 import { FormSelect } from '../components/FormInputs/FormSelect'
 import { sectionsApi } from '../api/sectionsApi'
+import { RefreshButton } from '../components/RefreshButton'
+import { TextAreaInput } from '../components/FormInputs/TextAreaInput'
+import { getPermissionList } from '../helpers/gambiarra'
 
 export const ArticlePage = () => {
    const { state } = useDomainContext()
@@ -17,6 +19,7 @@ export const ArticlePage = () => {
    const [loading, setLoading] = useState(false)
 
    const [articleSectionInput, setArticleSectionInput] = useState('')
+   const [articlePermissionInput, setArticlePermissionInput] = useState('')
    const [articleTitleInput, setArticleTitleInput] = useState('')
    const [articleDescInput, setArticleDescInput] = useState('')
    const [articleBodyInput, setArticleBodyInput] = useState('')
@@ -28,6 +31,11 @@ export const ArticlePage = () => {
    }, [apiState.articles])
 
    const startCheck = async () => {
+      if (apiState.articles?.articles) {
+         console.log(
+            getPermissionList(apiState.articles)
+         )
+      }
       if (!apiState.sections) {
          apiDispatch({ type: ApiAction.setSections, payload: await sectionsApi.getSections(state) })
       }
@@ -44,8 +52,8 @@ export const ArticlePage = () => {
 
       setLoading(true)
       let newArticle: ArticleTS = {
-         permission_group_id: 2059393,
-         user_segment_id: 360001790033,
+         permission_group_id: parseInt(articlePermissionInput),
+         user_segment_id: null,
          section_id: parseInt(articleSectionInput),
          title: articleTitleInput,
          description: articleDescInput,
@@ -90,10 +98,11 @@ export const ArticlePage = () => {
       <>
          <form className='my-24 rounded flex flex-col gap-4 justify-center items-center' onSubmit={(ev) => { postArticle(ev) }}>
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Article</h2>
+            {/* <FormSelect onChange={setArticlePermissionInput} options={articlePermissionList} /> */}
             <FormSelect onChange={setArticleSectionInput} options={apiState.sections?.sections} />
             <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setArticleTitleInput} />
             <FormInput placeholder='Descrição...' onChange={setArticleDescInput} />
-            <FormInput placeholder='Corpo...' onChange={setArticleBodyInput} />
+            <TextAreaInput placeholder='Corpo...' onChange={setArticleBodyInput} />
             <FormButton disable={loading} />
          </form>
          <br />
@@ -105,10 +114,7 @@ export const ArticlePage = () => {
          }
          {
             !apiState.articles &&
-            <button onClick={() => { getArticles() }}
-               className={`${loading ? 'animate-spin' : ''} hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}>
-               <Plugs size={26} color='#075985' />
-            </button>
+            <RefreshButton loading={loading} onclick={getArticles} />
          }
       </>
    )

@@ -26,7 +26,7 @@ export const randomGenerator = {
       }
       return category
    },
-   randomArticle: (sectionId: number, permissionId: number, userId: number) => {
+   randomArticle: (sectionId: number, permissionId: number, userId: number | null) => {
       const article: ArticleTS = {
          section_id: sectionId,
          permission_group_id: permissionId,

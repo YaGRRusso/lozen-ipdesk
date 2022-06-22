@@ -60,7 +60,7 @@ export const ApiProvider = ({ children }: ApiProviderType) => {
 export const useApiContext = () => {
    const context = useContext(ApiContext)
    if (context === undefined) {
-      throw new Error('Precisa ser usado dentro do provider')
+      throw new Error
    }
    return context
 }
