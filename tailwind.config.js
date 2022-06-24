@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       minHeight: {
-        'screen-65': '65vh'
+        'screen-fill': '65vh'
       }
     },
   },
