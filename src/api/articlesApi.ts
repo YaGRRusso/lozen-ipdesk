@@ -23,7 +23,7 @@ export const articlesApi = {
                'Authorization': 'Basic ' + btoa(`${zd.email_address}:${zd.password}`)
             },
             body: JSON.stringify({
-               article, notify_subscribers: false
+               article, notify_subscribers: false, promoted: true
             })
          });
          return res.json()

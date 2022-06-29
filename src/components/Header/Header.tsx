@@ -23,7 +23,7 @@ export const Header = () => {
                   type: 'password', placeholder: 'digite sua senha...'
                }} />
                <HeaderFormInput data={{
-                  value: state.password, dispatch: DomainAction.setPassword,
+                  value: state.locale, dispatch: DomainAction.setLocale,
                   type: 'select', options: [
                      { value: 'pt-br', name: 'Português' },
                      { value: 'en-us', name: 'Inglês' }

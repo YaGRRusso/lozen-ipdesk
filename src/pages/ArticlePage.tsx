@@ -12,6 +12,7 @@ import { sectionsApi } from '../api/sectionsApi'
 import { RefreshButton } from '../components/RefreshButton'
 import { TextAreaInput } from '../components/FormInputs/TextAreaInput'
 import { getPermissionList } from '../helpers/filter'
+import { FormCheck } from '../components/FormInputs/FormCheck'
 
 export const ArticlePage = () => {
    const { state } = useDomainContext()
@@ -23,6 +24,7 @@ export const ArticlePage = () => {
    const [articleTitleInput, setArticleTitleInput] = useState('')
    const [articleDescInput, setArticleDescInput] = useState('')
    const [articleBodyInput, setArticleBodyInput] = useState('')
+   const [articlePromotedInput, setArticlePromotedInput] = useState(false)
 
    useEffect(() => {
       if (apiState.articles) {
@@ -55,11 +57,15 @@ export const ArticlePage = () => {
          section_id: parseInt(articleSectionInput),
          title: articleTitleInput,
          description: articleDescInput,
-         body: articleBodyInput
+         body: articleBodyInput,
+         promoted: articlePromotedInput
       }
       if (newArticle.title === '') {
          newArticle = randomGenerator.randomArticle(
-            newArticle.section_id, newArticle.permission_group_id, newArticle.user_segment_id
+            newArticle.section_id,
+            newArticle.permission_group_id,
+            newArticle.user_segment_id,
+            newArticle.promoted
          )
       }
 
@@ -101,6 +107,7 @@ export const ArticlePage = () => {
             <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setArticleTitleInput} />
             <FormInput placeholder='Descrição...' onChange={setArticleDescInput} />
             <TextAreaInput placeholder='Corpo...' onChange={setArticleBodyInput} />
+            <FormCheck onChange={setArticlePromotedInput} value={articlePromotedInput}/>
             <FormButton disable={loading} />
          </form>
          <br />

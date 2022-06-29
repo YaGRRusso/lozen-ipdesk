@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { CategoryTS } from '../types/categoriesType'
 import { useDomainContext } from '../context/DomainContext'
 import { randomGenerator } from '../helpers/randomGenerator'
@@ -8,6 +8,7 @@ import { FormInput } from '../components/FormInputs/FormInput'
 import { FormButton } from '../components/FormInputs/FormButton'
 import { ApiAction, useApiContext } from '../context/ApiContext'
 import { RefreshButton } from '../components/RefreshButton'
+import { FormNumber } from '../components/FormInputs/FormNumber'
 
 export const CategoryPage = () => {
    const { state } = useDomainContext()
@@ -16,6 +17,13 @@ export const CategoryPage = () => {
 
    const [categoryNameInput, setCategoryNameInput] = useState('')
    const [categoryDescInput, setCategoryDescInput] = useState('')
+   const [categoryPositionInput, setCategoryPositionInput] = useState(0)
+
+   useEffect(()=> {
+      if (apiState.categories?.count){
+         setCategoryPositionInput(apiState.categories?.count)
+      }
+   },[apiState.categories?.count])
 
    const getCategories = async () => {
       setLoading(true)
@@ -30,10 +38,11 @@ export const CategoryPage = () => {
       let newCategory: CategoryTS = {
          name: categoryNameInput,
          description: categoryDescInput,
-         locale: state.locale
+         locale: state.locale,
+         position: categoryPositionInput
       }
       if (newCategory.name === '') {
-         newCategory = randomGenerator.randomCategory()
+         newCategory = randomGenerator.randomCategory(categoryPositionInput-1)
       }
 
       setCategoryNameInput('')
@@ -41,9 +50,11 @@ export const CategoryPage = () => {
 
       const createdCategory = await categoriesApi.createCategory(state, newCategory)
       if (apiState.categories && createdCategory) {
+         const newList: CategoryTS[] = apiState.categories.categories
+         newList.splice(categoryPositionInput-1, 0, createdCategory.category)
          apiDispatch({
             type: ApiAction.setCategories, payload: {
-               categories: [createdCategory.category, ...apiState.categories.categories],
+               categories: newList,
                count: apiState.categories.count + 1
             }
          })
@@ -70,6 +81,7 @@ export const CategoryPage = () => {
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Categoria</h2>
             <FormInput placeholder='nome (deixe vazio para gerar automaticamente)...' onChange={setCategoryNameInput} />
             <FormInput placeholder='descrição...' onChange={setCategoryDescInput} />
+            <FormNumber value={categoryPositionInput} onChange={setCategoryPositionInput} placeholder='posição...'/>
             <FormButton disable={loading} />
          </form>
          <br />

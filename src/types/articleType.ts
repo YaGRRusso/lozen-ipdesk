@@ -7,7 +7,8 @@ export type ArticleTS = {
    title: string,
    body: string,
    description: string,
-   section_id: number
+   section_id: number,
+   promoted?: boolean
 }
 
 export type NewArticleTS = {

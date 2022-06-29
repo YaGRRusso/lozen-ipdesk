@@ -10,6 +10,7 @@ import { ApiAction, useApiContext } from '../context/ApiContext'
 import { FormSelect } from '../components/FormInputs/FormSelect'
 import { categoriesApi } from '../api/categoriesApi'
 import { RefreshButton } from '../components/RefreshButton'
+import { FormNumber } from '../components/FormInputs/FormNumber'
 
 export const SectionPage = () => {
    const { state } = useDomainContext()
@@ -19,10 +20,12 @@ export const SectionPage = () => {
    const [sectionCategoryInput, setSectionCategoryInput] = useState('')
    const [sectionNameInput, setSectionNameInput] = useState('')
    const [sectionDescInput, setSectionDescInput] = useState('')
-
+   const [sectionPositionInput, setSectionPositionInput] = useState(0)
+   
    useEffect(() => {
       if (apiState.sections) {
          startCheck()
+         setSectionPositionInput(apiState.sections.count)
       }
    }, [apiState.sections])
 
@@ -46,10 +49,11 @@ export const SectionPage = () => {
          category_id: parseInt(sectionCategoryInput),
          name: sectionNameInput,
          description: sectionDescInput,
-         locale: state.locale
+         locale: state.locale,
+         position: sectionPositionInput
       }
       if (newSection.name === '') {
-         newSection = randomGenerator.randomSection(newSection.category_id)
+         newSection = randomGenerator.randomSection(newSection.category_id, sectionPositionInput-1)
       }
 
       setSectionNameInput('')
@@ -57,9 +61,11 @@ export const SectionPage = () => {
 
       const createdSection = await sectionsApi.createSection(state, newSection)
       if (apiState.sections && createdSection) {
+         const newList: SectionTS[] = apiState.sections.sections
+         newList.splice(sectionPositionInput-1, 0, createdSection.section)
          apiDispatch({
             type: ApiAction.setSections, payload: {
-               sections: [createdSection.section, ...apiState.sections.sections],
+               sections: newList,
                count: apiState.sections.count + 1
             }
          })
@@ -87,6 +93,7 @@ export const SectionPage = () => {
             <FormSelect onChange={setSectionCategoryInput} options={apiState.categories?.categories} />
             <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setSectionNameInput} />
             <FormInput placeholder='Descrição...' onChange={setSectionDescInput} />
+            <FormNumber value={sectionPositionInput} onChange={setSectionPositionInput} placeholder='posição...'/>
             <FormButton disable={loading} />
          </form>
          <br />
