@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, ReactEventHandler, useEffect, useRef, useState } from 'react'
 import { useDomainContext } from '../context/DomainContext'
 import { InfoTable } from '../components/InfoTable'
 import { FormInput } from '../components/FormInputs/FormInput'
@@ -13,17 +13,38 @@ import { RefreshButton } from '../components/RefreshButton'
 import { TextAreaInput } from '../components/FormInputs/TextAreaInput'
 import { getPermissionList } from '../helpers/filter'
 import { FormCheck } from '../components/FormInputs/FormCheck'
+import JoditEditor from 'jodit-react'
 
 export const ArticlePage = () => {
    const { state } = useDomainContext()
    const { state: apiState, dispatch: apiDispatch } = useApiContext()
    const [loading, setLoading] = useState(false)
+   const joditRef = useRef<JoditEditor | null>(null)
 
+   const joditConfig = {
+      readonly: false,
+      minWidth: 'auto',
+      removeButtons: [
+         'eraser',
+         'font',
+         'superscript',
+         'subscript',
+         'file',
+         'image',
+         'video',
+         'speechRecognize',
+         'brush',
+         'source',
+         'print',
+         'about'
+      ]
+   }
+
+   const [articleBodyInput, setArticleBodyInput] = useState('')
    const [articleSectionInput, setArticleSectionInput] = useState('')
    const [articlePermissionInput, setArticlePermissionInput] = useState('')
    const [articleTitleInput, setArticleTitleInput] = useState('')
    const [articleDescInput, setArticleDescInput] = useState('')
-   const [articleBodyInput, setArticleBodyInput] = useState('')
    const [articlePromotedInput, setArticlePromotedInput] = useState(false)
 
    useEffect(() => {
@@ -106,7 +127,15 @@ export const ArticlePage = () => {
             <FormSelect onChange={setArticleSectionInput} options={apiState.sections?.sections} />
             <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setArticleTitleInput} />
             <FormInput placeholder='Descrição...' onChange={setArticleDescInput} />
-            <TextAreaInput placeholder='Corpo...' onChange={setArticleBodyInput} />
+            <div className='max-w-screen-md w-full list-disc'>
+               <JoditEditor
+                  ref={joditRef}
+                  value={articleBodyInput}
+                  config={joditConfig}
+                  onBlur={newContent => setArticleBodyInput(newContent)}
+                  onChange={() => {}}
+               /> 
+            </div>
             <FormCheck onChange={setArticlePromotedInput} value={articlePromotedInput}/>
             <FormButton disable={loading} />
          </form>

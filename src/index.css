@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+ol, ul, menu {
+   list-style: initial;
+   list-style-position: inside;
+}
+
+.jodit-workplace a{
+   color: #075985;
+}
