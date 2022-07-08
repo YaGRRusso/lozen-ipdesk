@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-ol, ul, menu {
+.jodit-workplace ol,
+.jodit-workplace ul,
+.jodit-workplace menu {
    list-style: initial;
    list-style-position: inside;
 }
