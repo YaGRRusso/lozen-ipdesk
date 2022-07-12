@@ -1,13 +1,11 @@
-type PropsTS = {
-   onChange: (value: boolean) => void,
-   value: boolean
+interface PropsTS extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
-export const FormCheck = ({ onChange, value }: PropsTS) => {
+export const FormCheck = ({ ...rest }: PropsTS) => {
    return (
       <label className="flex gap-2">
          <span>Promoted: </span>
-         <input type="checkbox" checked={value} onChange={(ev) => onChange(!value)}/>
+         <input type="checkbox" {...rest}/>
       </label>
    )
 }

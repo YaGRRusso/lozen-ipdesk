@@ -1,14 +1,38 @@
-type PropsTS = {
-   placeholder: string,
-   onChange: (value: string) => void
+import JoditEditor, { JoditProps } from "jodit-react"
+import { useRef } from "react"
+
+interface PropsTS extends JoditProps {
 }
 
-export const TextAreaInput = ({ placeholder, onChange }: PropsTS) => {
+const joditConfig = {
+   readonly: false,
+   minWidth: 'auto',
+   removeButtons: [
+      'eraser',
+      'font',
+      'superscript',
+      'subscript',
+      'file',
+      'image',
+      'video',
+      'speechRecognize',
+      'brush',
+      'source',
+      'print',
+      'about'
+   ]
+}
+
+export const TextAreaInput = ({...rest}:PropsTS) => {
+   const joditRef = useRef<JoditEditor | null>(null)
+
    return (
-      <textarea
-         className="bg-transparent border border-sky-800 rounded px-2 py-1 invalid:border-red-800 invalid:border-2
-         block w-full max-w-screen-md text-ellipsis py-6"
-         placeholder={placeholder} onChange={ev => { onChange(ev.target.value) }}
-      />
+      <div className='max-w-screen-md w-full list-disc'>
+         <JoditEditor
+            ref={joditRef}
+            config={joditConfig}
+            {...rest}
+         /> 
+      </div>
    )
 }

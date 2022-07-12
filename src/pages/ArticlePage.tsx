@@ -13,32 +13,11 @@ import { RefreshButton } from '../components/RefreshButton'
 import { TextAreaInput } from '../components/FormInputs/TextAreaInput'
 import { getPermissionList } from '../helpers/filter'
 import { FormCheck } from '../components/FormInputs/FormCheck'
-import JoditEditor from 'jodit-react'
 
 export const ArticlePage = () => {
    const { state } = useDomainContext()
    const { state: apiState, dispatch: apiDispatch } = useApiContext()
    const [loading, setLoading] = useState(false)
-   const joditRef = useRef<JoditEditor | null>(null)
-
-   const joditConfig = {
-      readonly: false,
-      minWidth: 'auto',
-      removeButtons: [
-         'eraser',
-         'font',
-         'superscript',
-         'subscript',
-         'file',
-         'image',
-         'video',
-         'speechRecognize',
-         'brush',
-         'source',
-         'print',
-         'about'
-      ]
-   }
 
    const [articleBodyInput, setArticleBodyInput] = useState('')
    const [articleSectionInput, setArticleSectionInput] = useState('')
@@ -123,21 +102,13 @@ export const ArticlePage = () => {
       <>
          <form className='my-24 rounded flex flex-col gap-4 justify-center items-center' onSubmit={(ev) => { postArticle(ev) }}>
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Article</h2>
-            <FormSelect onChange={setArticlePermissionInput} options={getPermissionList(apiState.articles)} />
-            <FormSelect onChange={setArticleSectionInput} options={apiState.sections?.sections} />
-            <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setArticleTitleInput} />
-            <FormInput placeholder='Descrição...' onChange={setArticleDescInput} />
-            <div className='max-w-screen-md w-full list-disc'>
-               <JoditEditor
-                  ref={joditRef}
-                  value={articleBodyInput}
-                  config={joditConfig}
-                  onBlur={newContent => setArticleBodyInput(newContent)}
-                  onChange={() => {}}
-               /> 
-            </div>
-            <FormCheck onChange={setArticlePromotedInput} value={articlePromotedInput}/>
-            <FormButton disable={loading} />
+            <FormSelect onChange={ev => setArticlePermissionInput(ev.target.value)} options={getPermissionList(apiState.articles)} required/>
+            <FormSelect onChange={ev => setArticleSectionInput(ev.target.value)} options={apiState.sections?.sections} required/>
+            <FormInput  placeholder='nome...' onChange={ev => setArticleTitleInput(ev.target.value)}/>
+            <FormInput placeholder='descrição...' onChange={ev => setArticleDescInput(ev.target.value)} />
+            <TextAreaInput value={articleBodyInput} onBlur={newContent => setArticleBodyInput(newContent)}/>
+            <FormCheck onChange={() => setArticlePromotedInput(!articlePromotedInput)} checked={articlePromotedInput}/>
+            <FormButton disabled={loading} />
          </form>
          <br />
          {

@@ -10,7 +10,6 @@ import { ApiAction, useApiContext } from '../context/ApiContext'
 import { FormSelect } from '../components/FormInputs/FormSelect'
 import { categoriesApi } from '../api/categoriesApi'
 import { RefreshButton } from '../components/RefreshButton'
-import { FormNumber } from '../components/FormInputs/FormNumber'
 
 export const SectionPage = () => {
    const { state } = useDomainContext()
@@ -90,11 +89,11 @@ export const SectionPage = () => {
       <>
          <form className='my-24 rounded flex flex-col gap-4 justify-center items-center' onSubmit={(ev) => { postSection(ev) }}>
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Section</h2>
-            <FormSelect onChange={setSectionCategoryInput} options={apiState.categories?.categories} />
-            <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={setSectionNameInput} />
-            <FormInput placeholder='Descrição...' onChange={setSectionDescInput} />
-            <FormNumber value={sectionPositionInput} onChange={setSectionPositionInput} placeholder='posição...'/>
-            <FormButton disable={loading} />
+            <FormSelect onChange={ev => setSectionCategoryInput(ev.target.value)} options={apiState.categories?.categories} required/>
+            <FormInput placeholder='Nome (deixe vazio para gerar automaticamente)...' onChange={ev => setSectionNameInput(ev.target.value)} />
+            <FormInput placeholder='Descrição...' onChange={ev => setSectionDescInput(ev.target.value)} />
+            <FormInput type='number' min={1} max={apiState.sections?.count} value={sectionPositionInput} onChange={ev => setSectionPositionInput(parseInt(ev.target.value))} placeholder='posição...'/>
+            <FormButton disabled={loading} />
          </form>
          <br />
          {

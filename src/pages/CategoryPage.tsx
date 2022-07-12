@@ -8,7 +8,6 @@ import { FormInput } from '../components/FormInputs/FormInput'
 import { FormButton } from '../components/FormInputs/FormButton'
 import { ApiAction, useApiContext } from '../context/ApiContext'
 import { RefreshButton } from '../components/RefreshButton'
-import { FormNumber } from '../components/FormInputs/FormNumber'
 
 export const CategoryPage = () => {
    const { state } = useDomainContext()
@@ -79,10 +78,10 @@ export const CategoryPage = () => {
       <>
          <form className='my-24 rounded flex flex-col gap-4 justify-center items-center' onSubmit={(ev) => { postCategory(ev) }}>
             <h2 className='text-2xl mb-5 text-sky-800 font-semibold'>Criar Categoria</h2>
-            <FormInput placeholder='nome (deixe vazio para gerar automaticamente)...' onChange={setCategoryNameInput} />
-            <FormInput placeholder='descrição...' onChange={setCategoryDescInput} />
-            <FormNumber value={categoryPositionInput} onChange={setCategoryPositionInput} placeholder='posição...'/>
-            <FormButton disable={loading} />
+            <FormInput placeholder='nome (deixe vazio para gerar automaticamente)...' onChange={ev => setCategoryNameInput(ev.target.value)} />
+            <FormInput placeholder='descrição...' onChange={ev => setCategoryDescInput(ev.target.value)} />
+            <FormInput min={1} max={apiState.categories?.count} value={categoryPositionInput} type='number' onChange={ev => setCategoryPositionInput(parseInt(ev.target.value))} placeholder='posição...'/>
+            <FormButton disabled={loading} />
          </form>
          <br />
          {
