@@ -116,23 +116,23 @@ export const ArticlePage = () => {
           value={articlePermissionInput}
           onChange={(ev) => setArticlePermissionInput(ev.target.value)}
           options={getPermissionList(apiState.articles)}
-          placeholder="selecione o permission ID pertencente... (deve estar conectado)"
+          placeholder="permission ID pertencente... (deve estar conectado)"
           required
         />
         <FormSelect
           value={articleSectionInput}
           onChange={(ev) => setArticleSectionInput(ev.target.value)}
           options={apiState.sections?.sections}
-          placeholder="selecione o artigo pertencente... (deve estar conectado)"
+          placeholder="artigo pertencente... (deve estar conectado)"
           required
         />
         <FormInput
-          placeholder="nome..."
+          placeholder="nome... (deixe vazio para gerar aleatoriamente)"
           value={articleTitleInput}
           onChange={(ev) => setArticleTitleInput(ev.target.value)}
         />
         <FormInput
-          placeholder="descrição..."
+          placeholder="descrição... (deixe vazio para gerar aleatoriamente)"
           value={articleDescInput}
           onChange={(ev) => setArticleDescInput(ev.target.value)}
         />

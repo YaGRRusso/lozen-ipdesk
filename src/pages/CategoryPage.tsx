@@ -88,21 +88,16 @@ export const CategoryPage = () => {
           postCategory(ev);
         }}
       >
-        <h2
-          className="text-2xl mb-5 text-sky-800 font-semibold"
-          onClick={() => {
-            console.log(categoryPositionInput || "oi");
-          }}
-        >
+        <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
           Criar Categoria
         </h2>
         <FormInput
-          placeholder="nome..."
+          placeholder="nome... (deixe vazio para gerar aleatoriamente)"
           value={categoryNameInput ?? ""}
           onChange={(ev) => setCategoryNameInput(ev.target.value)}
         />
         <FormInput
-          placeholder="descrição..."
+          placeholder="descrição... (deixe vazio para gerar aleatoriamente)"
           value={categoryDescInput ?? ""}
           onChange={(ev) => setCategoryDescInput(ev.target.value)}
         />
@@ -112,7 +107,7 @@ export const CategoryPage = () => {
           value={categoryPositionInput || ""}
           type="number"
           onChange={(ev) => setCategoryPositionInput(parseInt(ev.target.value))}
-          placeholder="posição..."
+          placeholder="posição... (deixe vazio para criar no início da lista)"
         />
         <FormButton disabled={loading} />
       </form>

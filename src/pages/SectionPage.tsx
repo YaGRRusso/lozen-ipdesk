@@ -111,16 +111,16 @@ export const SectionPage = () => {
           onChange={(ev) => setSectionCategoryInput(ev.target.value)}
           value={sectionCategoryInput}
           options={apiState.categories?.categories}
-          placeholder="selecione a categoria pertencente... (deve estar conectado)"
+          placeholder="categoria pertencente... (deve estar conectado)"
           required
         />
         <FormInput
-          placeholder="nome..."
+          placeholder="nome... (deixe vazio para gerar aleatoriamente)"
           value={sectionNameInput}
           onChange={(ev) => setSectionNameInput(ev.target.value)}
         />
         <FormInput
-          placeholder="descrição..."
+          placeholder="descrição... (deixe vazio para gerar aleatoriamente)"
           value={sectionDescInput}
           onChange={(ev) => setSectionDescInput(ev.target.value)}
         />
@@ -130,7 +130,7 @@ export const SectionPage = () => {
           max={apiState.sections?.count}
           value={sectionPositionInput || ""}
           onChange={(ev) => setSectionPositionInput(parseInt(ev.target.value))}
-          placeholder="posição..."
+          placeholder="posição... (deixe vazio para criar no início da lista)"
         />
         <FormButton disabled={loading} />
       </form>
