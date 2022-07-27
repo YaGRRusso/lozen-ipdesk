@@ -1,16 +1,16 @@
 export type CategoryTS = {
-   id?: number,
-   position?: number,
-   locale?: string,
-   name: string,
-   description: string
-}
+  id?: number;
+  position?: number;
+  locale?: string;
+  name: string;
+  description: string;
+};
 
 export type NewCategoryTS = {
-   category: CategoryTS
-}
+  category: CategoryTS;
+};
 
 export type CategoriesTS = {
-   categories: CategoryTS[],
-   count: number
-}
+  categories: CategoryTS[];
+  count: number;
+};

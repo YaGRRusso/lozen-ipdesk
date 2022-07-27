@@ -4,9 +4,9 @@ import { CategoryPage } from "./pages/CategoryPage";
 import { SectionPage } from "./pages/SectionPage";
 
 export const RouteList = () => {
-   return useRoutes([
-      { path: '/', element: <CategoryPage /> },
-      { path: '/sections', element: <SectionPage /> },
-      { path: '/articles', element: <ArticlePage /> }
-   ])
-}
+  return useRoutes([
+    { path: "/", element: <CategoryPage /> },
+    { path: "/sections", element: <SectionPage /> },
+    { path: "/articles", element: <ArticlePage /> },
+  ]);
+};

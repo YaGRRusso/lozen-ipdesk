@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { CategoryTS } from "../types/categoriesType";
 import { useDomainContext } from "../context/DomainContext";
 import { randomGenerator } from "../helpers/randomGenerator";
