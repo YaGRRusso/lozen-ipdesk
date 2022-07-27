@@ -24,7 +24,6 @@ export const SectionPage = () => {
   useEffect(() => {
     if (apiState.sections) {
       startCheck();
-      setSectionPositionInput(apiState.sections.count);
     }
   }, [apiState.sections]);
 
@@ -52,25 +51,21 @@ export const SectionPage = () => {
     setLoading(true);
     let newSection: SectionTS = {
       category_id: parseInt(sectionCategoryInput),
-      name: sectionNameInput,
-      description: sectionDescInput,
+      name: sectionNameInput || randomGenerator.title(),
+      description: sectionDescInput || randomGenerator.description(),
       locale: state.locale,
-      position: sectionPositionInput,
+      position: sectionPositionInput || 0,
     };
-    if (newSection.name === "") {
-      newSection = randomGenerator.randomSection(
-        newSection.category_id,
-        sectionPositionInput - 1
-      );
-    }
-
-    setSectionNameInput("");
-    setSectionDescInput("");
 
     const createdSection = await sectionsApi.createSection(state, newSection);
     if (apiState.sections && createdSection) {
+      console.log(createdSection);
       const newList: SectionTS[] = apiState.sections.sections;
-      newList.splice(sectionPositionInput - 1, 0, createdSection.section);
+      if (sectionPositionInput) {
+        newList.splice(sectionPositionInput - 1, 0, createdSection.section);
+      } else {
+        newList.unshift(createdSection.section);
+      }
       apiDispatch({
         type: ApiAction.setSections,
         payload: {
@@ -79,6 +74,9 @@ export const SectionPage = () => {
         },
       });
     }
+    setSectionNameInput("");
+    setSectionDescInput("");
+    setSectionPositionInput(0);
     setLoading(false);
   };
 
@@ -111,22 +109,26 @@ export const SectionPage = () => {
         </h2>
         <FormSelect
           onChange={(ev) => setSectionCategoryInput(ev.target.value)}
+          value={sectionCategoryInput}
           options={apiState.categories?.categories}
+          placeholder="selecione a categoria pertencente... (deve estar conectado)"
           required
         />
         <FormInput
-          placeholder="Nome (deixe vazio para gerar automaticamente)..."
+          placeholder="nome..."
+          value={sectionNameInput}
           onChange={(ev) => setSectionNameInput(ev.target.value)}
         />
         <FormInput
-          placeholder="Descrição..."
+          placeholder="descrição..."
+          value={sectionDescInput}
           onChange={(ev) => setSectionDescInput(ev.target.value)}
         />
         <FormInput
           type="number"
           min={1}
           max={apiState.sections?.count}
-          value={sectionPositionInput}
+          value={sectionPositionInput || ""}
           onChange={(ev) => setSectionPositionInput(parseInt(ev.target.value))}
           placeholder="posição..."
         />

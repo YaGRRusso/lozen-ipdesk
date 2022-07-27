@@ -1,10 +1,4 @@
-import React, {
-  FormEvent,
-  ReactEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useDomainContext } from "../context/DomainContext";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";
@@ -67,26 +61,15 @@ export const ArticlePage = () => {
       permission_group_id: parseInt(articlePermissionInput),
       user_segment_id: null,
       section_id: parseInt(articleSectionInput),
-      title: articleTitleInput,
-      description: articleDescInput,
-      body: articleBodyInput,
+      title: articleTitleInput || randomGenerator.title(),
+      description: articleDescInput || randomGenerator.description(),
+      body: articleBodyInput || randomGenerator.body(),
       promoted: articlePromotedInput,
     };
-    if (newArticle.title === "") {
-      newArticle = randomGenerator.randomArticle(
-        newArticle.section_id,
-        newArticle.permission_group_id,
-        newArticle.user_segment_id,
-        newArticle.promoted
-      );
-    }
-
-    setArticleTitleInput("");
-    setArticleDescInput("");
-    setArticleBodyInput("");
 
     const createdArticle = await articlesApi.createArticle(state, newArticle);
     if (apiState.articles && createdArticle) {
+      console.log(createdArticle);
       apiDispatch({
         type: ApiAction.setArticles,
         payload: {
@@ -95,6 +78,10 @@ export const ArticlePage = () => {
         },
       });
     }
+    setArticleTitleInput("");
+    setArticleDescInput("");
+    setArticleBodyInput("");
+    setArticlePromotedInput(false);
     setLoading(false);
   };
 
@@ -126,21 +113,27 @@ export const ArticlePage = () => {
           Criar Article
         </h2>
         <FormSelect
+          value={articlePermissionInput}
           onChange={(ev) => setArticlePermissionInput(ev.target.value)}
           options={getPermissionList(apiState.articles)}
+          placeholder="selecione o permission ID pertencente... (deve estar conectado)"
           required
         />
         <FormSelect
+          value={articleSectionInput}
           onChange={(ev) => setArticleSectionInput(ev.target.value)}
           options={apiState.sections?.sections}
+          placeholder="selecione o artigo pertencente... (deve estar conectado)"
           required
         />
         <FormInput
           placeholder="nome..."
+          value={articleTitleInput}
           onChange={(ev) => setArticleTitleInput(ev.target.value)}
         />
         <FormInput
           placeholder="descrição..."
+          value={articleDescInput}
           onChange={(ev) => setArticleDescInput(ev.target.value)}
         />
         <TextAreaInput

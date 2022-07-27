@@ -14,9 +14,9 @@ export const CategoryPage = () => {
   const { state: apiState, dispatch: apiDispatch } = useApiContext();
   const [loading, setLoading] = useState(false);
 
-  const [categoryNameInput, setCategoryNameInput] = useState<string>("");
-  const [categoryDescInput, setCategoryDescInput] = useState<string>("");
-  const [categoryPositionInput, setCategoryPositionInput] = useState<number>(0);
+  const [categoryNameInput, setCategoryNameInput] = useState("");
+  const [categoryDescInput, setCategoryDescInput] = useState("");
+  const [categoryPositionInput, setCategoryPositionInput] = useState(0);
 
   const getCategories = async () => {
     setLoading(true);
@@ -43,6 +43,7 @@ export const CategoryPage = () => {
       newCategory
     );
     if (apiState.categories && createdCategory) {
+      console.log(createdCategory);
       const newList: CategoryTS[] = apiState.categories.categories;
       if (categoryPositionInput) {
         newList.splice(categoryPositionInput - 1, 0, createdCategory.category);
@@ -96,7 +97,7 @@ export const CategoryPage = () => {
           Criar Categoria
         </h2>
         <FormInput
-          placeholder="nome (deixe vazio para gerar automaticamente)..."
+          placeholder="nome..."
           value={categoryNameInput ?? ""}
           onChange={(ev) => setCategoryNameInput(ev.target.value)}
         />
