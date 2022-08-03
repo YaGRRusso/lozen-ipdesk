@@ -103,7 +103,7 @@ export const CategoryPage = () => {
         />
         <FormInput
           min={1}
-          max={apiState.categories?.count}
+          max={apiState.categories ? apiState.categories.count + 1 : 1}
           value={categoryPositionInput || ""}
           type="number"
           onChange={(ev) => setCategoryPositionInput(parseInt(ev.target.value))}

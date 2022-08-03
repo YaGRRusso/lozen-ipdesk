@@ -127,7 +127,7 @@ export const SectionPage = () => {
         <FormInput
           type="number"
           min={1}
-          max={apiState.sections?.count}
+          max={apiState.categories ? apiState.categories.count + 1 : 1}
           value={sectionPositionInput || ""}
           onChange={(ev) => setSectionPositionInput(parseInt(ev.target.value))}
           placeholder="posição... (deixe vazio para criar no início da lista)"
