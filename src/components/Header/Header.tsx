@@ -53,6 +53,8 @@ export const Header = () => {
             { name: "Categorias", local: "/" },
             { name: "Sections", local: "/sections" },
             { name: "Artigos", local: "/articles" },
+            { name: "Exportar", local: "/export" },
+            { name: "Importar", local: "/import" },
           ]}
         />
       </nav>

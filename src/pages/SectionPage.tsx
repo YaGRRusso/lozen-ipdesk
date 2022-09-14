@@ -11,7 +11,7 @@ import { FormSelect } from "../components/FormInputs/FormSelect";
 import { categoriesApi } from "../api/categoriesApi";
 import { RefreshButton } from "../components/RefreshButton";
 
-export const SectionPage = () => {
+const SectionPage = () => {
   const { state } = useDomainContext();
   const { state: apiState, dispatch: apiDispatch } = useApiContext();
   const [loading, setLoading] = useState(false);
@@ -151,3 +151,5 @@ export const SectionPage = () => {
     </>
   );
 };
+
+export default SectionPage;

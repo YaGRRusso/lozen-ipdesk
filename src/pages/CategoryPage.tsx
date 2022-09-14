@@ -9,7 +9,7 @@ import { FormButton } from "../components/FormInputs/FormButton";
 import { ApiAction, useApiContext } from "../context/ApiContext";
 import { RefreshButton } from "../components/RefreshButton";
 
-export const CategoryPage = () => {
+const CategoryPage = () => {
   const { state } = useDomainContext();
   const { state: apiState, dispatch: apiDispatch } = useApiContext();
   const [loading, setLoading] = useState(false);
@@ -128,3 +128,5 @@ export const CategoryPage = () => {
     </>
   );
 };
+
+export default CategoryPage;

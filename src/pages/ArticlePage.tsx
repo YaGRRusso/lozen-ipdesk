@@ -14,7 +14,7 @@ import { TextAreaInput } from "../components/FormInputs/TextAreaInput";
 import { getPermissionList } from "../helpers/filter";
 import { FormCheck } from "../components/FormInputs/FormCheck";
 
-export const ArticlePage = () => {
+const ArticlePage = () => {
   const { state } = useDomainContext();
   const { state: apiState, dispatch: apiDispatch } = useApiContext();
   const [loading, setLoading] = useState(false);
@@ -163,3 +163,5 @@ export const ArticlePage = () => {
     </>
   );
 };
+
+export default ArticlePage;

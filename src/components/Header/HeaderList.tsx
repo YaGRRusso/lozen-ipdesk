@@ -11,7 +11,7 @@ export const HeaderList = ({ data }: PropsTS) => {
   const { pathname } = useLocation();
 
   return (
-    <ul className="flex py-2 px-4 gap-6 justify-center uppercase font-semibold text-sm text-slate-50">
+    <ul className="flex flex-wrap py-2 px-4 gap-2 justify-center uppercase font-semibold text-sm text-slate-50">
       {data.map((item) => (
         <li key={item.name}>
           <Link
