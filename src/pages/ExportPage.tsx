@@ -15,7 +15,11 @@ const ExportPage = () => {
   const { loggedAccount } = useAuthContext();
 
   const loadZendeskInfo = async () => {
-    await Promise.all([loadCategories(), loadSections(), loadArticles()]);
+    await Promise.all([
+      loadCategories(categories?.page),
+      loadSections(sections?.page),
+      loadArticles(articles?.page),
+    ]);
   };
 
   useEffect(() => {
