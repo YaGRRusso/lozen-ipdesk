@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { randomGenerator } from "../helpers/randomGenerator";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";

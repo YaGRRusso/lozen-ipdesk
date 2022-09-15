@@ -42,8 +42,8 @@ export const JsonViewer = ({ title, object }: Props) => {
           <DownloadSimple size={24} />
         </a>
       </div>
-      <div className="p-4">
-        <Inspector table={false} data={object} expandLevel={1} />
+      <div className="p-4 max-h-screen-40 overflow-auto">
+        <Inspector table={false} data={object} expandLevel={2} />
       </div>
     </div>
   );

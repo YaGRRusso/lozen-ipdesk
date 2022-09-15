@@ -6,6 +6,9 @@ module.exports = {
       minHeight: {
         "screen-fill": "65vh",
       },
+      maxHeight: {
+        "screen-40": "40vh",
+      },
       minWidth: {
         "sm": "280px",
       },
