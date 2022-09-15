@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { randomGenerator } from "../helpers/randomGenerator";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";
@@ -23,9 +23,9 @@ const CategoryPage = () => {
   const [categoryPositionInput, setCategoryPositionInput] = useState(0);
   const [currentPage, setCurrentPage] = useState(categories?.page ?? 1);
 
-  const loadZendeskInfo = useCallback(async () => {
+  const loadZendeskInfo = async () => {
     await loadCategories(currentPage);
-  }, []);
+  };
 
   useEffect(() => {
     loadZendeskInfo();
