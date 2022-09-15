@@ -1,4 +1,12 @@
-import { DownloadSimple } from "phosphor-react";
+import {
+  Check,
+  CheckCircle,
+  Diamond,
+  DiamondsFour,
+  DownloadSimple,
+  Info,
+  Stack,
+} from "phosphor-react";
 import { useMemo } from "react";
 import { Inspector } from "react-inspector";
 
@@ -27,9 +35,16 @@ export const JsonViewer = ({ title, object }: Props) => {
   return (
     <div className="w-full border-separate border-spacing-0 shadow rounded overflow-hidden">
       <div className="bg-sky-800 text-white text-left font-semibold p-2 flex items-center justify-between">
-        <span>
-          {title} ({(jsonFile.blob.size / 1000).toFixed(1) + " kB"})
+        <span className="flex gap-x-1 flex-col items-center md:flex-row">
+          {title}
+          <span className="text-sm">
+            ({(jsonFile.blob.size / 1000).toFixed(1) + " kB"})
+          </span>
         </span>
+        <strong className="flex items-center gap-1 justify-center">
+          <Stack weight="bold" />
+          {object.page}/{object.page_count}
+        </strong>
         <a
           onClick={() => console.log(object)}
           download={title.toLowerCase() + ".json"}
