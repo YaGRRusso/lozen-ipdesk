@@ -29,9 +29,6 @@ export const JsonViewer = ({ title, object }: Props) => {
       <div className="bg-sky-800 text-white text-left font-semibold p-2 flex items-center justify-between">
         <span className="flex gap-x-1 flex-col items-center md:flex-row">
           {title}
-          <span className="text-sm">
-            ({(jsonFile.blob.size / 1000).toFixed(1) + " kB"})
-          </span>
         </span>
         <strong className="flex items-center gap-1 justify-center">
           <Stack weight="bold" />
@@ -43,10 +40,10 @@ export const JsonViewer = ({ title, object }: Props) => {
           href={jsonFile?.url}
           className={`${
             jsonFile?.url ? "" : "pointer-events-none text-sky-900"
-          } flex items-center gap-2 justify-center px-2 py-1 rounded hover:bg-sky-700 transition-all cursor-pointer`}
+          } flex text-sm items-center gap-1 justify-center px-2 py-1 rounded hover:bg-sky-700 transition-all cursor-pointer`}
         >
-          Baixar
-          <DownloadSimple size={24} />
+          <DownloadSimple weight="bold" size={24} />
+          {(jsonFile.blob.size / 1000).toFixed(1) + " kB"}
         </a>
       </div>
       <div className="p-4 max-h-screen-40 overflow-auto">
