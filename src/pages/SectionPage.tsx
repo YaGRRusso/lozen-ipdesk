@@ -2,12 +2,12 @@ import { FormEvent, useEffect, useState } from "react";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";
 import { FormButton } from "../components/FormInputs/FormButton";
-import { SectionTS } from "../types/sectionsType";
 import { randomGenerator } from "../helpers/randomGenerator";
 import { FormSelect } from "../components/FormInputs/FormSelect";
 import { RefreshButton } from "../components/RefreshButton";
 import { useZendeskContext } from "../context/ZendeskContext";
 import { useAuthContext } from "../context/AuthContext";
+import { CreateSectionProps } from "../api/sectionsApi";
 
 const SectionPage = () => {
   const {
@@ -25,19 +25,23 @@ const SectionPage = () => {
   const [sectionNameInput, setSectionNameInput] = useState("");
   const [sectionDescInput, setSectionDescInput] = useState("");
   const [sectionPositionInput, setSectionPositionInput] = useState(0);
+  const [currentPage, setCurrentPage] = useState(sections?.page ?? 1);
 
   const loadZendeskInfo = async () => {
-    await Promise.all([loadCategories(), loadSections()]);
+    await Promise.all([
+      loadCategories(categories?.page),
+      loadSections(currentPage),
+    ]);
   };
 
   useEffect(() => {
     loadZendeskInfo();
-  }, [loggedAccount]);
+  }, [loggedAccount, currentPage]);
 
   const handleCreateSection = async (ev: FormEvent<HTMLElement>) => {
     ev.preventDefault();
 
-    let newSection: SectionTS = {
+    let newSection: CreateSectionProps = {
       category_id: parseInt(sectionCategoryInput),
       name: sectionNameInput || randomGenerator.title(),
       description: sectionDescInput || randomGenerator.description(),
@@ -98,9 +102,16 @@ const SectionPage = () => {
         <InfoTable
           titles={["Identificação", "Nome", "Categoria"]}
           deleteFunction={handleDeleteSection}
-          infoList={{
-            data: sections.sections,
-            count: sections.count,
+          count={sections.count}
+          data={sections.sections.map((item) => ({
+            id: item.id,
+            name: item.name,
+            parentId: item.category_id,
+          }))}
+          totalPages={sections.page_count}
+          currentPage={{
+            value: currentPage,
+            setValue: setCurrentPage,
           }}
         />
       )}

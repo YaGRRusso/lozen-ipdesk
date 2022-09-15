@@ -2,17 +2,15 @@ import { FormEvent, useEffect, useState } from "react";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";
 import { FormButton } from "../components/FormInputs/FormButton";
-import { articlesApi } from "../api/articlesApi";
-import { ArticleTS } from "../types/articleType";
 import { randomGenerator } from "../helpers/randomGenerator";
 import { FormSelect } from "../components/FormInputs/FormSelect";
-import { sectionsApi } from "../api/sectionsApi";
 import { RefreshButton } from "../components/RefreshButton";
 import { TextAreaInput } from "../components/FormInputs/TextAreaInput";
 import { getPermissionList } from "../helpers/filter";
 import { FormCheck } from "../components/FormInputs/FormCheck";
 import { useZendeskContext } from "../context/ZendeskContext";
 import { useAuthContext } from "../context/AuthContext";
+import { CreateArticleProps } from "../api/articlesApi";
 
 const ArticlePage = () => {
   const {
@@ -32,19 +30,23 @@ const ArticlePage = () => {
   const [articleTitleInput, setArticleTitleInput] = useState("");
   const [articleDescInput, setArticleDescInput] = useState("");
   const [articlePromotedInput, setArticlePromotedInput] = useState(false);
+  const [currentPage, setCurrentPage] = useState(articles?.page ?? 1);
 
   const loadZendeskInfo = async () => {
-    await Promise.all([loadSections(), loadArticles()]);
+    await Promise.all([
+      loadSections(sections?.page),
+      loadArticles(currentPage),
+    ]);
   };
 
   useEffect(() => {
     loadZendeskInfo();
-  }, [loggedAccount]);
+  }, [loggedAccount, currentPage]);
 
   const handleCreateArticle = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
-    let newArticle: ArticleTS = {
+    let newArticle: CreateArticleProps = {
       permission_group_id: parseInt(articlePermissionInput),
       user_segment_id: null,
       section_id: parseInt(articleSectionInput),
@@ -73,7 +75,12 @@ const ArticlePage = () => {
           handleCreateArticle(ev);
         }}
       >
-        <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
+        <h2
+          className="text-2xl mb-5 text-sky-800 font-semibold"
+          onClick={() => {
+            loadZendeskInfo();
+          }}
+        >
           Criar Article
         </h2>
         <FormSelect
@@ -87,7 +94,7 @@ const ArticlePage = () => {
           value={articleSectionInput}
           onChange={(ev) => setArticleSectionInput(ev.target.value)}
           options={sections?.sections}
-          placeholder="artigo pertencente... (deve estar conectado)"
+          placeholder="seção pertencente... (deve estar conectado)"
           required
         />
         <FormInput
@@ -115,10 +122,17 @@ const ArticlePage = () => {
         <InfoTable
           titles={["Identificação", "Nome", "Section"]}
           deleteFunction={handleDeleteArticle}
-          infoList={{
-            data: articles.articles,
-            count: articles.count,
+          count={articles.count}
+          currentPage={{
+            value: currentPage,
+            setValue: setCurrentPage,
           }}
+          totalPages={articles.page_count}
+          data={articles.articles.map((item) => ({
+            id: item.id,
+            name: item.name,
+            parentId: item.section_id,
+          }))}
         />
       )}
       {!articles && <RefreshButton loading={articlesLoading} />}

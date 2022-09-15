@@ -22,7 +22,7 @@ export const JsonViewer = ({ title, object }: Props) => {
       url: "",
       blob: new Blob(),
     };
-  }, []);
+  }, [object]);
 
   return (
     <div className="w-full border-separate border-spacing-0 shadow rounded overflow-hidden">

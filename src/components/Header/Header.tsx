@@ -2,9 +2,10 @@ import { HeaderList } from "./HeaderList";
 import { HeaderTextInput } from "./HeaderInputs/HeaderTextInput";
 import { HeaderPasswordInput } from "./HeaderInputs/HeaderPasswordInput";
 import { HeaderSelectInput } from "./HeaderInputs/HeaderSelectInput";
-import { SignIn } from "phosphor-react";
+import { Info, SignIn } from "phosphor-react";
 import { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
+import ReactTooltip from "react-tooltip";
 
 export const Header = () => {
   const { loggedAccount, setLoggedAccount } = useAuthContext();
@@ -26,11 +27,19 @@ export const Header = () => {
 
   return (
     <header className="bg-sky-800">
-      <div className="max-w-screen-xl flex-wrap w-11/12 mx-auto py-4 flex items-center justify-center gap-6 text-white">
-        <h1 className="text-4xl font-bold flex-1 text-center">
-          Lozen Ipdesk 2.0
+      <div className="max-w-screen-xl flex-wrap lg:flex-row flex-col w-11/12 mx-auto py-8 flex items-center justify-center gap-8 text-white">
+        <h1 className="text-4xl font-bold text-center flex items-center justify-center gap-2">
+          Lozen Ipdesk{" "}
+          <span
+            className="cursor-pointer"
+            data-tip='Para o funcionamento correto da ferramenta, é necessário instalar e ativar a extensão do Chrome "Enable CORS"'
+            data-event="click focus"
+          >
+            <Info size={20} weight={"bold"} />
+            <ReactTooltip effect="solid" globalEventOff="click" />
+          </span>
         </h1>
-        <div className="flex flex-2 gap-3 text-black flex-col">
+        <div className="flex flex-1 gap-3 text-black flex-col">
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <HeaderTextInput
               placeholder="digite seu email..."

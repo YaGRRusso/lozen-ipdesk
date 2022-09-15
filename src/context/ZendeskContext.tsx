@@ -1,32 +1,31 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { articlesApi } from "../api/articlesApi";
-import { categoriesApi } from "../api/categoriesApi";
-import { sectionsApi } from "../api/sectionsApi";
+import { articlesApi, CreateArticleProps } from "../api/articlesApi";
+import { categoriesApi, CreateCategoryProps } from "../api/categoriesApi";
+import { CreateSectionProps, sectionsApi } from "../api/sectionsApi";
 import { ArticlesTS, ArticleTS } from "../types/articleType";
-import {
-  CategoriesTS,
-  CategoryTS,
-  NewCategoryTS,
-} from "../types/categoriesType";
+import { CategoriesTS, CategoryTS } from "../types/categoriesType";
 import { SectionsTS, SectionTS } from "../types/sectionsType";
 import { useAuthContext } from "./AuthContext";
 
 interface ZendeskContextProps {
-  loadCategories: () => Promise<void>;
+  loadCategories: (page?: number) => Promise<void>;
   deleteCategory: (id: number) => void;
-  createCategory: (data: CategoryTS, position?: number) => Promise<void>;
+  createCategory: (
+    data: CreateCategoryProps,
+    position?: number
+  ) => Promise<void>;
   categories: CategoriesTS | undefined;
   categoriesLoading: boolean;
 
-  loadSections: () => Promise<void>;
+  loadSections: (page?: number) => Promise<void>;
   deleteSection: (id: number) => void;
-  createSection: (data: SectionTS, position?: number) => Promise<void>;
+  createSection: (data: CreateSectionProps, position?: number) => Promise<void>;
   sections: SectionsTS | undefined;
   sectionsLoading: boolean;
 
-  loadArticles: () => Promise<void>;
+  loadArticles: (page?: number) => Promise<void>;
   deleteArticle: (id: number) => void;
-  createArticle: (data: ArticleTS) => Promise<void>;
+  createArticle: (data: CreateArticleProps) => Promise<void>;
   articles: ArticlesTS | undefined;
   articlesLoading: boolean;
 }
@@ -59,13 +58,13 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
     clearZendeskContext();
   }, [loggedAccount]);
 
-  const loadCategories = async (refresh?: boolean) => {
+  const loadCategories = async (page?: number) => {
     if (
-      (refresh && loggedAccount) ||
+      (categories?.page !== (page ?? 1) && loggedAccount) ||
       (!categories && !categoriesLoading && loggedAccount)
     ) {
       setCategoriesLoading(true);
-      const res = await categoriesApi.getCategories(loggedAccount);
+      const res = await categoriesApi.getCategories(loggedAccount, page);
       if (res) {
         setCategories(res);
       } else {
@@ -76,7 +75,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteCategory = async (id: number) => {
-    await categoriesApi.deleteCategory(loggedAccount, id);
+    if (loggedAccount) await categoriesApi.deleteCategory(loggedAccount, id);
     if (categories) {
       const newList = categories.categories.filter((item) => item.id !== id);
       setCategories({
@@ -87,34 +86,39 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const createCategory = async (data: CategoryTS, position?: number) => {
-    const createdCategory = await categoriesApi.createCategory(
-      loggedAccount,
-      data
-    );
-    if (categories && createdCategory) {
-      console.log(createdCategory);
-      const newList: CategoryTS[] = categories.categories;
-      if (position) {
-        newList.splice(position - 1, 0, createdCategory.category);
-      } else {
-        newList.unshift(createdCategory.category);
+  const createCategory = async (
+    data: CreateCategoryProps,
+    position?: number
+  ) => {
+    if (loggedAccount) {
+      const createdCategory = await categoriesApi.createCategory(
+        loggedAccount,
+        data
+      );
+      if (categories && createdCategory) {
+        console.log(createdCategory);
+        const newList: CategoryTS[] = categories.categories;
+        if (position) {
+          newList.splice(position - 1, 0, createdCategory.category);
+        } else {
+          newList.unshift(createdCategory.category);
+        }
+        setCategories({
+          ...categories,
+          categories: newList,
+          count: categories.count + 1,
+        });
       }
-      setCategories({
-        ...categories,
-        categories: newList,
-        count: categories.count + 1,
-      });
     }
   };
 
-  const loadSections = async (refresh?: boolean) => {
+  const loadSections = async (page?: number) => {
     if (
-      (refresh && loggedAccount) ||
+      (sections?.page !== (page ?? 1) && loggedAccount) ||
       (!sections && !sectionsLoading && loggedAccount)
     ) {
       setSectionsLoading(true);
-      const res = await sectionsApi.getSections(loggedAccount);
+      const res = await sectionsApi.getSections(loggedAccount, page);
       if (res) {
         setSections(res);
       } else {
@@ -125,7 +129,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteSection = async (id: number) => {
-    await sectionsApi.deleteSection(loggedAccount, id);
+    if (loggedAccount) await sectionsApi.deleteSection(loggedAccount, id);
     if (sections) {
       const newList = sections.sections.filter((item) => item.id !== id);
       setSections({
@@ -136,31 +140,36 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const createSection = async (data: SectionTS, position?: number) => {
-    const createdSection = await sectionsApi.createSection(loggedAccount, data);
-    if (sections && createdSection) {
-      console.log(createdSection);
-      const newList: SectionTS[] = sections.sections;
-      if (position) {
-        newList.splice(position - 1, 0, createdSection.section);
-      } else {
-        newList.unshift(createdSection.section);
+  const createSection = async (data: CreateSectionProps, position?: number) => {
+    if (loggedAccount) {
+      const createdSection = await sectionsApi.createSection(
+        loggedAccount,
+        data
+      );
+      if (sections && createdSection) {
+        console.log(createdSection);
+        const newList: SectionTS[] = sections.sections;
+        if (position) {
+          newList.splice(position - 1, 0, createdSection.section);
+        } else {
+          newList.unshift(createdSection.section);
+        }
+        setSections({
+          ...sections,
+          sections: newList,
+          count: sections.count + 1,
+        });
       }
-      setSections({
-        ...sections,
-        sections: newList,
-        count: sections.count + 1,
-      });
     }
   };
 
-  const loadArticles = async (refresh?: boolean) => {
+  const loadArticles = async (page?: number) => {
     if (
-      (refresh && loggedAccount) ||
+      (articles?.page !== (page ?? 1) && loggedAccount) ||
       (!articles && !articlesLoading && loggedAccount)
     ) {
       setArticlesLoading(true);
-      const res = await articlesApi.getArticles(loggedAccount);
+      const res = await articlesApi.getArticles(loggedAccount, page);
       if (res) {
         setArticles(res);
       } else {
@@ -171,7 +180,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteArticle = async (id: number) => {
-    await articlesApi.deleteArticle(loggedAccount, id);
+    if (loggedAccount) await articlesApi.deleteArticle(loggedAccount, id);
     if (articles) {
       const newList = articles.articles.filter((item) => item.id !== id);
       setArticles({
@@ -182,21 +191,26 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const createArticle = async (data: ArticleTS, position?: number) => {
-    const createdArticle = await articlesApi.createArticle(loggedAccount, data);
-    if (articles && createdArticle) {
-      console.log(createdArticle);
-      const newList: ArticleTS[] = articles.articles;
-      if (position) {
-        newList.splice(position - 1, 0, createdArticle.article);
-      } else {
-        newList.unshift(createdArticle.article);
+  const createArticle = async (data: CreateArticleProps, position?: number) => {
+    if (loggedAccount) {
+      const createdArticle = await articlesApi.createArticle(
+        loggedAccount,
+        data
+      );
+      if (articles && createdArticle) {
+        console.log(createdArticle);
+        const newList: ArticleTS[] = articles.articles;
+        if (position) {
+          newList.splice(position - 1, 0, createdArticle.article);
+        } else {
+          newList.unshift(createdArticle.article);
+        }
+        setArticles({
+          ...articles,
+          articles: newList,
+          count: articles.count + 1,
+        });
       }
-      setArticles({
-        ...articles,
-        articles: newList,
-        count: articles.count + 1,
-      });
     }
   };
 

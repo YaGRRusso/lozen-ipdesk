@@ -1,5 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
-import { CategoryTS } from "../types/categoriesType";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { randomGenerator } from "../helpers/randomGenerator";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";
@@ -7,6 +6,7 @@ import { FormButton } from "../components/FormInputs/FormButton";
 import { RefreshButton } from "../components/RefreshButton";
 import { useZendeskContext } from "../context/ZendeskContext";
 import { useAuthContext } from "../context/AuthContext";
+import { CreateCategoryProps } from "../api/categoriesApi";
 
 const CategoryPage = () => {
   const {
@@ -21,18 +21,19 @@ const CategoryPage = () => {
   const [categoryNameInput, setCategoryNameInput] = useState("");
   const [categoryDescInput, setCategoryDescInput] = useState("");
   const [categoryPositionInput, setCategoryPositionInput] = useState(0);
+  const [currentPage, setCurrentPage] = useState(categories?.page ?? 1);
 
-  const loadZendeskInfo = async () => {
-    await loadCategories();
-  };
+  const loadZendeskInfo = useCallback(async () => {
+    await loadCategories(currentPage);
+  }, []);
 
   useEffect(() => {
     loadZendeskInfo();
-  }, [loggedAccount]);
+  }, [loggedAccount, currentPage]);
 
   const handleCreateCategory = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    let newCategory: CategoryTS = {
+    let newCategory: CreateCategoryProps = {
       name: categoryNameInput || randomGenerator.title(),
       description: categoryDescInput || randomGenerator.description(),
       locale: loggedAccount?.locale || "pt-br",
@@ -85,9 +86,15 @@ const CategoryPage = () => {
         <InfoTable
           titles={["Identificação", "Nome"]}
           deleteFunction={handleDeleteCategory}
-          infoList={{
-            data: categories?.categories,
-            count: categories?.count,
+          count={categories.count}
+          data={categories.categories.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }))}
+          totalPages={categories.page_count}
+          currentPage={{
+            value: currentPage,
+            setValue: setCurrentPage,
           }}
         />
       )}
