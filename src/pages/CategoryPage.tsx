@@ -1,83 +1,52 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { CategoryTS } from "../types/categoriesType";
-import { useDomainContext } from "../context/DomainContext";
 import { randomGenerator } from "../helpers/randomGenerator";
-import { categoriesApi } from "../api/categoriesApi";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";
 import { FormButton } from "../components/FormInputs/FormButton";
-import { ApiAction, useApiContext } from "../context/ApiContext";
 import { RefreshButton } from "../components/RefreshButton";
+import { useZendeskContext } from "../context/ZendeskContext";
+import { useAuthContext } from "../context/AuthContext";
 
 const CategoryPage = () => {
-  const { state } = useDomainContext();
-  const { state: apiState, dispatch: apiDispatch } = useApiContext();
-  const [loading, setLoading] = useState(false);
+  const {
+    categories,
+    categoriesLoading,
+    loadCategories,
+    deleteCategory,
+    createCategory,
+  } = useZendeskContext();
+  const { loggedAccount } = useAuthContext();
 
   const [categoryNameInput, setCategoryNameInput] = useState("");
   const [categoryDescInput, setCategoryDescInput] = useState("");
   const [categoryPositionInput, setCategoryPositionInput] = useState(0);
 
-  const getCategories = async () => {
-    setLoading(true);
-    apiDispatch({
-      type: ApiAction.setCategories,
-      payload: await categoriesApi.getCategories(state),
-    });
-    setLoading(false);
+  const loadZendeskInfo = async () => {
+    await loadCategories();
   };
 
-  const postCategory = async (ev: FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
+  useEffect(() => {
+    loadZendeskInfo();
+  }, [loggedAccount]);
 
-    setLoading(true);
+  const handleCreateCategory = async (ev: FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
     let newCategory: CategoryTS = {
       name: categoryNameInput || randomGenerator.title(),
       description: categoryDescInput || randomGenerator.description(),
-      locale: state.locale,
+      locale: loggedAccount?.locale || "pt-br",
       position: categoryPositionInput || 0,
     };
+    createCategory(newCategory, categoryPositionInput);
 
-    const createdCategory = await categoriesApi.createCategory(
-      state,
-      newCategory
-    );
-    if (apiState.categories && createdCategory) {
-      console.log(createdCategory);
-      const newList: CategoryTS[] = apiState.categories.categories;
-      if (categoryPositionInput) {
-        newList.splice(categoryPositionInput - 1, 0, createdCategory.category);
-      } else {
-        newList.unshift(createdCategory.category);
-      }
-      apiDispatch({
-        type: ApiAction.setCategories,
-        payload: {
-          categories: newList,
-          count: apiState.categories.count + 1,
-        },
-      });
-    }
     setCategoryNameInput("");
     setCategoryDescInput("");
     setCategoryPositionInput(0);
-    setLoading(false);
   };
 
-  const deleteCategory = (id: number) => {
-    categoriesApi.deleteCategory(state, id);
-    if (apiState.categories) {
-      const newList = apiState.categories.categories.filter(
-        (item) => item.id !== id
-      );
-      apiDispatch({
-        type: ApiAction.setCategories,
-        payload: {
-          categories: newList,
-          count: apiState.categories.count - 1,
-        },
-      });
-    }
+  const handleDeleteCategory = (id: number) => {
+    deleteCategory(id);
   };
 
   return (
@@ -85,7 +54,7 @@ const CategoryPage = () => {
       <form
         className="my-24 rounded flex flex-col gap-4 justify-center items-center"
         onSubmit={(ev) => {
-          postCategory(ev);
+          handleCreateCategory(ev);
         }}
       >
         <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
@@ -103,28 +72,26 @@ const CategoryPage = () => {
         />
         <FormInput
           min={1}
-          max={apiState.categories ? apiState.categories.count + 1 : 1}
+          max={categories ? categories.count + 1 : 1}
           value={categoryPositionInput || ""}
           type="number"
           onChange={(ev) => setCategoryPositionInput(parseInt(ev.target.value))}
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
-        <FormButton disabled={loading} />
+        <FormButton disabled={categoriesLoading} />
       </form>
       <br />
-      {apiState.categories && (
+      {categories && (
         <InfoTable
           titles={["Identificação", "Nome"]}
-          deleteFunction={deleteCategory}
+          deleteFunction={handleDeleteCategory}
           infoList={{
-            data: apiState.categories.categories,
-            count: apiState.categories.count,
+            data: categories?.categories,
+            count: categories?.count,
           }}
         />
       )}
-      {!apiState.categories && (
-        <RefreshButton loading={loading} onclick={getCategories} />
-      )}
+      {!categories && <RefreshButton loading={categoriesLoading} />}
     </>
   );
 };

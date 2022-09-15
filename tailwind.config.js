@@ -1,15 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
       minHeight: {
-        'screen-fill': '65vh'
-      }
+        "screen-fill": "65vh",
+      },
+      minWidth: {
+        "sm": "280px",
+      },
     },
   },
   plugins: [],
-}
+};

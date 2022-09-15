@@ -1,9 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
-import { useDomainContext } from "../context/DomainContext";
 import { InfoTable } from "../components/InfoTable";
 import { FormInput } from "../components/FormInputs/FormInput";
 import { FormButton } from "../components/FormInputs/FormButton";
-import { ApiAction, useApiContext } from "../context/ApiContext";
 import { articlesApi } from "../api/articlesApi";
 import { ArticleTS } from "../types/articleType";
 import { randomGenerator } from "../helpers/randomGenerator";
@@ -13,11 +11,20 @@ import { RefreshButton } from "../components/RefreshButton";
 import { TextAreaInput } from "../components/FormInputs/TextAreaInput";
 import { getPermissionList } from "../helpers/filter";
 import { FormCheck } from "../components/FormInputs/FormCheck";
+import { useZendeskContext } from "../context/ZendeskContext";
+import { useAuthContext } from "../context/AuthContext";
 
 const ArticlePage = () => {
-  const { state } = useDomainContext();
-  const { state: apiState, dispatch: apiDispatch } = useApiContext();
-  const [loading, setLoading] = useState(false);
+  const {
+    sections,
+    loadSections,
+    articles,
+    articlesLoading,
+    loadArticles,
+    deleteArticle,
+    createArticle,
+  } = useZendeskContext();
+  const { loggedAccount } = useAuthContext();
 
   const [articleBodyInput, setArticleBodyInput] = useState("");
   const [articleSectionInput, setArticleSectionInput] = useState("");
@@ -26,37 +33,17 @@ const ArticlePage = () => {
   const [articleDescInput, setArticleDescInput] = useState("");
   const [articlePromotedInput, setArticlePromotedInput] = useState(false);
 
+  const loadZendeskInfo = async () => {
+    await Promise.all([loadSections(), loadArticles()]);
+  };
+
   useEffect(() => {
-    if (apiState.articles) {
-      startCheck();
-    }
-  }, [apiState.articles]);
+    loadZendeskInfo();
+  }, [loggedAccount]);
 
-  const startCheck = async () => {
-    if (apiState.articles?.articles) {
-      getPermissionList(apiState.articles);
-    }
-    if (!apiState.sections) {
-      apiDispatch({
-        type: ApiAction.setSections,
-        payload: await sectionsApi.getSections(state),
-      });
-    }
-  };
-
-  const getArticles = async () => {
-    setLoading(true);
-    apiDispatch({
-      type: ApiAction.setArticles,
-      payload: await articlesApi.getArticles(state),
-    });
-    setLoading(false);
-  };
-
-  const postArticle = async (ev: FormEvent<HTMLFormElement>) => {
+  const handleCreateArticle = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
-    setLoading(true);
     let newArticle: ArticleTS = {
       permission_group_id: parseInt(articlePermissionInput),
       user_segment_id: null,
@@ -66,39 +53,16 @@ const ArticlePage = () => {
       body: articleBodyInput || randomGenerator.body(),
       promoted: articlePromotedInput,
     };
+    createArticle(newArticle);
 
-    const createdArticle = await articlesApi.createArticle(state, newArticle);
-    if (apiState.articles && createdArticle) {
-      console.log(createdArticle);
-      apiDispatch({
-        type: ApiAction.setArticles,
-        payload: {
-          articles: [createdArticle.article, ...apiState.articles.articles],
-          count: apiState.articles.count + 1,
-        },
-      });
-    }
     setArticleTitleInput("");
     setArticleDescInput("");
     setArticleBodyInput("");
     setArticlePromotedInput(false);
-    setLoading(false);
   };
 
-  const deleteArticle = (id: number) => {
-    articlesApi.deleteArticle(state, id);
-    if (apiState.articles) {
-      const newList = apiState.articles.articles.filter(
-        (item) => item.id !== id
-      );
-      apiDispatch({
-        type: ApiAction.setArticles,
-        payload: {
-          articles: newList,
-          count: apiState.articles.count - 1,
-        },
-      });
-    }
+  const handleDeleteArticle = (id: number) => {
+    deleteArticle(id);
   };
 
   return (
@@ -106,7 +70,7 @@ const ArticlePage = () => {
       <form
         className="my-24 rounded flex flex-col gap-4 justify-center items-center"
         onSubmit={(ev) => {
-          postArticle(ev);
+          handleCreateArticle(ev);
         }}
       >
         <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
@@ -115,14 +79,14 @@ const ArticlePage = () => {
         <FormSelect
           value={articlePermissionInput}
           onChange={(ev) => setArticlePermissionInput(ev.target.value)}
-          options={getPermissionList(apiState.articles)}
+          options={getPermissionList(articles)}
           placeholder="permission ID pertencente... (deve estar conectado)"
           required
         />
         <FormSelect
           value={articleSectionInput}
           onChange={(ev) => setArticleSectionInput(ev.target.value)}
-          options={apiState.sections?.sections}
+          options={sections?.sections}
           placeholder="artigo pertencente... (deve estar conectado)"
           required
         />
@@ -144,22 +108,20 @@ const ArticlePage = () => {
           onChange={() => setArticlePromotedInput(!articlePromotedInput)}
           checked={articlePromotedInput}
         />
-        <FormButton disabled={loading} />
+        <FormButton disabled={articlesLoading} />
       </form>
       <br />
-      {apiState.articles && (
+      {articles && (
         <InfoTable
           titles={["Identificação", "Nome", "Section"]}
-          deleteFunction={deleteArticle}
+          deleteFunction={handleDeleteArticle}
           infoList={{
-            data: apiState.articles.articles,
-            count: apiState.articles.count,
+            data: articles.articles,
+            count: articles.count,
           }}
         />
       )}
-      {!apiState.articles && (
-        <RefreshButton loading={loading} onclick={getArticles} />
-      )}
+      {!articles && <RefreshButton loading={articlesLoading} />}
     </>
   );
 };

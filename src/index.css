@@ -5,10 +5,10 @@
 .jodit-workplace ol,
 .jodit-workplace ul,
 .jodit-workplace menu {
-   list-style: initial;
-   list-style-position: inside;
+  list-style: initial;
+  list-style-position: inside;
 }
 
-.jodit-workplace a{
-   color: #075985;
+.jodit-workplace a {
+  color: #075985;
 }

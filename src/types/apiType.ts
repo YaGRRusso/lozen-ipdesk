@@ -2,7 +2,7 @@ import { ArticlesTS } from "./articleType";
 import { CategoriesTS } from "./categoriesType";
 import { SectionsTS } from "./sectionsType";
 
-export type DomainTS = {
+export type AuthProps = {
   subdomain: string;
   email_address: string;
   password: string;

@@ -1,15 +1,15 @@
-import { ApiProvider } from "./context/ApiContext";
-import { DomainProvider } from "./context/DomainContext";
+import { AuthProvider } from "./context/AuthContext";
+import { ZendeskProvider } from "./context/ZendeskContext";
 import { PagesLayout } from "./pages/PagesLayout";
 import { RouteList } from "./router";
 
 const App = () => {
   return (
-    <DomainProvider>
-      <ApiProvider>
+    <AuthProvider>
+      <ZendeskProvider>
         <PagesLayout children={<RouteList />} />
-      </ApiProvider>
-    </DomainProvider>
+      </ZendeskProvider>
+    </AuthProvider>
   );
 };
 

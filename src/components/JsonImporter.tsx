@@ -28,11 +28,6 @@ export const JsonImporter = ({ title, object }: Props) => {
         <input type="file" onChange={(ev) => importCategories(ev)} />
         {object.value && <Inspector table={false} data={object.value} />}
       </div>
-      {/* {object.value?.count && (
-        <div className="flex items-center justify-center">
-          <strong>0/{object?.value?.count}</strong>
-        </div>
-      )} */}
     </div>
   );
 };
