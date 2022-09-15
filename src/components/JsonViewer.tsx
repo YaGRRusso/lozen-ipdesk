@@ -35,7 +35,7 @@ export const JsonViewer = ({ title, object }: Props) => {
         </span>
         <strong className="flex items-center gap-1 justify-center">
           <Stack weight="bold" />
-          {object.page}/{object.page_count}
+          {object?.page}/{object?.page_count}
         </strong>
         <a
           onClick={() => console.log(object)}
