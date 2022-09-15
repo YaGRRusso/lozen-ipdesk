@@ -28,11 +28,11 @@ const ExportPage = () => {
 
   return (
     <>
-      <JsonViewer title="categories" object={categories?.categories} />
+      <JsonViewer title="categories" object={categories} />
       <br />
-      <JsonViewer title="sections" object={sections?.sections} />
+      <JsonViewer title="sections" object={sections} />
       <br />
-      <JsonViewer title="articles" object={articles?.articles} />
+      <JsonViewer title="articles" object={articles} />
     </>
   );
 };

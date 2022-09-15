@@ -43,7 +43,7 @@ export const JsonViewer = ({ title, object }: Props) => {
         </a>
       </div>
       <div className="p-4 max-h-screen-40 overflow-auto">
-        <Inspector table={false} data={object} expandLevel={2} />
+        <Inspector table={false} data={object} expandLevel={3} />
       </div>
     </div>
   );
