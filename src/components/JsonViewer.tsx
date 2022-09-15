@@ -1,12 +1,4 @@
-import {
-  Check,
-  CheckCircle,
-  Diamond,
-  DiamondsFour,
-  DownloadSimple,
-  Info,
-  Stack,
-} from "phosphor-react";
+import { DownloadSimple, Stack } from "phosphor-react";
 import { useMemo } from "react";
 import { Inspector } from "react-inspector";
 
