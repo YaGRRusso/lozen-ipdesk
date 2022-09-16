@@ -18,7 +18,7 @@ export const HeaderPasswordInput = ({
     <div className="flex-1 flex items-center relative min-w-sm">
       <input
         type={showingPass ? "text" : "password"}
-        className="w-full p-1 rounded"
+        className="w-full p-1 rounded pr-8"
         placeholder={placeholder}
         value={value}
         onChange={(ev) => onChange(ev.target.value)}
