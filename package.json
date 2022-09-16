@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/react-paginate": "^7.1.1",
     "chance": "^1.1.8",
     "jodit": "^3.18.9",
     "jodit-react": "^1.3.11",
@@ -15,6 +16,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-inspector": "^6.0.1",
+    "react-paginate": "^8.1.3",
     "react-router-dom": "^6.3.0",
     "react-tooltip": "^4.2.21"
   },

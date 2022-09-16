@@ -82,7 +82,7 @@ const CategoryPage = () => {
         <FormButton disabled={categoriesLoading} />
       </form>
       <br />
-      {categories && (
+      {!categoriesLoading && categories && (
         <InfoTable
           titles={["Identificação", "Nome"]}
           deleteFunction={handleDeleteCategory}
@@ -98,7 +98,9 @@ const CategoryPage = () => {
           }}
         />
       )}
-      {!categories && <RefreshButton loading={categoriesLoading} />}
+      {(categoriesLoading || !categories) && (
+        <RefreshButton loading={categoriesLoading} />
+      )}
     </>
   );
 };

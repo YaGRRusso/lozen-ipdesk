@@ -98,7 +98,7 @@ const SectionPage = () => {
         <FormButton disabled={sectionsLoading} />
       </form>
       <br />
-      {sections && (
+      {!sectionsLoading && sections && (
         <InfoTable
           titles={["Identificação", "Nome", "Categoria"]}
           deleteFunction={handleDeleteSection}
@@ -115,7 +115,9 @@ const SectionPage = () => {
           }}
         />
       )}
-      {!sections && <RefreshButton loading={sectionsLoading} />}
+      {(sectionsLoading || !sections) && (
+        <RefreshButton loading={sectionsLoading} />
+      )}
     </>
   );
 };

@@ -1,4 +1,5 @@
-import { Trash } from "phosphor-react";
+import { CaretLeft, CaretRight, Trash } from "phosphor-react";
+import ReactPaginate from "react-paginate";
 
 type Props = {
   titles: string[];
@@ -74,22 +75,21 @@ export const InfoTable = ({
           ))}
         </tbody>
       </table>
-      {totalPages && totalPages > 1 && (
-        <ul className="flex gap-4 my-6 justify-evenly items-center">
-          {new Array(totalPages).fill(null).map((item, index) => (
-            <li
-              className={`py-1 px-2 rounded ${
-                index + 1 === currentPage?.value
-                  ? "bg-sky-800 text-white"
-                  : "cursor-pointer hover:bg-gray-200"
-              }`}
-              key={index + 1}
-              onClick={() => currentPage?.setValue(index + 1)}
-            >
-              {index + 1}
-            </li>
-          ))}
-        </ul>
+      {totalPages && totalPages > 1 && currentPage && (
+        <ReactPaginate
+          className="flex gap-1 items-center justify-evenly mt-8 max-w-lg mx-auto"
+          activeClassName="pointer-events-none px-1 rounded bg-sky-800 text-white"
+          pageClassName="px-1 rounded transition-all hover:bg-gray-200"
+          nextClassName="hidden"
+          previousClassName="hidden"
+          pageCount={totalPages}
+          forcePage={currentPage.value - 1}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={1}
+          previousLabel={<CaretLeft />}
+          nextLabel={<CaretRight />}
+          onPageChange={(ev) => currentPage.setValue(ev.selected + 1)}
+        />
       )}
     </>
   );

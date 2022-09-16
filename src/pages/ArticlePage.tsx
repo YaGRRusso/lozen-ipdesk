@@ -118,7 +118,7 @@ const ArticlePage = () => {
         <FormButton disabled={articlesLoading} />
       </form>
       <br />
-      {articles && (
+      {!articlesLoading && articles && (
         <InfoTable
           titles={["Identificação", "Nome", "Section"]}
           deleteFunction={handleDeleteArticle}
@@ -135,7 +135,9 @@ const ArticlePage = () => {
           }))}
         />
       )}
-      {!articles && <RefreshButton loading={articlesLoading} />}
+      {(articlesLoading || !articles) && (
+        <RefreshButton loading={articlesLoading} />
+      )}
     </>
   );
 };
