@@ -1,6 +1,6 @@
 import { UploadSimple, Warning } from "phosphor-react";
-import { useState } from "react";
 import { Inspector } from "react-inspector";
+import { ProgressBar } from "./ProgressBar";
 
 type Props = {
   title: string;
@@ -10,9 +10,20 @@ type Props = {
     check: string;
   };
   uploadEvent: () => void;
+  progress: {
+    current?: number;
+    max?: number;
+  };
+  importedList?: any[];
 };
 
-export const JsonImporter = ({ title, object, uploadEvent }: Props) => {
+export const JsonImporter = ({
+  title,
+  object,
+  uploadEvent,
+  progress,
+  importedList,
+}: Props) => {
   const importCategories = (ev: React.ChangeEvent<HTMLInputElement>) => {
     if (ev.target.files && ev.target.files[0]) {
       const fileReader = new FileReader();
@@ -31,7 +42,7 @@ export const JsonImporter = ({ title, object, uploadEvent }: Props) => {
   };
 
   return (
-    <div className="w-full border-separate border-spacing-0 shadow rounded overflow-hidden">
+    <div className="w-full border-separate shadow rounded overflow-hidden">
       <div className="bg-sky-800 text-white text-left font-semibold p-2 flex items-center justify-between">
         <span>Importar {title}</span>
         <button
@@ -46,17 +57,29 @@ export const JsonImporter = ({ title, object, uploadEvent }: Props) => {
           Importar
         </button>
       </div>
-      <div className="p-4 flex flex-col gap-4">
-        <input type="file" onChange={(ev) => importCategories(ev)} />
-        {object.value && !object.value.error && (
-          <Inspector table={false} data={object.value} />
-        )}
-        {object.value && object.value.error && (
-          <span className="text-xs font-bold uppercase text-red-600 flex items-center gap-2">
-            <Warning size={18} weight="bold" />
-            Arquivo inválido!
-          </span>
-        )}
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4">
+          <input type="file" onChange={(ev) => importCategories(ev)} />
+          {object.value && !object.value.error && (
+            <Inspector table={false} data={object.value} />
+          )}
+          {object.value && object.value.error && (
+            <span className="text-xs font-bold uppercase text-red-600 flex items-center gap-2">
+              <Warning size={18} weight="bold" />
+              Arquivo inválido!
+            </span>
+          )}
+        </div>
+        <ProgressBar current={progress.current} max={progress.max} />
+        <ul
+          className={`${
+            importedList ? "" : "hidden"
+          } flex flex-col text-xs gap-1 justify-center items-center`}
+        >
+          {importedList?.map((item) => (
+            <span>{item}</span>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -1,24 +1,47 @@
+import { CaretRight } from "phosphor-react";
 import { useState } from "react";
 import { JsonImporter } from "../components/JsonImporter";
+import { useZendeskContext } from "../context/ZendeskContext";
 import { ArticlesTS } from "../types/articleType";
 import { CategoriesTS } from "../types/categoriesType";
 import { SectionsTS } from "../types/sectionsType";
 
-const ImportPage = () => {
-  const [categories, setCategories] = useState<CategoriesTS>();
-  const [sections, setSections] = useState<SectionsTS>();
-  const [articles, setArticles] = useState<ArticlesTS>();
+type IdProps = { oldId: number; newId: number }[];
 
-  const handleUploadCategories = () => {
-    console.log(categories);
+const ImportPage = () => {
+  const { createCategory } = useZendeskContext();
+
+  const [categoriesFile, setCategoriesFile] = useState<CategoriesTS>();
+  const [categoriesId, setCategoriesId] = useState<IdProps>([]);
+
+  const [sectionsFile, setSectionsFile] = useState<SectionsTS>();
+  const [articlesFile, setArticlesFile] = useState<ArticlesTS>();
+
+  const handleUploadCategories = async () => {
+    if (categoriesFile?.categories && categoriesFile?.categories.length > 1) {
+      for (let i in categoriesFile?.categories) {
+        const res = await createCategory({
+          description: categoriesFile?.categories[i].description,
+          locale: categoriesFile?.categories[i].locale,
+          name: categoriesFile?.categories[i].name,
+          position: categoriesFile?.categories[i].position,
+        });
+        if (res) {
+          setCategoriesId((oldArray) => [
+            ...oldArray,
+            { oldId: categoriesFile?.categories[i].id, newId: res.category.id },
+          ]);
+        }
+      }
+    }
   };
 
   const handleUploadSections = () => {
-    console.log(sections);
+    console.log(sectionsFile);
   };
 
   const handleUploadArticles = () => {
-    console.log(articles);
+    console.log(articlesFile);
   };
 
   return (
@@ -26,23 +49,48 @@ const ImportPage = () => {
       <JsonImporter
         title="Categories"
         object={{
-          value: categories,
-          setValue: setCategories,
+          value: categoriesFile,
+          setValue: setCategoriesFile,
           check: "categories",
         }}
         uploadEvent={handleUploadCategories}
+        progress={{
+          current: categoriesId?.length,
+          max: categoriesFile?.categories?.length,
+        }}
+        importedList={categoriesId.map((item) => (
+          <span className="flex gap-1">
+            {item.oldId} <CaretRight /> {item.newId}
+          </span>
+        ))}
       />
       <br />
       <JsonImporter
         title="Sections"
-        object={{ value: sections, setValue: setSections, check: "sections" }}
+        object={{
+          value: sectionsFile,
+          setValue: setSectionsFile,
+          check: "sections",
+        }}
         uploadEvent={handleUploadSections}
+        progress={{
+          current: 0,
+          max: 0,
+        }}
       />
       <br />
       <JsonImporter
         title="Articles"
-        object={{ value: articles, setValue: setArticles, check: "articles" }}
+        object={{
+          value: articlesFile,
+          setValue: setArticlesFile,
+          check: "articles",
+        }}
         uploadEvent={handleUploadArticles}
+        progress={{
+          current: 0,
+          max: 0,
+        }}
       />
     </>
   );

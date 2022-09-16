@@ -3,7 +3,11 @@ import { articlesApi, CreateArticleProps } from "../api/articlesApi";
 import { categoriesApi, CreateCategoryProps } from "../api/categoriesApi";
 import { CreateSectionProps, sectionsApi } from "../api/sectionsApi";
 import { ArticlesTS, ArticleTS } from "../types/articleType";
-import { CategoriesTS, CategoryTS } from "../types/categoriesType";
+import {
+  CategoriesTS,
+  CategoryTS,
+  NewCategoryTS,
+} from "../types/categoriesType";
 import { SectionsTS, SectionTS } from "../types/sectionsType";
 import { useAuthContext } from "./AuthContext";
 
@@ -13,7 +17,7 @@ interface ZendeskContextProps {
   createCategory: (
     data: CreateCategoryProps,
     position?: number
-  ) => Promise<void>;
+  ) => Promise<NewCategoryTS | undefined>;
   categories: CategoriesTS | undefined;
   categoriesLoading: boolean;
 
@@ -95,19 +99,22 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         loggedAccount,
         data
       );
-      if (categories && createdCategory) {
+      if (createdCategory) {
         console.log(createdCategory);
-        const newList: CategoryTS[] = categories.categories;
-        if (position) {
-          newList.splice(position - 1, 0, createdCategory.category);
-        } else {
-          newList.unshift(createdCategory.category);
+        if (categories) {
+          const newList: CategoryTS[] = categories.categories;
+          if (position) {
+            newList.splice(position - 1, 0, createdCategory.category);
+          } else {
+            newList.unshift(createdCategory.category);
+          }
+          setCategories({
+            ...categories,
+            categories: newList,
+            count: categories.count + 1,
+          });
         }
-        setCategories({
-          ...categories,
-          categories: newList,
-          count: categories.count + 1,
-        });
+        return createdCategory;
       }
     }
   };

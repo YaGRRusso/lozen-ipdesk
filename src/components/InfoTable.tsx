@@ -1,4 +1,5 @@
 import { CaretLeft, CaretRight, Trash } from "phosphor-react";
+import { useMemo } from "react";
 import ReactPaginate from "react-paginate";
 
 type Props = {
@@ -25,6 +26,14 @@ export const InfoTable = ({
   totalPages,
   deleteFunction,
 }: Props) => {
+  const showPagination = useMemo(() => {
+    if (totalPages && totalPages > 1 && currentPage) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [totalPages, currentPage]);
+
   return (
     <>
       <table className="w-full border-separate border-spacing-0 shadow rounded overflow-hidden">
@@ -75,14 +84,14 @@ export const InfoTable = ({
           ))}
         </tbody>
       </table>
-      {totalPages && totalPages > 1 && currentPage && (
+      {currentPage && showPagination && (
         <ReactPaginate
           className="flex gap-1 items-center justify-evenly mt-8 max-w-lg mx-auto"
           activeClassName="pointer-events-none px-1 rounded bg-sky-800 text-white"
           pageClassName="px-1 rounded transition-all hover:bg-gray-200"
           nextClassName="hidden"
           previousClassName="hidden"
-          pageCount={totalPages}
+          pageCount={totalPages ?? 0}
           forcePage={currentPage.value - 1}
           pageRangeDisplayed={3}
           marginPagesDisplayed={1}

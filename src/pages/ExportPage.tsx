@@ -25,6 +25,10 @@ const ExportPage = () => {
     ]);
   };
 
+  useEffect(() => {
+    loadZendeskInfo();
+  }, [loggedAccount]);
+
   const categoriesPagesButtons = {
     next: async () => {
       await loadCategories((categories?.page ?? 0) + 1);
@@ -51,10 +55,6 @@ const ExportPage = () => {
       await loadArticles((articles?.page ?? 0) - 1);
     },
   };
-
-  useEffect(() => {
-    loadZendeskInfo();
-  }, [loggedAccount]);
 
   return (
     <>
