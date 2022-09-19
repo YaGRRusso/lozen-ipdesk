@@ -1,4 +1,3 @@
-import { CaretRight } from "phosphor-react";
 import { useState } from "react";
 import { JsonImporter } from "../components/JsonImporter";
 import { useZendeskContext } from "../context/ZendeskContext";
@@ -6,7 +5,7 @@ import { ArticlesTS } from "../types/articleType";
 import { CategoriesTS } from "../types/categoriesType";
 import { SectionsTS } from "../types/sectionsType";
 
-type IdProps = { oldId: number; newId: number }[];
+type IdProps = { title: string; oldId: number; newId: number }[];
 
 const ImportPage = () => {
   const { createCategory } = useZendeskContext();
@@ -29,7 +28,11 @@ const ImportPage = () => {
         if (res) {
           setCategoriesId((oldArray) => [
             ...oldArray,
-            { oldId: categoriesFile?.categories[i].id, newId: res.category.id },
+            {
+              oldId: categoriesFile?.categories[i].id,
+              newId: res.category.id,
+              title: res.category.name,
+            },
           ]);
         }
       }
@@ -58,13 +61,12 @@ const ImportPage = () => {
           current: categoriesId?.length,
           max: categoriesFile?.categories?.length,
         }}
-        importedList={categoriesId.map((item) => (
-          <span className="flex gap-1">
-            {item.oldId} <CaretRight /> {item.newId}
-          </span>
-        ))}
+        importedList={categoriesId.map((item) => ({
+          title: item.title,
+          new: item.newId,
+          old: item.oldId,
+        }))}
       />
-      <br />
       <JsonImporter
         title="Sections"
         object={{
@@ -78,7 +80,6 @@ const ImportPage = () => {
           max: 0,
         }}
       />
-      <br />
       <JsonImporter
         title="Articles"
         object={{

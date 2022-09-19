@@ -65,7 +65,6 @@ const ExportPage = () => {
         nextPage={categoriesPagesButtons.next}
         loading={categoriesLoading}
       />
-      <br />
       <JsonViewer
         title="Sections"
         object={sections}
@@ -73,7 +72,6 @@ const ExportPage = () => {
         nextPage={sectionsPagesButtons.next}
         loading={sectionsLoading}
       />
-      <br />
       <JsonViewer
         title="Articles"
         object={articles}

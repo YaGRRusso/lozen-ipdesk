@@ -75,12 +75,7 @@ const ArticlePage = () => {
           handleCreateArticle(ev);
         }}
       >
-        <h2
-          className="text-2xl mb-5 text-sky-800 font-semibold"
-          onClick={() => {
-            loadZendeskInfo();
-          }}
-        >
+        <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
           Criar Article
         </h2>
         <FormSelect
@@ -117,7 +112,6 @@ const ArticlePage = () => {
         />
         <FormButton disabled={articlesLoading} />
       </form>
-      <br />
       {!articlesLoading && articles && (
         <InfoTable
           titles={["Identificação", "Nome", "Section"]}

@@ -97,7 +97,6 @@ const SectionPage = () => {
         />
         <FormButton disabled={sectionsLoading} />
       </form>
-      <br />
       {!sectionsLoading && sections && (
         <InfoTable
           titles={["Identificação", "Nome", "Categoria"]}

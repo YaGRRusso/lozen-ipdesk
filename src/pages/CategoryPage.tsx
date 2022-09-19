@@ -81,7 +81,6 @@ const CategoryPage = () => {
         />
         <FormButton disabled={categoriesLoading} />
       </form>
-      <br />
       {!categoriesLoading && categories && (
         <InfoTable
           titles={["Identificação", "Nome"]}

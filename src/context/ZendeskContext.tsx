@@ -2,13 +2,13 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { articlesApi, CreateArticleProps } from "../api/articlesApi";
 import { categoriesApi, CreateCategoryProps } from "../api/categoriesApi";
 import { CreateSectionProps, sectionsApi } from "../api/sectionsApi";
-import { ArticlesTS, ArticleTS } from "../types/articleType";
+import { ArticlesTS, ArticleTS, NewArticleTS } from "../types/articleType";
 import {
   CategoriesTS,
   CategoryTS,
   NewCategoryTS,
 } from "../types/categoriesType";
-import { SectionsTS, SectionTS } from "../types/sectionsType";
+import { NewSectionTS, SectionsTS, SectionTS } from "../types/sectionsType";
 import { useAuthContext } from "./AuthContext";
 
 interface ZendeskContextProps {
@@ -23,13 +23,18 @@ interface ZendeskContextProps {
 
   loadSections: (page?: number) => Promise<void>;
   deleteSection: (id: number) => void;
-  createSection: (data: CreateSectionProps, position?: number) => Promise<void>;
+  createSection: (
+    data: CreateSectionProps,
+    position?: number
+  ) => Promise<NewSectionTS | undefined>;
   sections: SectionsTS | undefined;
   sectionsLoading: boolean;
 
   loadArticles: (page?: number) => Promise<void>;
   deleteArticle: (id: number) => void;
-  createArticle: (data: CreateArticleProps) => Promise<void>;
+  createArticle: (
+    data: CreateArticleProps
+  ) => Promise<NewArticleTS | undefined>;
   articles: ArticlesTS | undefined;
   articlesLoading: boolean;
 }
@@ -79,14 +84,16 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteCategory = async (id: number) => {
-    if (loggedAccount) await categoriesApi.deleteCategory(loggedAccount, id);
-    if (categories) {
-      const newList = categories.categories.filter((item) => item.id !== id);
-      setCategories({
-        ...categories,
-        count: categories.count - 1,
-        categories: newList,
-      });
+    if (loggedAccount) {
+      if (categories) {
+        const newList = categories.categories.filter((item) => item.id !== id);
+        setCategories({
+          ...categories,
+          count: categories.count - 1,
+          categories: newList,
+        });
+      }
+      await categoriesApi.deleteCategory(loggedAccount, id);
     }
   };
 
@@ -136,14 +143,16 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteSection = async (id: number) => {
-    if (loggedAccount) await sectionsApi.deleteSection(loggedAccount, id);
-    if (sections) {
-      const newList = sections.sections.filter((item) => item.id !== id);
-      setSections({
-        ...sections,
-        count: sections.count - 1,
-        sections: newList,
-      });
+    if (loggedAccount) {
+      if (sections) {
+        const newList = sections.sections.filter((item) => item.id !== id);
+        setSections({
+          ...sections,
+          count: sections.count - 1,
+          sections: newList,
+        });
+      }
+      await sectionsApi.deleteSection(loggedAccount, id);
     }
   };
 
@@ -153,19 +162,22 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         loggedAccount,
         data
       );
-      if (sections && createdSection) {
+      if (createdSection) {
         console.log(createdSection);
-        const newList: SectionTS[] = sections.sections;
-        if (position) {
-          newList.splice(position - 1, 0, createdSection.section);
-        } else {
-          newList.unshift(createdSection.section);
+        if (sections) {
+          const newList: SectionTS[] = sections.sections;
+          if (position) {
+            newList.splice(position - 1, 0, createdSection.section);
+          } else {
+            newList.unshift(createdSection.section);
+          }
+          setSections({
+            ...sections,
+            sections: newList,
+            count: sections.count + 1,
+          });
         }
-        setSections({
-          ...sections,
-          sections: newList,
-          count: sections.count + 1,
-        });
+        return createdSection;
       }
     }
   };
@@ -187,14 +199,16 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteArticle = async (id: number) => {
-    if (loggedAccount) await articlesApi.deleteArticle(loggedAccount, id);
-    if (articles) {
-      const newList = articles.articles.filter((item) => item.id !== id);
-      setArticles({
-        ...articles,
-        count: articles.count - 1,
-        articles: newList,
-      });
+    if (loggedAccount) {
+      if (articles) {
+        const newList = articles.articles.filter((item) => item.id !== id);
+        setArticles({
+          ...articles,
+          count: articles.count - 1,
+          articles: newList,
+        });
+      }
+      await articlesApi.deleteArticle(loggedAccount, id);
     }
   };
 
@@ -204,19 +218,22 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         loggedAccount,
         data
       );
-      if (articles && createdArticle) {
+      if (createdArticle) {
         console.log(createdArticle);
-        const newList: ArticleTS[] = articles.articles;
-        if (position) {
-          newList.splice(position - 1, 0, createdArticle.article);
-        } else {
-          newList.unshift(createdArticle.article);
+        if (articles) {
+          const newList: ArticleTS[] = articles.articles;
+          if (position) {
+            newList.splice(position - 1, 0, createdArticle.article);
+          } else {
+            newList.unshift(createdArticle.article);
+          }
+          setArticles({
+            ...articles,
+            articles: newList,
+            count: articles.count + 1,
+          });
         }
-        setArticles({
-          ...articles,
-          articles: newList,
-          count: articles.count + 1,
-        });
+        return createdArticle;
       }
     }
   };
