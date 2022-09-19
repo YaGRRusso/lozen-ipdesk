@@ -1,8 +1,11 @@
-import { UploadSimple, Warning } from "phosphor-react";
 import { Inspector } from "react-inspector";
+import { ErrorMessage } from "./ErrorMessage";
+import { UploadButton } from "./UploadButton";
+import { ImportedList } from "./ImportedList";
 import { ProgressBar } from "./ProgressBar";
+import * as C from "../styles/ContainerBox";
 
-type Props = {
+type JsonImporterProps = {
   title: string;
   object: {
     value: any;
@@ -14,7 +17,11 @@ type Props = {
     current?: number;
     max?: number;
   };
-  importedList?: any[];
+  importedList?: {
+    title: string;
+    old: number;
+    new: number;
+  }[];
 };
 
 export const JsonImporter = ({
@@ -23,8 +30,8 @@ export const JsonImporter = ({
   uploadEvent,
   progress,
   importedList,
-}: Props) => {
-  const importCategories = (ev: React.ChangeEvent<HTMLInputElement>) => {
+}: JsonImporterProps) => {
+  const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
     if (ev.target.files && ev.target.files[0]) {
       const fileReader = new FileReader();
       fileReader.readAsText(ev.target.files[0], "UTF-8");
@@ -42,45 +49,27 @@ export const JsonImporter = ({
   };
 
   return (
-    <div className="w-full border-separate shadow rounded overflow-hidden">
-      <div className="bg-sky-800 text-white text-left font-semibold p-2 flex items-center justify-between">
-        <span>Importar {title}</span>
-        <button
-          onClick={() => uploadEvent()}
-          className={`${
-            object.value && !object.value.error
-              ? ""
-              : "text-sky-900 pointer-events-none"
-          } flex text-sm items-center gap-1 justify-center px-2 py-1 rounded hover:bg-sky-700 transition-all cursor-pointer`}
-        >
-          <UploadSimple weight="bold" size={22} />
-          Importar
-        </button>
-      </div>
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex flex-col gap-4">
-          <input type="file" onChange={(ev) => importCategories(ev)} />
-          {object.value && !object.value.error && (
-            <Inspector table={false} data={object.value} />
-          )}
-          {object.value && object.value.error && (
-            <span className="text-xs font-bold uppercase text-red-600 flex items-center gap-2">
-              <Warning size={18} weight="bold" />
-              Arquivo inválido!
-            </span>
-          )}
-        </div>
+    <C.Container>
+      <C.ContainerTitle>
+        <span>{title}</span>
+        <UploadButton
+          active={object.value && !object.value.error}
+          onClick={uploadEvent}
+        />
+      </C.ContainerTitle>
+      <C.ContainerBody>
+        <input type="file" onChange={(ev) => importJson(ev)} />
+        {object.value && !object.value.error && (
+          <Inspector table={false} data={object.value} />
+        )}
+        {object.value && object.value.error && (
+          <ErrorMessage message="Arquivo Inválido" />
+        )}
         <ProgressBar current={progress.current} max={progress.max} />
-        <ul
-          className={`${
-            importedList ? "" : "hidden"
-          } flex flex-col text-xs gap-1 justify-center items-center`}
-        >
-          {importedList?.map((item) => (
-            <span>{item}</span>
-          ))}
-        </ul>
-      </div>
-    </div>
+        {importedList && importedList?.length > 0 && (
+          <ImportedList importedList={importedList} />
+        )}
+      </C.ContainerBody>
+    </C.Container>
   );
 };
