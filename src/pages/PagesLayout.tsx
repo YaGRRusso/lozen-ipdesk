@@ -8,7 +8,7 @@ export const PagesLayout = ({ children }: PropsTS) => {
   return (
     <>
       <Header />
-      <section className="max-w-screen-xl w-11/12 mx-auto my-10 min-h-screen-fill">
+      <section className="max-w-screen-xl w-11/12 mx-auto my-10 min-h-screen-fill flex flex-col gap-8">
         {children}
       </section>
       <footer className="bg-sky-800 p-6 text-white text-center">
