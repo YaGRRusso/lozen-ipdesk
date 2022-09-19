@@ -1,17 +1,14 @@
 import { useState } from "react";
+import { useImportContext } from "../context/ImportContext";
 import { JsonImporter } from "../components/JsonImporter";
 import { useZendeskContext } from "../context/ZendeskContext";
 import { ArticlesTS } from "../types/articleType";
-import { CategoriesTS } from "../types/categoriesType";
 import { SectionsTS } from "../types/sectionsType";
-
-type IdProps = { title: string; oldId: number; newId: number }[];
 
 const ImportPage = () => {
   const { createCategory } = useZendeskContext();
-
-  const [categoriesFile, setCategoriesFile] = useState<CategoriesTS>();
-  const [categoriesId, setCategoriesId] = useState<IdProps>([]);
+  const { categoriesFile, categoriesIds, setCategoriesFile, setCategoriesIds } =
+    useImportContext();
 
   const [sectionsFile, setSectionsFile] = useState<SectionsTS>();
   const [articlesFile, setArticlesFile] = useState<ArticlesTS>();
@@ -26,7 +23,7 @@ const ImportPage = () => {
           position: categoriesFile?.categories[i].position,
         });
         if (res) {
-          setCategoriesId((oldArray) => [
+          setCategoriesIds((oldArray) => [
             ...oldArray,
             {
               oldId: categoriesFile?.categories[i].id,
@@ -58,10 +55,10 @@ const ImportPage = () => {
         }}
         uploadEvent={handleUploadCategories}
         progress={{
-          current: categoriesId?.length,
+          current: categoriesIds?.length,
           max: categoriesFile?.categories?.length,
         }}
-        importedList={categoriesId.map((item) => ({
+        importedList={categoriesIds?.map((item) => ({
           title: item.title,
           new: item.newId,
           old: item.oldId,
