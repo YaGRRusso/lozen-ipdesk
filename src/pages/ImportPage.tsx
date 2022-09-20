@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useImportContext } from "../context/ImportContext";
 import { JsonImporter } from "../components/JsonImporter";
 import { useZendeskContext } from "../context/ZendeskContext";
@@ -73,8 +73,19 @@ const ImportPage = () => {
     console.log(articlesFile);
   };
 
+  const articlesWithImg = useMemo(() => {
+    const filteredArticles = articlesFile?.articles.filter((item) =>
+      item.body.includes("img")
+    );
+    return filteredArticles?.map((item) => ({
+      title: item.title,
+      id: item.id,
+    }));
+  }, [articlesFile]);
+
   return (
     <>
+      <h1 onClick={() => console.log(articlesWithImg)}>xxx</h1>
       <JsonImporter
         title="Categories"
         object={{
@@ -123,6 +134,7 @@ const ImportPage = () => {
           current: 0,
           max: 0,
         }}
+        warningList={articlesWithImg}
       />
     </>
   );

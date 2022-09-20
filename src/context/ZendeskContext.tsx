@@ -2,7 +2,9 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { articlesApi, CreateArticleProps } from "../api/articlesApi";
 import { categoriesApi, CreateCategoryProps } from "../api/categoriesApi";
 import { CreateSectionProps, sectionsApi } from "../api/sectionsApi";
+import { permissionApi } from "../api/permission";
 import { ArticlesTS, ArticleTS, NewArticleTS } from "../types/articleType";
+import { PermissionGroupsTS } from "../types/apiType";
 import {
   CategoriesTS,
   CategoryTS,
@@ -30,6 +32,10 @@ interface ZendeskContextProps {
   sections: SectionsTS | undefined;
   sectionsLoading: boolean;
 
+  loadPermission: () => Promise<void>;
+  permission: PermissionGroupsTS | undefined;
+  permissionLoading: boolean;
+
   loadArticles: (page?: number) => Promise<void>;
   deleteArticle: (id: number) => void;
   createArticle: (
@@ -46,7 +52,7 @@ const ZendeskContext = createContext<ZendeskContextProps>(
 export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { loggedAccount, setLogoutAccount } = useAuthContext();
+  const { loggedAccount } = useAuthContext();
 
   const [categories, setCategories] = useState<CategoriesTS | undefined>();
   const [categoriesLoading, setCategoriesLoading] = useState(false);
@@ -54,12 +60,18 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   const [sections, setSections] = useState<SectionsTS | undefined>();
   const [sectionsLoading, setSectionsLoading] = useState(false);
 
+  const [permission, setPermission] = useState<
+    PermissionGroupsTS | undefined
+  >();
+  const [permissionLoading, setPermissionLoading] = useState(false);
+
   const [articles, setArticles] = useState<ArticlesTS | undefined>();
   const [articlesLoading, setArticlesLoading] = useState(false);
 
   const clearZendeskContext = () => {
     setCategories(undefined);
     setSections(undefined);
+    setPermission(undefined);
     setArticles(undefined);
   };
 
@@ -76,8 +88,6 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
       const res = await categoriesApi.getCategories(loggedAccount, page);
       if (res) {
         setCategories(res);
-      } else {
-        setLogoutAccount();
       }
       setCategoriesLoading(false);
     }
@@ -102,10 +112,12 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
     position?: number
   ) => {
     if (loggedAccount) {
+      setCategoriesLoading(true);
       const createdCategory = await categoriesApi.createCategory(
         loggedAccount,
         data
       );
+      setCategoriesLoading(false);
       if (createdCategory) {
         console.log(createdCategory);
         if (categories) {
@@ -135,8 +147,6 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
       const res = await sectionsApi.getSections(loggedAccount, page);
       if (res) {
         setSections(res);
-      } else {
-        setLogoutAccount();
       }
       setSectionsLoading(false);
     }
@@ -158,10 +168,12 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const createSection = async (data: CreateSectionProps, position?: number) => {
     if (loggedAccount) {
+      setSectionsLoading(true);
       const createdSection = await sectionsApi.createSection(
         loggedAccount,
         data
       );
+      setSectionsLoading(false);
       if (createdSection) {
         console.log(createdSection);
         if (sections) {
@@ -182,6 +194,17 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const loadPermission = async () => {
+    if (loggedAccount && !permission && !permissionLoading) {
+      setPermissionLoading(true);
+      const res = await permissionApi.getPermissionGroups(loggedAccount);
+      if (res) {
+        setPermission(res);
+      }
+      setPermissionLoading(false);
+    }
+  };
+
   const loadArticles = async (page?: number) => {
     if (
       (articles?.page !== (page ?? 1) && loggedAccount) ||
@@ -191,8 +214,6 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
       const res = await articlesApi.getArticles(loggedAccount, page);
       if (res) {
         setArticles(res);
-      } else {
-        setLogoutAccount();
       }
       setArticlesLoading(false);
     }
@@ -214,10 +235,12 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const createArticle = async (data: CreateArticleProps, position?: number) => {
     if (loggedAccount) {
+      setArticlesLoading(true);
       const createdArticle = await articlesApi.createArticle(
         loggedAccount,
         data
       );
+      setArticlesLoading(false);
       if (createdArticle) {
         console.log(createdArticle);
         if (articles) {
@@ -253,6 +276,9 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         createSection,
         articles,
         articlesLoading,
+        loadPermission,
+        permission,
+        permissionLoading,
         loadArticles,
         deleteArticle,
         createArticle,

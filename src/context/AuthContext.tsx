@@ -4,7 +4,6 @@ import { AuthProps } from "../types/apiType";
 interface AuthContextProps {
   loggedAccount: AuthProps | undefined;
   setLoggedAccount: (data: AuthProps) => void;
-  setLogoutAccount: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
@@ -53,17 +52,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setAccount(data);
   };
 
-  const setLogoutAccount = () => {
-    localStorage.removeItem("lozenUser");
-    setAccount(undefined);
-  };
-
   return (
     <AuthContext.Provider
       value={{
         loggedAccount: account,
         setLoggedAccount,
-        setLogoutAccount,
       }}
     >
       {children}

@@ -9,6 +9,24 @@ export type AuthProps = {
   locale: "pt-br" | "en-us";
 };
 
+export type PermissionGroupsTS = {
+  count: number;
+  page_count: number;
+  per_page: number;
+  page: number;
+  next_page: null | string;
+  previous_page: null | string;
+  permission_groups: {
+    id: number;
+    name: string;
+    built_in: boolean;
+    publish: string[];
+    created_at: string;
+    updated_at: string;
+    edit: string[];
+  }[];
+};
+
 export type ApiTS = {
   category_id?: number;
   section_id?: number;

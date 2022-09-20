@@ -22,6 +22,10 @@ type JsonImporterProps = {
     old: number;
     new: number;
   }[];
+  warningList?: {
+    title: string;
+    id: number;
+  }[];
 };
 
 export const JsonImporter = ({
@@ -30,6 +34,7 @@ export const JsonImporter = ({
   uploadEvent,
   progress,
   importedList,
+  warningList,
 }: JsonImporterProps) => {
   const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
     if (ev.target.files && ev.target.files[0]) {
@@ -68,6 +73,15 @@ export const JsonImporter = ({
         <ProgressBar current={progress.current} max={progress.max} />
         {importedList && importedList?.length > 0 && (
           <ImportedList importedList={importedList} />
+        )}
+        {warningList && (
+          <ul>
+            {warningList?.map((item) => (
+              <li key={item.id}>
+                {item.title} - {item.id}
+              </li>
+            ))}
+          </ul>
         )}
       </C.ContainerBody>
     </C.Container>
