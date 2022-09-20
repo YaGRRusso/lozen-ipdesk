@@ -2,8 +2,6 @@ import { useMemo, useState } from "react";
 import { useImportContext } from "../context/ImportContext";
 import { JsonImporter } from "../components/JsonImporter";
 import { useZendeskContext } from "../context/ZendeskContext";
-import { ArticlesTS } from "../types/articleType";
-import { SectionsTS } from "../types/sectionsType";
 
 const ImportPage = () => {
   const { createCategory, createSection, createArticle } = useZendeskContext();
@@ -69,8 +67,28 @@ const ImportPage = () => {
     }
   };
 
-  const handleUploadArticles = () => {
-    console.log(articlesFile);
+  const handleUploadArticles = async () => {
+    if (articlesFile?.articles && articlesFile?.articles.length > 1) {
+      for (let i in articlesFile?.articles) {
+        const res = await createArticle({
+          body: articlesFile?.articles[i].body,
+          permission_group_id: articlesFile?.articles[i].permission_group_id,
+          promoted: articlesFile?.articles[i].promoted,
+          section_id: articlesFile?.articles[i].section_id,
+          title: articlesFile?.articles[i].title,
+        });
+        if (res) {
+          setArticlesIds((oldArray) => [
+            ...oldArray,
+            {
+              oldId: articlesFile?.articles[i].id,
+              newId: res.article.id,
+              title: res.article.name,
+            },
+          ]);
+        }
+      }
+    }
   };
 
   const articlesWithImg = useMemo(() => {
@@ -85,7 +103,6 @@ const ImportPage = () => {
 
   return (
     <>
-      <h1 onClick={() => console.log(articlesWithImg)}>xxx</h1>
       <JsonImporter
         title="Categories"
         object={{
@@ -131,9 +148,14 @@ const ImportPage = () => {
         }}
         uploadEvent={handleUploadArticles}
         progress={{
-          current: 0,
-          max: 0,
+          current: articlesIds?.length,
+          max: articlesFile?.articles?.length,
         }}
+        importedList={articlesIds?.map((item) => ({
+          title: item.title,
+          new: item.newId,
+          old: item.oldId,
+        }))}
         warningList={articlesWithImg}
       />
     </>

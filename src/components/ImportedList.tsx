@@ -11,8 +11,11 @@ type ImportedListProps = {
 
 export const ImportedList = ({ importedList }: ImportedListProps) => {
   return (
-    <div className="relative">
-      <ul className="flex max-h-72 overflow-auto flex-col text-xs sm:text-sm items-center">
+    <div className="relative bg-slate-50 rounded border">
+      <div className="p-1 text-xs uppercase font-semibold bg-gray-100 border-b">
+        Novos IDs
+      </div>
+      <ul className="flex p-1 max-h-72 overflow-auto flex-col text-xs sm:text-sm items-center">
         {importedList?.map((item) => (
           <li
             key={item.new}

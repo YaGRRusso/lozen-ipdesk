@@ -3,12 +3,12 @@ import { ArticlesTS, ArticleTS, NewArticleTS } from "../types/articleType";
 
 export interface CreateArticleProps {
   permission_group_id: number;
-  user_segment_id: null;
+  user_segment_id?: null;
   section_id: number;
   title: string;
-  description: string;
+  description?: string;
   body: string;
-  promoted: boolean;
+  promoted?: boolean;
 }
 
 export const articlesApi = {

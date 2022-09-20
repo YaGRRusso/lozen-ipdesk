@@ -4,6 +4,7 @@ import { UploadButton } from "./UploadButton";
 import { ImportedList } from "./ImportedList";
 import { ProgressBar } from "./ProgressBar";
 import * as C from "../styles/ContainerBox";
+import { ImagesList } from "./ImageList";
 
 type JsonImporterProps = {
   title: string;
@@ -74,14 +75,8 @@ export const JsonImporter = ({
         {importedList && importedList?.length > 0 && (
           <ImportedList importedList={importedList} />
         )}
-        {warningList && (
-          <ul>
-            {warningList?.map((item) => (
-              <li key={item.id}>
-                {item.title} - {item.id}
-              </li>
-            ))}
-          </ul>
+        {warningList && warningList.length > 0 && (
+          <ImagesList imagesList={warningList} />
         )}
       </C.ContainerBody>
     </C.Container>
