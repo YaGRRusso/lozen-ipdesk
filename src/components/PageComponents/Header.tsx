@@ -76,7 +76,7 @@ const Header = ({ ...rest }: HeaderProps) => {
         <HeaderList
           data={[
             { name: 'Categorias', local: '/' },
-            { name: 'Sections', local: '/sections' },
+            { name: 'Seções', local: '/sections' },
             { name: 'Artigos', local: '/articles' },
             { name: 'Exportar', local: '/export' },
             { name: 'Importar', local: '/import' },

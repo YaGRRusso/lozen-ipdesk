@@ -1,5 +1,5 @@
 import { ArrowsClockwise, Check } from 'phosphor-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export interface ConvertButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -23,6 +23,12 @@ const ConvertButton = ({
   ...rest
 }: ConvertButtonProps) => {
   const [converted, setConverted] = useState(false)
+
+  useEffect(() => {
+    if (active) {
+      handleConvert()
+    }
+  }, [active])
 
   const handleConvert = () => {
     let temp = object.value[object.check as any]
