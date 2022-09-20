@@ -35,7 +35,7 @@ const DownloadButton = ({ object, title, ...rest }: DownloadButtonProps) => {
       className="flex text-sm items-center gap-1 justify-center font-semibold px-2 py-1 rounded hover:bg-sky-700 bg-sky-800 text-white transition-all cursor-pointer"
       {...rest}
     >
-      <DownloadSimple weight="bold" size={22} />
+      <DownloadSimple weight="bold" size={20} />
       {(jsonFile.blob.size / 1000).toFixed(1) + ' kB'}
     </a>
   )

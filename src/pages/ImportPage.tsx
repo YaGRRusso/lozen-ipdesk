@@ -22,7 +22,7 @@ const ImportPage = () => {
 
   const handleUploadCategories = async () => {
     setCategoriesIds([])
-    if (categoriesFile?.categories && categoriesFile?.categories.length > 1) {
+    if (categoriesFile?.categories && categoriesFile?.categories?.length > 1) {
       for (let i in categoriesFile?.categories) {
         const res = await createCategory({
           description: categoriesFile?.categories[i].description,
@@ -48,7 +48,7 @@ const ImportPage = () => {
 
   const handleUploadSections = async () => {
     setSectionsIds([])
-    if (sectionsFile?.sections && sectionsFile?.sections.length > 1) {
+    if (sectionsFile?.sections && sectionsFile?.sections?.length > 1) {
       for (let i in sectionsFile?.sections) {
         const res = await createSection({
           description: sectionsFile?.sections[i].description,
@@ -75,7 +75,7 @@ const ImportPage = () => {
 
   const handleUploadArticles = async () => {
     setArticlesIds([])
-    if (articlesFile?.articles && articlesFile?.articles.length > 1) {
+    if (articlesFile?.articles && articlesFile?.articles?.length > 1) {
       for (let i in articlesFile?.articles) {
         const res = await createArticle({
           body: articlesFile?.articles[i].body,
@@ -102,7 +102,7 @@ const ImportPage = () => {
   }
 
   const articlesWithImg = useMemo(() => {
-    const filteredArticles = articlesFile?.articles.filter((item) =>
+    const filteredArticles = articlesFile?.articles?.filter((item) =>
       item.body.includes('img')
     )
     return filteredArticles?.map((item) => ({
@@ -137,17 +137,19 @@ const ImportPage = () => {
           value: sectionsFile,
           setValue: setSectionsFile,
           check: 'sections',
+          parent: 'category_id',
         }}
         uploadEvent={handleUploadSections}
         progress={{
           current: sectionsIds?.length,
-          max: sectionsFile?.sections.length,
+          max: sectionsFile?.sections?.length,
         }}
         importedList={sectionsIds?.map((item) => ({
           title: item.title,
           new: item.newId,
           old: item.oldId,
         }))}
+        convertObject={categoriesIds}
       />
       <JsonImporter
         title="Articles"
@@ -155,6 +157,7 @@ const ImportPage = () => {
           value: articlesFile,
           setValue: setArticlesFile,
           check: 'articles',
+          parent: 'section_id',
         }}
         uploadEvent={handleUploadArticles}
         progress={{
@@ -166,7 +169,8 @@ const ImportPage = () => {
           new: item.newId,
           old: item.oldId,
         }))}
-        warningList={articlesWithImg}
+        imagesList={articlesWithImg}
+        convertObject={sectionsIds}
       />
     </>
   )

@@ -13,7 +13,7 @@ const UploadButton = ({ active, ...rest }: UploadButtonProps) => {
       } flex text-sm items-center gap-1 justify-center px-2 py-1 rounded hover:bg-sky-700 transition-all cursor-pointer`}
       {...rest}
     >
-      <UploadSimple weight="bold" size={22} />
+      <UploadSimple weight="bold" size={20} />
       Importar
     </button>
   )

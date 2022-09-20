@@ -12,7 +12,9 @@ import {
   FormSelect,
   FormTextAreaInput,
   InfoTable,
+  InfoTooltip,
 } from '@components/index'
+import ReactTooltip from 'react-tooltip'
 
 const ArticlePage = () => {
   const {
@@ -74,8 +76,9 @@ const ArticlePage = () => {
           handleCreateArticle(ev)
         }}
       >
-        <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
+        <h2 className="text-2xl mb-5 text-sky-800 font-semibold flex gap-2 items-center justify-center">
           Criar Article
+          <InfoTooltip title="O Zendesk não disponibiliza a lista de permission id, é necessário que haja pelo menos 1 artigo pré-cadastrado" />
         </h2>
         <FormSelect
           value={articlePermissionInput}

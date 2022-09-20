@@ -4,6 +4,7 @@ import {
   ImportedList,
   ProgressBar,
   UploadButton,
+  ConvertButton,
 } from '@components/index'
 import { Inspector } from 'react-inspector'
 import * as C from '@styles/ContainerBox'
@@ -15,7 +16,12 @@ export interface JsonImporterProps
     value: any
     setValue: React.Dispatch<React.SetStateAction<any>>
     check: string
+    parent?: string
   }
+  convertObject?: {
+    oldId: number
+    newId: number
+  }[]
   uploadEvent: () => void
   progress: {
     current?: number
@@ -26,7 +32,7 @@ export interface JsonImporterProps
     old: number
     new: number
   }[]
-  warningList?: {
+  imagesList?: {
     title: string
     id: number
   }[]
@@ -38,7 +44,8 @@ const JsonImporter = ({
   uploadEvent,
   progress,
   importedList,
-  warningList,
+  imagesList,
+  convertObject,
   ...rest
 }: JsonImporterProps) => {
   const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +69,15 @@ const JsonImporter = ({
     <C.Container>
       <C.ContainerTitle>
         <span>{title}</span>
+        {convertObject && (
+          <ConvertButton
+            active={
+              object.value && !object.value.error && convertObject.length > 0
+            }
+            ids={convertObject}
+            object={object}
+          />
+        )}
         <UploadButton
           active={object.value && !object.value.error}
           onClick={uploadEvent}
@@ -79,8 +95,8 @@ const JsonImporter = ({
         {importedList && importedList?.length > 0 && (
           <ImportedList importedList={importedList} />
         )}
-        {warningList && warningList.length > 0 && (
-          <ImagesList imagesList={warningList} />
+        {imagesList && imagesList.length > 0 && (
+          <ImagesList imagesList={imagesList} />
         )}
       </C.ContainerBody>
     </C.Container>

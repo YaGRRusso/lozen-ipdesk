@@ -52,6 +52,9 @@ export type { ProgressBarProps } from './MiscComponents/ProgressBar'
 export { default as ConnectionButton } from './MiscComponents/ConnectionButton'
 export type { ConnectionButtonProps } from './MiscComponents/ConnectionButton'
 
+export { default as ConvertButton } from './MiscComponents/ConvertButton'
+export type { ConvertButtonProps } from './MiscComponents/ConvertButton'
+
 export { default as UploadButton } from './MiscComponents/UploadButton'
 export type { UploadButtonProps } from './MiscComponents/UploadButton'
 
