@@ -1,9 +1,9 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { randomGenerator } from '../helpers/randomGenerator'
-import { getPermissionList } from '../helpers/filter'
-import { useZendeskContext } from '../context/ZendeskContext'
-import { useAuthContext } from '../context/AuthContext'
-import { CreateArticleProps } from '../api/articlesApi'
+import { randomGenerator } from '@helpers/randomGenerator'
+import { getPermissionList } from '@helpers/filter'
+import { useZendeskContext } from '@context/ZendeskContext'
+import { useAuthContext } from '@context/AuthContext'
+import { CreateArticleProps } from '@api/articlesApi'
 import {
   ConnectionButton,
   FormButton,

@@ -4,7 +4,7 @@ import {
   DownloadButton,
   PaginationCounterButton,
 } from '@components/index'
-import * as C from '../../styles/ContainerBox'
+import * as C from '@styles/ContainerBox'
 
 export interface JsonViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string

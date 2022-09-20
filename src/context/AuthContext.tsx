@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useState } from "react";
-import { AuthProps } from "../types/apiType";
+import React, { createContext, useContext, useState } from 'react'
+import { AuthProps } from '@customTypes/apiType'
 
 interface AuthContextProps {
-  loggedAccount: AuthProps | undefined;
-  setLoggedAccount: (data: AuthProps) => void;
+  loggedAccount: AuthProps | undefined
+  setLoggedAccount: (data: AuthProps) => void
 }
 
-const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
+const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 
 const initialData = (): AuthProps | undefined => {
   const envAccount = {
@@ -14,8 +14,8 @@ const initialData = (): AuthProps | undefined => {
     password: import.meta.env.VITE_PASSWORD,
     subdomain: import.meta.env.VITE_SUBDOMAIN,
     locale: import.meta.env.VITE_LOCALE,
-  };
-  const localAccount = localStorage.getItem("lozenUser");
+  }
+  const localAccount = localStorage.getItem('lozenUser')
 
   if (
     envAccount.email_address &&
@@ -28,29 +28,29 @@ const initialData = (): AuthProps | undefined => {
       password: envAccount.password,
       subdomain: envAccount.subdomain,
       locale: envAccount.locale,
-    };
+    }
   }
 
   if (localAccount) {
-    const parsedLocalAccount: AuthProps = JSON.parse(localAccount);
+    const parsedLocalAccount: AuthProps = JSON.parse(localAccount)
     return {
       email_address: parsedLocalAccount.email_address,
       password: parsedLocalAccount.password,
       subdomain: parsedLocalAccount.subdomain,
       locale: parsedLocalAccount.locale,
-    };
+    }
   }
-};
+}
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [account, setAccount] = useState<AuthProps | undefined>(initialData());
+  const [account, setAccount] = useState<AuthProps | undefined>(initialData())
 
   const setLoggedAccount = (data: AuthProps) => {
-    localStorage.setItem("lozenUser", JSON.stringify(data));
-    setAccount(data);
-  };
+    localStorage.setItem('lozenUser', JSON.stringify(data))
+    setAccount(data)
+  }
 
   return (
     <AuthContext.Provider
@@ -61,13 +61,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     >
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
 export const useAuthContext = () => {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error();
+    throw new Error()
   }
-  return context;
-};
+  return context
+}

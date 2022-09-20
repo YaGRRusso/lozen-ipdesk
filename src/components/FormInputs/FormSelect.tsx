@@ -1,7 +1,7 @@
 import React from 'react'
-import { PermissionListTS } from '../../helpers/filter'
-import { CategoryTS } from '../../types/categoriesType'
-import { SectionTS } from '../../types/sectionsType'
+import { PermissionListTS } from '@helpers/filter'
+import { CategoryTS } from '@customTypes/categoriesType'
+import { SectionTS } from '@customTypes/sectionsType'
 
 export interface FormSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {

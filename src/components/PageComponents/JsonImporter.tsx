@@ -6,7 +6,7 @@ import {
   UploadButton,
 } from '@components/index'
 import { Inspector } from 'react-inspector'
-import * as C from '../../styles/ContainerBox'
+import * as C from '@styles/ContainerBox'
 
 export interface JsonImporterProps
   extends React.HTMLAttributes<HTMLDivElement> {

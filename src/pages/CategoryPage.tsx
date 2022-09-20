@@ -1,8 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { randomGenerator } from '../helpers/randomGenerator'
-import { useZendeskContext } from '../context/ZendeskContext'
-import { useAuthContext } from '../context/AuthContext'
-import { CreateCategoryProps } from '../api/categoriesApi'
+import { randomGenerator } from '@helpers/randomGenerator'
+import { useZendeskContext } from '@context/ZendeskContext'
+import { useAuthContext } from '@context/AuthContext'
+import { CreateCategoryProps } from '@api/categoriesApi'
 import {
   ConnectionButton,
   FormButton,

@@ -1,7 +1,7 @@
 import { JsonImporter } from '@components/index'
 import { useMemo } from 'react'
-import { useImportContext } from '../context/ImportContext'
-import { useZendeskContext } from '../context/ZendeskContext'
+import { useImportContext } from '@context/ImportContext'
+import { useZendeskContext } from '@context/ZendeskContext'
 
 const ImportPage = () => {
   const { createCategory, createSection, createArticle } = useZendeskContext()
@@ -21,6 +21,7 @@ const ImportPage = () => {
   } = useImportContext()
 
   const handleUploadCategories = async () => {
+    setCategoriesIds([])
     if (categoriesFile?.categories && categoriesFile?.categories.length > 1) {
       for (let i in categoriesFile?.categories) {
         const res = await createCategory({
@@ -29,7 +30,7 @@ const ImportPage = () => {
           name: categoriesFile?.categories[i].name,
           position: categoriesFile?.categories[i].position,
         })
-        if (res) {
+        if (res?.category?.id) {
           setCategoriesIds((oldArray) => [
             ...oldArray,
             {
@@ -38,12 +39,15 @@ const ImportPage = () => {
               title: res.category.name,
             },
           ])
+        } else {
+          return alert('error')
         }
       }
     }
   }
 
   const handleUploadSections = async () => {
+    setSectionsIds([])
     if (sectionsFile?.sections && sectionsFile?.sections.length > 1) {
       for (let i in sectionsFile?.sections) {
         const res = await createSection({
@@ -53,7 +57,7 @@ const ImportPage = () => {
           position: sectionsFile?.sections[i].position,
           category_id: sectionsFile?.sections[i].category_id,
         })
-        if (res) {
+        if (res?.section?.id) {
           setSectionsIds((oldArray) => [
             ...oldArray,
             {
@@ -62,22 +66,26 @@ const ImportPage = () => {
               title: res.section.name,
             },
           ])
+        } else {
+          return alert('error')
         }
       }
     }
   }
 
   const handleUploadArticles = async () => {
+    setArticlesIds([])
     if (articlesFile?.articles && articlesFile?.articles.length > 1) {
       for (let i in articlesFile?.articles) {
         const res = await createArticle({
           body: articlesFile?.articles[i].body,
           permission_group_id: articlesFile?.articles[i].permission_group_id,
+          user_segment_id: null,
           promoted: articlesFile?.articles[i].promoted,
           section_id: articlesFile?.articles[i].section_id,
           title: articlesFile?.articles[i].title,
         })
-        if (res) {
+        if (res?.article?.id) {
           setArticlesIds((oldArray) => [
             ...oldArray,
             {
@@ -86,6 +94,8 @@ const ImportPage = () => {
               title: res.article.name,
             },
           ])
+        } else {
+          return alert('error')
         }
       }
     }
