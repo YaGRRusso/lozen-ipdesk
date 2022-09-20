@@ -6,12 +6,21 @@ import { ArticlesTS } from "../types/articleType";
 import { SectionsTS } from "../types/sectionsType";
 
 const ImportPage = () => {
-  const { createCategory } = useZendeskContext();
-  const { categoriesFile, categoriesIds, setCategoriesFile, setCategoriesIds } =
-    useImportContext();
-
-  const [sectionsFile, setSectionsFile] = useState<SectionsTS>();
-  const [articlesFile, setArticlesFile] = useState<ArticlesTS>();
+  const { createCategory, createSection, createArticle } = useZendeskContext();
+  const {
+    categoriesFile,
+    categoriesIds,
+    setCategoriesFile,
+    setCategoriesIds,
+    sectionsFile,
+    sectionsIds,
+    setSectionsFile,
+    setSectionsIds,
+    articlesFile,
+    articlesIds,
+    setArticlesFile,
+    setArticlesIds,
+  } = useImportContext();
 
   const handleUploadCategories = async () => {
     if (categoriesFile?.categories && categoriesFile?.categories.length > 1) {
@@ -36,8 +45,28 @@ const ImportPage = () => {
     }
   };
 
-  const handleUploadSections = () => {
-    console.log(sectionsFile);
+  const handleUploadSections = async () => {
+    if (sectionsFile?.sections && sectionsFile?.sections.length > 1) {
+      for (let i in sectionsFile?.sections) {
+        const res = await createSection({
+          description: sectionsFile?.sections[i].description,
+          locale: sectionsFile?.sections[i].locale,
+          name: sectionsFile?.sections[i].name,
+          position: sectionsFile?.sections[i].position,
+          category_id: sectionsFile?.sections[i].category_id,
+        });
+        if (res) {
+          setSectionsIds((oldArray) => [
+            ...oldArray,
+            {
+              oldId: sectionsFile?.sections[i].id,
+              newId: res.section.id,
+              title: res.section.name,
+            },
+          ]);
+        }
+      }
+    }
   };
 
   const handleUploadArticles = () => {
@@ -73,9 +102,14 @@ const ImportPage = () => {
         }}
         uploadEvent={handleUploadSections}
         progress={{
-          current: 0,
-          max: 0,
+          current: sectionsIds?.length,
+          max: sectionsFile?.sections.length,
         }}
+        importedList={sectionsIds?.map((item) => ({
+          title: item.title,
+          new: item.newId,
+          old: item.oldId,
+        }))}
       />
       <JsonImporter
         title="Articles"

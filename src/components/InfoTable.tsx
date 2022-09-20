@@ -1,4 +1,4 @@
-import { CaretLeft, CaretRight, Trash } from "phosphor-react";
+import { Trash } from "phosphor-react";
 import { useMemo } from "react";
 import ReactPaginate from "react-paginate";
 
@@ -86,7 +86,7 @@ export const InfoTable = ({
       </table>
       {currentPage && showPagination && (
         <ReactPaginate
-          className="flex gap-1 items-center justify-evenly mt-8 max-w-lg mx-auto"
+          className="flex gap-1 items-center justify-evenly max-w-lg mx-auto"
           activeClassName="pointer-events-none px-1 rounded bg-sky-800 text-white"
           pageClassName="px-1 rounded transition-all hover:bg-gray-200"
           nextClassName="hidden"
@@ -95,8 +95,6 @@ export const InfoTable = ({
           forcePage={currentPage.value - 1}
           pageRangeDisplayed={3}
           marginPagesDisplayed={1}
-          previousLabel={<CaretLeft />}
-          nextLabel={<CaretRight />}
           onPageChange={(ev) => currentPage.setValue(ev.selected + 1)}
         />
       )}
