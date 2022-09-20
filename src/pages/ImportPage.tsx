@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
-import { useImportContext } from "../context/ImportContext";
-import { JsonImporter } from "../components/JsonImporter";
-import { useZendeskContext } from "../context/ZendeskContext";
+import { JsonImporter } from '@components/index'
+import { useMemo } from 'react'
+import { useImportContext } from '../context/ImportContext'
+import { useZendeskContext } from '../context/ZendeskContext'
 
 const ImportPage = () => {
-  const { createCategory, createSection, createArticle } = useZendeskContext();
+  const { createCategory, createSection, createArticle } = useZendeskContext()
   const {
     categoriesFile,
     categoriesIds,
@@ -18,7 +18,7 @@ const ImportPage = () => {
     articlesIds,
     setArticlesFile,
     setArticlesIds,
-  } = useImportContext();
+  } = useImportContext()
 
   const handleUploadCategories = async () => {
     if (categoriesFile?.categories && categoriesFile?.categories.length > 1) {
@@ -28,7 +28,7 @@ const ImportPage = () => {
           locale: categoriesFile?.categories[i].locale,
           name: categoriesFile?.categories[i].name,
           position: categoriesFile?.categories[i].position,
-        });
+        })
         if (res) {
           setCategoriesIds((oldArray) => [
             ...oldArray,
@@ -37,11 +37,11 @@ const ImportPage = () => {
               newId: res.category.id,
               title: res.category.name,
             },
-          ]);
+          ])
         }
       }
     }
-  };
+  }
 
   const handleUploadSections = async () => {
     if (sectionsFile?.sections && sectionsFile?.sections.length > 1) {
@@ -52,7 +52,7 @@ const ImportPage = () => {
           name: sectionsFile?.sections[i].name,
           position: sectionsFile?.sections[i].position,
           category_id: sectionsFile?.sections[i].category_id,
-        });
+        })
         if (res) {
           setSectionsIds((oldArray) => [
             ...oldArray,
@@ -61,11 +61,11 @@ const ImportPage = () => {
               newId: res.section.id,
               title: res.section.name,
             },
-          ]);
+          ])
         }
       }
     }
-  };
+  }
 
   const handleUploadArticles = async () => {
     if (articlesFile?.articles && articlesFile?.articles.length > 1) {
@@ -76,7 +76,7 @@ const ImportPage = () => {
           promoted: articlesFile?.articles[i].promoted,
           section_id: articlesFile?.articles[i].section_id,
           title: articlesFile?.articles[i].title,
-        });
+        })
         if (res) {
           setArticlesIds((oldArray) => [
             ...oldArray,
@@ -85,21 +85,21 @@ const ImportPage = () => {
               newId: res.article.id,
               title: res.article.name,
             },
-          ]);
+          ])
         }
       }
     }
-  };
+  }
 
   const articlesWithImg = useMemo(() => {
     const filteredArticles = articlesFile?.articles.filter((item) =>
-      item.body.includes("img")
-    );
+      item.body.includes('img')
+    )
     return filteredArticles?.map((item) => ({
       title: item.title,
       id: item.id,
-    }));
-  }, [articlesFile]);
+    }))
+  }, [articlesFile])
 
   return (
     <>
@@ -108,7 +108,7 @@ const ImportPage = () => {
         object={{
           value: categoriesFile,
           setValue: setCategoriesFile,
-          check: "categories",
+          check: 'categories',
         }}
         uploadEvent={handleUploadCategories}
         progress={{
@@ -126,7 +126,7 @@ const ImportPage = () => {
         object={{
           value: sectionsFile,
           setValue: setSectionsFile,
-          check: "sections",
+          check: 'sections',
         }}
         uploadEvent={handleUploadSections}
         progress={{
@@ -144,7 +144,7 @@ const ImportPage = () => {
         object={{
           value: articlesFile,
           setValue: setArticlesFile,
-          check: "articles",
+          check: 'articles',
         }}
         uploadEvent={handleUploadArticles}
         progress={{
@@ -159,7 +159,7 @@ const ImportPage = () => {
         warningList={articlesWithImg}
       />
     </>
-  );
-};
+  )
+}
 
-export default ImportPage;
+export default ImportPage

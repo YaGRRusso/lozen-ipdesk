@@ -1,16 +1,18 @@
-import { FormEvent, useEffect, useState } from "react";
-import { InfoTable } from "../components/InfoTable";
-import { FormInput } from "../components/FormInputs/FormInput";
-import { FormButton } from "../components/FormInputs/FormButton";
-import { randomGenerator } from "../helpers/randomGenerator";
-import { FormSelect } from "../components/FormInputs/FormSelect";
-import { RefreshButton } from "../components/RefreshButton";
-import { TextAreaInput } from "../components/FormInputs/TextAreaInput";
-import { getPermissionList } from "../helpers/filter";
-import { FormCheck } from "../components/FormInputs/FormCheck";
-import { useZendeskContext } from "../context/ZendeskContext";
-import { useAuthContext } from "../context/AuthContext";
-import { CreateArticleProps } from "../api/articlesApi";
+import { FormEvent, useEffect, useState } from 'react'
+import { randomGenerator } from '../helpers/randomGenerator'
+import { getPermissionList } from '../helpers/filter'
+import { useZendeskContext } from '../context/ZendeskContext'
+import { useAuthContext } from '../context/AuthContext'
+import { CreateArticleProps } from '../api/articlesApi'
+import {
+  ConnectionButton,
+  FormButton,
+  FormCheck,
+  FormInput,
+  FormSelect,
+  FormTextAreaInput,
+  InfoTable,
+} from '@components/index'
 
 const ArticlePage = () => {
   const {
@@ -21,30 +23,27 @@ const ArticlePage = () => {
     loadArticles,
     deleteArticle,
     createArticle,
-  } = useZendeskContext();
-  const { loggedAccount } = useAuthContext();
+  } = useZendeskContext()
+  const { loggedAccount } = useAuthContext()
 
-  const [articleBodyInput, setArticleBodyInput] = useState("");
-  const [articleSectionInput, setArticleSectionInput] = useState("");
-  const [articlePermissionInput, setArticlePermissionInput] = useState("");
-  const [articleTitleInput, setArticleTitleInput] = useState("");
-  const [articleDescInput, setArticleDescInput] = useState("");
-  const [articlePromotedInput, setArticlePromotedInput] = useState(false);
-  const [currentPage, setCurrentPage] = useState(articles?.page ?? 1);
+  const [articleBodyInput, setArticleBodyInput] = useState('')
+  const [articleSectionInput, setArticleSectionInput] = useState('')
+  const [articlePermissionInput, setArticlePermissionInput] = useState('')
+  const [articleTitleInput, setArticleTitleInput] = useState('')
+  const [articleDescInput, setArticleDescInput] = useState('')
+  const [articlePromotedInput, setArticlePromotedInput] = useState(false)
+  const [currentPage, setCurrentPage] = useState(articles?.page ?? 1)
 
   const loadZendeskInfo = async () => {
-    await Promise.all([
-      loadSections(sections?.page),
-      loadArticles(currentPage),
-    ]);
-  };
+    await Promise.all([loadSections(sections?.page), loadArticles(currentPage)])
+  }
 
   useEffect(() => {
-    loadZendeskInfo();
-  }, [loggedAccount, currentPage]);
+    loadZendeskInfo()
+  }, [loggedAccount, currentPage])
 
   const handleCreateArticle = async (ev: FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
     let newArticle: CreateArticleProps = {
       permission_group_id: parseInt(articlePermissionInput),
@@ -54,25 +53,25 @@ const ArticlePage = () => {
       description: articleDescInput || randomGenerator.description(),
       body: articleBodyInput || randomGenerator.body(),
       promoted: articlePromotedInput,
-    };
-    createArticle(newArticle);
+    }
+    createArticle(newArticle)
 
-    setArticleTitleInput("");
-    setArticleDescInput("");
-    setArticleBodyInput("");
-    setArticlePromotedInput(false);
-  };
+    setArticleTitleInput('')
+    setArticleDescInput('')
+    setArticleBodyInput('')
+    setArticlePromotedInput(false)
+  }
 
   const handleDeleteArticle = (id: number) => {
-    deleteArticle(id);
-  };
+    deleteArticle(id)
+  }
 
   return (
     <>
       <form
         className="my-24 rounded flex flex-col gap-4 justify-center items-center"
         onSubmit={(ev) => {
-          handleCreateArticle(ev);
+          handleCreateArticle(ev)
         }}
       >
         <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
@@ -102,7 +101,7 @@ const ArticlePage = () => {
           value={articleDescInput}
           onChange={(ev) => setArticleDescInput(ev.target.value)}
         />
-        <TextAreaInput
+        <FormTextAreaInput
           value={articleBodyInput}
           onBlur={(newContent) => setArticleBodyInput(newContent)}
         />
@@ -114,7 +113,7 @@ const ArticlePage = () => {
       </form>
       {!articlesLoading && articles && (
         <InfoTable
-          titles={["Identificação", "Nome", "Section"]}
+          titles={['Identificação', 'Nome', 'Section']}
           deleteFunction={handleDeleteArticle}
           count={articles.count}
           currentPage={{
@@ -130,10 +129,10 @@ const ArticlePage = () => {
         />
       )}
       {(articlesLoading || !articles) && (
-        <RefreshButton loading={articlesLoading} />
+        <ConnectionButton loading={articlesLoading} />
       )}
     </>
-  );
-};
+  )
+}
 
-export default ArticlePage;
+export default ArticlePage

@@ -1,0 +1,17 @@
+{
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "importOrder": [
+    "^@components",
+    "^@customTypes/(.*)$",
+    "^@helpers/(.*)$",
+    "^@pages/(.*)$",
+    "^@api/(.*)$",
+    "^@styles/(.*)$",
+    "^@context/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}

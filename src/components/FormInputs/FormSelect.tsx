@@ -1,13 +1,14 @@
-import React from "react";
-import { PermissionListTS } from "../../helpers/filter";
-import { CategoryTS } from "../../types/categoriesType";
-import { SectionTS } from "../../types/sectionsType";
+import React from 'react'
+import { PermissionListTS } from '../../helpers/filter'
+import { CategoryTS } from '../../types/categoriesType'
+import { SectionTS } from '../../types/sectionsType'
 
-interface PropsTS extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  options?: CategoryTS[] | SectionTS[] | PermissionListTS[];
+export interface FormSelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  options?: CategoryTS[] | SectionTS[] | PermissionListTS[]
 }
 
-export const FormSelect = ({ options, placeholder, ...rest }: PropsTS) => {
+const FormSelect = ({ options, placeholder, ...rest }: FormSelectProps) => {
   return (
     <select
       className="bg-transparent border border-sky-800 rounded px-2 py-1 invalid:border-red-600
@@ -15,7 +16,7 @@ export const FormSelect = ({ options, placeholder, ...rest }: PropsTS) => {
       {...rest}
     >
       <option className="text-gray-400" disabled value="">
-        {placeholder || "Selecione uma opção..."}
+        {placeholder || 'Selecione uma opção...'}
       </option>
       {options?.map((item) => (
         <option className="text-black" key={item.id} value={item.id}>
@@ -23,5 +24,7 @@ export const FormSelect = ({ options, placeholder, ...rest }: PropsTS) => {
         </option>
       ))}
     </select>
-  );
-};
+  )
+}
+
+export default FormSelect

@@ -1,10 +1,10 @@
-import { Header } from "../components/Header/Header";
+import { Header } from '@components/index'
 
-type PropsTS = {
-  children: JSX.Element;
-};
+type PagesLayoutProps = {
+  children: JSX.Element
+}
 
-export const PagesLayout = ({ children }: PropsTS) => {
+export const PagesLayout = ({ children }: PagesLayoutProps) => {
   return (
     <>
       <Header />
@@ -15,5 +15,5 @@ export const PagesLayout = ({ children }: PropsTS) => {
         Desenvolvido de ❤ para uso interno da Aktie Now
       </footer>
     </>
-  );
-};
+  )
+}

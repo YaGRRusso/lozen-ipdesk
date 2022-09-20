@@ -1,21 +1,25 @@
-import { CaretRight, CopySimple } from "phosphor-react";
-import { DownloadButton } from "./DownloadButton";
+import { CaretRight, CopySimple } from 'phosphor-react'
+import DownloadButton from './DownloadButton'
 
-type ImportedListProps = {
+export interface ImportedListProps
+  extends React.HTMLAttributes<HTMLUListElement> {
   importedList: {
-    title: string;
-    old: number;
-    new: number;
-  }[];
-};
+    title: string
+    old: number
+    new: number
+  }[]
+}
 
-export const ImportedList = ({ importedList }: ImportedListProps) => {
+const ImportedList = ({ importedList, ...rest }: ImportedListProps) => {
   return (
     <div className="relative bg-slate-50 rounded border">
       <div className="p-1 text-xs uppercase font-semibold bg-gray-100 border-b">
         Novos IDs
       </div>
-      <ul className="flex p-1 max-h-72 overflow-auto flex-col text-xs sm:text-sm items-center">
+      <ul
+        className="flex p-1 max-h-72 overflow-auto flex-col text-xs sm:text-sm items-center"
+        {...rest}
+      >
         {importedList?.map((item) => (
           <li
             key={item.new}
@@ -52,5 +56,7 @@ export const ImportedList = ({ importedList }: ImportedListProps) => {
         <DownloadButton title="ids" object={importedList} />
       </span>
     </div>
-  );
-};
+  )
+}
+
+export default ImportedList

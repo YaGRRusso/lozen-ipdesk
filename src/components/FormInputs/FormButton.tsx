@@ -1,6 +1,7 @@
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface FormButtonProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export const FormButton = ({ ...rest }: Props) => {
+const FormButton = ({ ...rest }: FormButtonProps) => {
   return (
     <input
       className="bg-transparent border rounded px-2 py-1 cursor-pointer transition-all w-1/3 mt-8 border-sky-800
@@ -9,5 +10,7 @@ export const FormButton = ({ ...rest }: Props) => {
       value="Criar"
       {...rest}
     />
-  );
-};
+  )
+}
+
+export default FormButton

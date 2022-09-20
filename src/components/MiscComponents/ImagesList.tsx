@@ -1,20 +1,24 @@
-import { Image } from "phosphor-react";
-import { DownloadButton } from "./DownloadButton";
+import { Image } from 'phosphor-react'
+import DownloadButton from './DownloadButton'
 
-type ImagesListProps = {
+export interface ImagesListProps
+  extends React.HTMLAttributes<HTMLUListElement> {
   imagesList: {
-    title: string;
-    id: number;
-  }[];
-};
+    title: string
+    id: number
+  }[]
+}
 
-export const ImagesList = ({ imagesList }: ImagesListProps) => {
+const ImagesList = ({ imagesList, ...rest }: ImagesListProps) => {
   return (
     <div className="relative bg-slate-50 rounded border">
       <div className="p-1 text-xs uppercase font-semibold bg-gray-100 border-b">
         Artigos com Imagens
       </div>
-      <ul className="flex p-1 max-h-72 overflow-auto flex-col text-xs sm:text-sm items-center">
+      <ul
+        className="flex p-1 max-h-72 overflow-auto flex-col text-xs sm:text-sm items-center"
+        {...rest}
+      >
         {imagesList?.map((item) => (
           <li
             key={item.id}
@@ -41,5 +45,7 @@ export const ImagesList = ({ imagesList }: ImagesListProps) => {
         <DownloadButton title="ids" object={imagesList} />
       </span>
     </div>
-  );
-};
+  )
+}
+
+export default ImagesList

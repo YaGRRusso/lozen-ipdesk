@@ -1,58 +1,62 @@
-import { Inspector } from "react-inspector";
-import { ErrorMessage } from "./ErrorMessage";
-import { UploadButton } from "./UploadButton";
-import { ImportedList } from "./ImportedList";
-import { ProgressBar } from "./ProgressBar";
-import * as C from "../styles/ContainerBox";
-import { ImagesList } from "./ImageList";
+import {
+  ErrorMessage,
+  ImagesList,
+  ImportedList,
+  ProgressBar,
+  UploadButton,
+} from '@components/index'
+import { Inspector } from 'react-inspector'
+import * as C from '../../styles/ContainerBox'
 
-type JsonImporterProps = {
-  title: string;
+export interface JsonImporterProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  title: string
   object: {
-    value: any;
-    setValue: React.Dispatch<React.SetStateAction<any>>;
-    check: string;
-  };
-  uploadEvent: () => void;
+    value: any
+    setValue: React.Dispatch<React.SetStateAction<any>>
+    check: string
+  }
+  uploadEvent: () => void
   progress: {
-    current?: number;
-    max?: number;
-  };
+    current?: number
+    max?: number
+  }
   importedList?: {
-    title: string;
-    old: number;
-    new: number;
-  }[];
+    title: string
+    old: number
+    new: number
+  }[]
   warningList?: {
-    title: string;
-    id: number;
-  }[];
-};
+    title: string
+    id: number
+  }[]
+}
 
-export const JsonImporter = ({
+const JsonImporter = ({
   title,
   object,
   uploadEvent,
   progress,
   importedList,
   warningList,
+  ...rest
 }: JsonImporterProps) => {
   const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
     if (ev.target.files && ev.target.files[0]) {
-      const fileReader = new FileReader();
-      fileReader.readAsText(ev.target.files[0], "UTF-8");
+      const fileReader = new FileReader()
+      fileReader.readAsText(ev.target.files[0], 'UTF-8')
       fileReader.onload = (e) => {
-        const parsedJson = JSON.parse(e.target?.result as string);
+        const parsedJson = JSON.parse(e.target?.result as string)
         if (object.check in parsedJson) {
-          object.setValue(parsedJson);
+          object.setValue(parsedJson)
         } else {
-          object.setValue({ error: "arquivo inválido" });
+          object.setValue({ error: 'arquivo inválido' })
         }
-      };
+      }
     } else {
-      object.setValue(undefined);
+      object.setValue(undefined)
     }
-  };
+  }
 
   return (
     <C.Container>
@@ -63,7 +67,7 @@ export const JsonImporter = ({
           onClick={uploadEvent}
         />
       </C.ContainerTitle>
-      <C.ContainerBody>
+      <C.ContainerBody {...rest}>
         <input type="file" onChange={(ev) => importJson(ev)} />
         {object.value && !object.value.error && (
           <Inspector table={false} data={object.value} />
@@ -80,5 +84,7 @@ export const JsonImporter = ({
         )}
       </C.ContainerBody>
     </C.Container>
-  );
-};
+  )
+}
+
+export default JsonImporter

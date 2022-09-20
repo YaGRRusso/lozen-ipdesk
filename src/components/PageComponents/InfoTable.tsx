@@ -1,38 +1,38 @@
-import { Trash } from "phosphor-react";
-import { useMemo } from "react";
-import ReactPaginate from "react-paginate";
+import { Trash } from 'phosphor-react'
+import { useMemo } from 'react'
+import ReactPaginate from 'react-paginate'
 
-type Props = {
-  titles: string[];
-  count: number;
+export interface InfoTableProps {
+  titles: string[]
+  count: number
   currentPage?: {
-    value: number;
-    setValue: React.Dispatch<React.SetStateAction<number>>;
-  };
-  totalPages?: number;
+    value: number
+    setValue: React.Dispatch<React.SetStateAction<number>>
+  }
+  totalPages?: number
   data: {
-    id: number;
-    name: string;
-    parentId?: number;
-  }[];
-  deleteFunction: (id: number) => void;
-};
+    id: number
+    name: string
+    parentId?: number
+  }[]
+  deleteFunction: (id: number) => void
+}
 
-export const InfoTable = ({
+const InfoTable = ({
   titles,
   data,
   count,
   currentPage,
   totalPages,
   deleteFunction,
-}: Props) => {
+}: InfoTableProps) => {
   const showPagination = useMemo(() => {
     if (totalPages && totalPages > 1 && currentPage) {
-      return true;
+      return true
     } else {
-      return false;
+      return false
     }
-  }, [totalPages, currentPage]);
+  }, [totalPages, currentPage])
 
   return (
     <>
@@ -43,7 +43,7 @@ export const InfoTable = ({
               <th
                 key={index}
                 className={`py-4 px-2 ${
-                  index > 0 ? "hidden sm:table-cell" : ""
+                  index > 0 ? 'hidden sm:table-cell' : ''
                 }`}
               >
                 {item}
@@ -74,7 +74,7 @@ export const InfoTable = ({
                 <button
                   className="hover:bg-red-300 p-1 rounded transition-all"
                   onClick={() => {
-                    deleteFunction(item.id as number);
+                    deleteFunction(item.id as number)
                   }}
                 >
                   <Trash size={24} />
@@ -99,5 +99,7 @@ export const InfoTable = ({
         />
       )}
     </>
-  );
-};
+  )
+}
+
+export default InfoTable

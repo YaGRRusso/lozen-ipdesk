@@ -1,13 +1,15 @@
-import { FormEvent, useEffect, useState } from "react";
-import { InfoTable } from "../components/InfoTable";
-import { FormInput } from "../components/FormInputs/FormInput";
-import { FormButton } from "../components/FormInputs/FormButton";
-import { randomGenerator } from "../helpers/randomGenerator";
-import { FormSelect } from "../components/FormInputs/FormSelect";
-import { RefreshButton } from "../components/RefreshButton";
-import { useZendeskContext } from "../context/ZendeskContext";
-import { useAuthContext } from "../context/AuthContext";
-import { CreateSectionProps } from "../api/sectionsApi";
+import { FormEvent, useEffect, useState } from 'react'
+import { randomGenerator } from '../helpers/randomGenerator'
+import { useZendeskContext } from '../context/ZendeskContext'
+import { useAuthContext } from '../context/AuthContext'
+import { CreateSectionProps } from '../api/sectionsApi'
+import {
+  ConnectionButton,
+  FormButton,
+  FormInput,
+  FormSelect,
+  InfoTable,
+} from '@components/index'
 
 const SectionPage = () => {
   const {
@@ -18,53 +20,53 @@ const SectionPage = () => {
     loadSections,
     createSection,
     deleteSection,
-  } = useZendeskContext();
-  const { loggedAccount } = useAuthContext();
+  } = useZendeskContext()
+  const { loggedAccount } = useAuthContext()
 
-  const [sectionCategoryInput, setSectionCategoryInput] = useState("");
-  const [sectionNameInput, setSectionNameInput] = useState("");
-  const [sectionDescInput, setSectionDescInput] = useState("");
-  const [sectionPositionInput, setSectionPositionInput] = useState(0);
-  const [currentPage, setCurrentPage] = useState(sections?.page ?? 1);
+  const [sectionCategoryInput, setSectionCategoryInput] = useState('')
+  const [sectionNameInput, setSectionNameInput] = useState('')
+  const [sectionDescInput, setSectionDescInput] = useState('')
+  const [sectionPositionInput, setSectionPositionInput] = useState(0)
+  const [currentPage, setCurrentPage] = useState(sections?.page ?? 1)
 
   const loadZendeskInfo = async () => {
     await Promise.all([
       loadCategories(categories?.page),
       loadSections(currentPage),
-    ]);
-  };
+    ])
+  }
 
   useEffect(() => {
-    loadZendeskInfo();
-  }, [loggedAccount, currentPage]);
+    loadZendeskInfo()
+  }, [loggedAccount, currentPage])
 
   const handleCreateSection = async (ev: FormEvent<HTMLElement>) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
     let newSection: CreateSectionProps = {
       category_id: parseInt(sectionCategoryInput),
       name: sectionNameInput || randomGenerator.title(),
       description: sectionDescInput || randomGenerator.description(),
-      locale: loggedAccount?.locale || "pt-br",
+      locale: loggedAccount?.locale || 'pt-br',
       position: sectionPositionInput || 0,
-    };
-    createSection(newSection, sectionPositionInput);
+    }
+    createSection(newSection, sectionPositionInput)
 
-    setSectionNameInput("");
-    setSectionDescInput("");
-    setSectionPositionInput(0);
-  };
+    setSectionNameInput('')
+    setSectionDescInput('')
+    setSectionPositionInput(0)
+  }
 
   const handleDeleteSection = (id: number) => {
-    deleteSection(id);
-  };
+    deleteSection(id)
+  }
 
   return (
     <>
       <form
         className="my-24 rounded flex flex-col gap-4 justify-center items-center"
         onSubmit={(ev) => {
-          handleCreateSection(ev);
+          handleCreateSection(ev)
         }}
       >
         <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
@@ -91,7 +93,7 @@ const SectionPage = () => {
           type="number"
           min={1}
           max={sections ? sections.count + 1 : 1}
-          value={sectionPositionInput || ""}
+          value={sectionPositionInput || ''}
           onChange={(ev) => setSectionPositionInput(parseInt(ev.target.value))}
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
@@ -99,7 +101,7 @@ const SectionPage = () => {
       </form>
       {!sectionsLoading && sections && (
         <InfoTable
-          titles={["Identificação", "Nome", "Categoria"]}
+          titles={['Identificação', 'Nome', 'Categoria']}
           deleteFunction={handleDeleteSection}
           count={sections.count}
           data={sections.sections.map((item) => ({
@@ -115,10 +117,10 @@ const SectionPage = () => {
         />
       )}
       {(sectionsLoading || !sections) && (
-        <RefreshButton loading={sectionsLoading} />
+        <ConnectionButton loading={sectionsLoading} />
       )}
     </>
-  );
-};
+  )
+}
 
-export default SectionPage;
+export default SectionPage
