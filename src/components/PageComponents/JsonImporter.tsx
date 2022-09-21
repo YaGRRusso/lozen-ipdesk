@@ -1,51 +1,47 @@
 import {
   ErrorMessage,
   ImagesList,
+  ImagesListProps,
   ImportedList,
   ProgressBar,
+  ProgressBarProps,
   UploadButton,
   ConvertButton,
 } from '@components/index'
 import { Inspector } from 'react-inspector'
 import * as C from '@styles/ContainerBox'
+import { NewOldIdProps } from '@context/ImportContext'
+
+export type ImportObjectProps = {
+  value: any
+  setValue: React.Dispatch<React.SetStateAction<any>>
+  target: string
+  setIds?: React.Dispatch<React.SetStateAction<NewOldIdProps>>
+  parent?: string
+}
 
 export interface JsonImporterProps
   extends React.HTMLAttributes<HTMLDivElement> {
+  uploadEvent: {
+    onClick: () => void
+    loading: boolean
+  }
   title: string
-  object: {
-    value: any
-    setValue: React.Dispatch<React.SetStateAction<any>>
-    check: string
-    parent?: string
-  }
-  convertObject?: {
-    oldId: number
-    newId: number
-  }[]
-  uploadEvent: () => void
-  progress: {
-    current?: number
-    max?: number
-  }
-  importedList?: {
-    title: string
-    old: number
-    new: number
-  }[]
-  imagesList?: {
-    title: string
-    id: number
-  }[]
+  object: ImportObjectProps
+  progress: ProgressBarProps
+  importedListNewOldIds: NewOldIdProps
+  parentNewOldIds?: NewOldIdProps
+  importedImagesList?: Pick<ImagesListProps, 'data'>
 }
 
 const JsonImporter = ({
+  uploadEvent,
   title,
   object,
-  uploadEvent,
   progress,
-  importedList,
-  imagesList,
-  convertObject,
+  parentNewOldIds,
+  importedListNewOldIds,
+  importedImagesList,
   ...rest
 }: JsonImporterProps) => {
   const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,13 +50,29 @@ const JsonImporter = ({
       fileReader.readAsText(ev.target.files[0], 'UTF-8')
       fileReader.onload = (e) => {
         const parsedJson = JSON.parse(e.target?.result as string)
-        if (object.check in parsedJson) {
+        if (object.target in parsedJson) {
+          if (object.setIds) {
+            object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+          }
           object.setValue(parsedJson)
+        } else if (
+          object.setIds &&
+          'newOldIds' in parsedJson &&
+          object.target === parsedJson.target
+        ) {
+          object.setIds(parsedJson)
+          object.setValue(undefined)
         } else {
-          object.setValue({ error: 'arquivo inválido' })
+          if (object.setIds) {
+            object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+          }
+          object.setValue({ error: 'Arquivo inválido' })
         }
       }
     } else {
+      if (object.setIds) {
+        object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+      }
       object.setValue(undefined)
     }
   }
@@ -69,18 +81,20 @@ const JsonImporter = ({
     <C.Container>
       <C.ContainerTitle>
         <span>{title}</span>
-        {convertObject && (
+        {parentNewOldIds?.newOldIds && (
           <ConvertButton
             active={
-              object.value && !object.value.error && convertObject.length > 0
+              object.value &&
+              !object.value.error &&
+              parentNewOldIds?.newOldIds.length > 0
             }
-            ids={convertObject}
+            newOldIds={parentNewOldIds}
             object={object}
           />
         )}
         <UploadButton
-          active={object.value && !object.value.error}
-          onClick={uploadEvent}
+          active={object.value && !object.value.error && !uploadEvent.loading}
+          onClick={uploadEvent.onClick}
         />
       </C.ContainerTitle>
       <C.ContainerBody {...rest}>
@@ -89,14 +103,15 @@ const JsonImporter = ({
           <Inspector table={false} data={object.value} />
         )}
         {object.value && object.value.error && (
-          <ErrorMessage message="Arquivo Inválido" />
+          <ErrorMessage message={object.value.error} />
         )}
         <ProgressBar current={progress.current} max={progress.max} />
-        {importedList && importedList?.length > 0 && (
-          <ImportedList importedList={importedList} />
-        )}
-        {imagesList && imagesList.length > 0 && (
-          <ImagesList imagesList={imagesList} />
+        {importedListNewOldIds.newOldIds &&
+          importedListNewOldIds.newOldIds.length > 0 && (
+            <ImportedList data={importedListNewOldIds} />
+          )}
+        {importedImagesList?.data && importedImagesList.data.length > 0 && (
+          <ImagesList data={importedImagesList.data} />
         )}
       </C.ContainerBody>
     </C.Container>

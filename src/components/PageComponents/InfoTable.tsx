@@ -14,6 +14,7 @@ export interface InfoTableProps {
     id: number
     name: string
     parentId?: number
+    warning?: boolean
   }[]
   deleteFunction: (id: number) => void
 }
@@ -58,7 +59,14 @@ const InfoTable = ({
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr className="hover:bg-slate-100 transition-all" key={item.id}>
+            <tr
+              className={`${
+                item.warning
+                  ? 'bg-red-50 hover:bg-red-100'
+                  : 'hover:bg-slate-100'
+              } transition-all`}
+              key={item.id}
+            >
               <td className="p-2 flex flex-col">
                 <span className="sm:hidden text-xs text-gray-500">
                   {item.parentId}

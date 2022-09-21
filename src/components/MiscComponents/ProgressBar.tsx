@@ -18,7 +18,7 @@ const ProgressBar = ({ current, max, ...rest }: ProgressBarProps) => {
   return (
     <div
       className={`${max ? '' : 'hidden'}
-      h-4 mx-6 flex w-auto bg-sky-100 rounded`}
+      h-4 sm:mx-6 flex w-auto bg-sky-100 rounded`}
       {...rest}
     >
       <div

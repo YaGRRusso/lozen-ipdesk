@@ -14,7 +14,6 @@ import {
   InfoTable,
   InfoTooltip,
 } from '@components/index'
-import ReactTooltip from 'react-tooltip'
 
 const ArticlePage = () => {
   const {
@@ -125,9 +124,10 @@ const ArticlePage = () => {
           }}
           totalPages={articles.page_count}
           data={articles.articles.map((item) => ({
-            id: item.id,
-            name: item.name,
-            parentId: item.section_id,
+            id: item?.id,
+            name: item?.name,
+            parentId: item?.section_id,
+            warning: item?.body.includes('img'),
           }))}
         />
       )}
