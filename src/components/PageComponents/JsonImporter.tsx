@@ -48,35 +48,40 @@ const JsonImporter = ({
   const [dragOver, setDragOver] = useState(false)
 
   const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    if (ev.target.files && ev.target.files[0]) {
-      const fileReader = new FileReader()
-      fileReader.readAsText(ev.target.files[0], 'UTF-8')
-      fileReader.onload = (e) => {
-        const parsedJson = JSON.parse(e.target?.result as string)
-        if (object.target in parsedJson) {
-          if (object.setIds) {
-            object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
-          }
-          object.setValue(parsedJson)
-        } else if (
-          object.setIds &&
-          'newOldIds' in parsedJson &&
-          object.target === parsedJson.target
-        ) {
-          object.setIds(parsedJson)
-          object.setValue(undefined)
-        } else {
-          if (object.setIds) {
-            object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
-          }
-          object.setValue({ error: 'Arquivo inválido' })
-        }
-      }
-    } else {
-      if (object.setIds) {
+    if (!ev.target.files || !ev.target.files[0]) {
+      if (object.setIds)
         object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
-      }
       object.setValue(undefined)
+      return
+    }
+    if (ev.target.files[0].type !== 'application/json') {
+      if (object.setIds)
+        object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+      object.setValue({ error: 'Formato de arquivo inválido' })
+      return
+    }
+    const fileReader = new FileReader()
+    fileReader.readAsText(ev.target.files[0], 'UTF-8')
+    fileReader.onload = (e) => {
+      const parsedJson = JSON.parse(e.target?.result as string)
+      if (object.target in parsedJson) {
+        if (object.setIds) {
+          object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+        }
+        object.setValue(parsedJson)
+      } else if (
+        object.setIds &&
+        'newOldIds' in parsedJson &&
+        object.target === parsedJson.target
+      ) {
+        object.setIds(parsedJson)
+        object.setValue(undefined)
+      } else {
+        if (object.setIds) {
+          object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+        }
+        object.setValue({ error: 'Arquivo incorreto' })
+      }
     }
   }
 
