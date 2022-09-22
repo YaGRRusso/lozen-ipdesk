@@ -99,7 +99,7 @@ const JsonImporter = ({
       </C.ContainerTitle>
       <C.ContainerBody {...rest}>
         <input
-          className="bg-slate-50 disabled:text-slate-400 disabled:p-2 disabled:pointer-events-none hover:bg-slate-100 cursor-pointer transition-all duration-500 border-dashed border-2 border-slate-300 hover:border-slate-400 text-slate-700 hover:text-slate-800 w-full p-6"
+          className="bg-slate-50 disabled:p-2 rounded disabled:pointer-events-none hover:bg-slate-100 cursor-pointer transition-all duration-500 border-dashed border-2 border-slate-300 hover:border-slate-400 text-slate-900 disabled:text-slate-400 hover:text-slate-800 w-full p-6"
           type="file"
           onChange={(ev) => importJson(ev)}
           disabled={uploadEvent.loading}

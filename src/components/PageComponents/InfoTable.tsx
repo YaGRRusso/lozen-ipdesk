@@ -98,7 +98,7 @@ const InfoTable = ({
                 <td className="p-2 hidden sm:table-cell">{item.parentId}</td>
               )}
               <td className="p-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <button
                     className="hover:bg-red-300 p-1 rounded transition-all z-10"
                     onClick={() => {
