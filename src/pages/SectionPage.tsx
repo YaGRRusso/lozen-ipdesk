@@ -105,10 +105,12 @@ const SectionPage = () => {
           deleteFunction={handleDeleteSection}
           count={sections.count}
           data={sections.sections.map((item) => ({
-            id: item.id,
-            name: item.name,
-            parentId: item.category_id,
+            id: item?.id,
+            name: item?.name,
+            link: item?.html_url,
+            parentId: item?.category_id,
           }))}
+          refresh={() => loadSections()}
           totalPages={sections.page_count}
           currentPage={{
             value: currentPage,

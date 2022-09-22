@@ -89,9 +89,11 @@ const CategoryPage = () => {
           deleteFunction={handleDeleteCategory}
           count={categories.count}
           data={categories.categories.map((item) => ({
-            id: item.id,
-            name: item.name,
+            id: item?.id,
+            name: item?.name,
+            link: item?.html_url,
           }))}
+          refresh={() => loadCategories()}
           totalPages={categories.page_count}
           currentPage={{
             value: currentPage,

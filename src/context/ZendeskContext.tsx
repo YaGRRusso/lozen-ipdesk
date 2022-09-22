@@ -77,6 +77,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const loadCategories = async (page?: number) => {
     if (
+      (!page && loggedAccount) ||
       (categories?.page !== (page ?? 1) && loggedAccount) ||
       (!categories && !categoriesLoading && loggedAccount)
     ) {
@@ -136,6 +137,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const loadSections = async (page?: number) => {
     if (
+      (!page && loggedAccount) ||
       (sections?.page !== (page ?? 1) && loggedAccount) ||
       (!sections && !sectionsLoading && loggedAccount)
     ) {
@@ -203,6 +205,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const loadArticles = async (page?: number) => {
     if (
+      (!page && loggedAccount) ||
       (articles?.page !== (page ?? 1) && loggedAccount) ||
       (!articles && !articlesLoading && loggedAccount)
     ) {

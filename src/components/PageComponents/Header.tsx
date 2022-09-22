@@ -30,8 +30,11 @@ const Header = ({ ...rest }: HeaderProps) => {
   }
 
   return (
-    <header className="bg-sky-800" {...rest}>
-      <div className="max-w-screen-xl flex-wrap lg:flex-row flex-col w-11/12 mx-auto py-8 flex items-center justify-center gap-8 text-white">
+    <>
+      <div
+        className="max-w-screen-xl flex-wrap lg:flex-row flex-col w-11/12 mx-auto py-8 flex items-center justify-center gap-8 text-white"
+        {...rest}
+      >
         <h1 className="text-4xl font-bold flex items-center justify-center gap-2">
           Lozen Ipdesk
           <InfoTooltip title='Para o funcionamento correto da ferramenta, é necessário instalar e ativar a extensão do Chrome "Enable CORS"' />
@@ -83,7 +86,7 @@ const Header = ({ ...rest }: HeaderProps) => {
           ]}
         />
       </nav>
-    </header>
+    </>
   )
 }
 

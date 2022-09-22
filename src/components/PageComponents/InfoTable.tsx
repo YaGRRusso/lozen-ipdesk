@@ -1,18 +1,20 @@
-import { Trash } from 'phosphor-react'
+import { ArrowClockwise, ArrowSquareIn, Image, Trash } from 'phosphor-react'
 import { useMemo } from 'react'
 import ReactPaginate from 'react-paginate'
 
-export interface InfoTableProps {
+export interface InfoTableProps extends React.HTMLAttributes<HTMLTableElement> {
   titles: string[]
   count: number
   currentPage?: {
     value: number
     setValue: React.Dispatch<React.SetStateAction<number>>
   }
+  refresh: () => void
   totalPages?: number
   data: {
     id: number
     name: string
+    link: string
     parentId?: number
     warning?: boolean
   }[]
@@ -26,6 +28,8 @@ const InfoTable = ({
   currentPage,
   totalPages,
   deleteFunction,
+  refresh,
+  ...rest
 }: InfoTableProps) => {
   const showPagination = useMemo(() => {
     if (totalPages && totalPages > 1 && currentPage) {
@@ -37,7 +41,10 @@ const InfoTable = ({
 
   return (
     <>
-      <table className="w-full border-separate border-spacing-0 shadow rounded overflow-hidden">
+      <table
+        className="w-full border-separate border-spacing-0 shadow rounded overflow-hidden"
+        {...rest}
+      >
         <thead className="bg-sky-800 text-white text-left">
           <tr>
             {titles.map((item, index) => (
@@ -50,9 +57,16 @@ const InfoTable = ({
                 {item}
               </th>
             ))}
-            <th className="py-4 px-2 w-14">
-              <span className="flex items-center justify-center border w-12 rounded">
+            <th className="w-16 px-2">
+              <span
+                className="flex cursor-pointer transition-all hover:bg-sky-700 py-1 text-sm items-center gap-1 justify-center border rounded"
+                onClick={() => {
+                  refresh()
+                  currentPage?.setValue(1)
+                }}
+              >
                 {count}
+                <ArrowClockwise weight="bold" size={12} />
               </span>
             </th>
           </tr>
@@ -61,32 +75,46 @@ const InfoTable = ({
           {data.map((item) => (
             <tr
               className={`${
-                item.warning
-                  ? 'bg-red-50 hover:bg-red-100'
-                  : 'hover:bg-slate-100'
-              } transition-all`}
+                item.warning ? 'bg-slate-50' : ''
+              } hover:bg-slate-100 transition-all text-slate-900`}
               key={item.id}
             >
-              <td className="p-2 flex flex-col">
-                <span className="sm:hidden text-xs text-gray-500">
-                  {item.parentId}
-                </span>
-                <span className="sm:hidden">{item.name}</span>
-                {item.id}
+              <td className="p-2">
+                <div className="flex flex-col">
+                  <span className="sm:hidden text-xs opacity-70">
+                    {item.parentId}
+                  </span>
+                  <span className="sm:hidden">{item.name}</span>
+                  {item.id}
+                </div>
               </td>
-              <td className="p-2 hidden sm:table-cell">{item.name}</td>
+              <td className="p-2 hidden sm:table-cell">
+                <span className="flex gap-1 items-center">
+                  {item.name}
+                  {item.warning && <Image size={14} />}
+                </span>
+              </td>
               {item.parentId && (
                 <td className="p-2 hidden sm:table-cell">{item.parentId}</td>
               )}
-              <td className="p-2 text-center">
-                <button
-                  className="hover:bg-red-300 p-1 rounded transition-all"
-                  onClick={() => {
-                    deleteFunction(item.id as number)
-                  }}
-                >
-                  <Trash size={24} />
-                </button>
+              <td className="p-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    className="hover:bg-red-300 p-1 rounded transition-all z-10"
+                    onClick={() => {
+                      deleteFunction(item.id as number)
+                    }}
+                  >
+                    <Trash size={22} />
+                  </button>
+                  <a
+                    className="hover:bg-sky-300 p-1 rounded transition-all z-10"
+                    href={item.link}
+                    target="_blank"
+                  >
+                    <ArrowSquareIn size={22} />
+                  </a>
+                </div>
               </td>
             </tr>
           ))}

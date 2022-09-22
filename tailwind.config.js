@@ -1,18 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  darkMode: 'class',
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
       minHeight: {
-        "screen-fill": "65vh",
+        'screen-fill': '65vh',
       },
       maxHeight: {
-        "screen-40": "40vh",
+        'screen-40': '40vh',
       },
       minWidth: {
-        "sm": "280px",
+        sm: '280px',
       },
     },
   },
   plugins: [],
-};
+}
