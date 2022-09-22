@@ -64,7 +64,7 @@ const SectionPage = () => {
   return (
     <>
       <form
-        className="my-24 rounded flex flex-col gap-4 justify-center items-center"
+        className="my-24 shadow rounded flex flex-col gap-4 justify-center items-center"
         onSubmit={(ev) => {
           handleCreateSection(ev)
         }}
