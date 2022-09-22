@@ -11,6 +11,7 @@ import {
 import { Inspector } from 'react-inspector'
 import * as C from '@styles/ContainerBox'
 import { NewOldIdProps } from '@context/ImportContext'
+import { useState } from 'react'
 
 export type ImportObjectProps = {
   value: any
@@ -44,6 +45,8 @@ const JsonImporter = ({
   importedImagesList,
   ...rest
 }: JsonImporterProps) => {
+  const [dragOver, setDragOver] = useState(false)
+
   const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
     if (ev.target.files && ev.target.files[0]) {
       const fileReader = new FileReader()
@@ -99,10 +102,17 @@ const JsonImporter = ({
       </C.ContainerTitle>
       <C.ContainerBody {...rest}>
         <input
-          className="bg-slate-50 disabled:p-2 rounded disabled:pointer-events-none hover:bg-slate-100 cursor-pointer transition-all duration-500 border-dashed border-2 border-slate-300 hover:border-slate-400 text-slate-900 disabled:text-slate-400 hover:text-slate-800 w-full p-6"
+          className={`${
+            dragOver
+              ? 'py-12 bg-slate-100 border-slate-400 text-slate-900'
+              : 'py-6'
+          } bg-slate-50 disabled:p-2 rounded disabled:pointer-events-none hover:bg-slate-100 cursor-pointer transition-all duration-300 border-dashed border-2 border-slate-300 hover:border-slate-400 text-slate-800 disabled:text-slate-400 hover:text-slate-900 w-full px-6`}
           type="file"
-          onChange={(ev) => importJson(ev)}
           disabled={uploadEvent.loading}
+          onChange={(ev) => importJson(ev)}
+          onDragEnter={() => setDragOver(true)}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={() => setDragOver(false)}
         />
         {object.value && !object.value.error && (
           <Inspector table={false} data={object.value} />
