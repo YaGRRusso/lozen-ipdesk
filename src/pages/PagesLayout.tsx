@@ -6,8 +6,8 @@ type PagesLayoutProps = {
 
 export const PagesLayout = ({ children }: PagesLayoutProps) => {
   return (
-    <body>
-      <header className="bg-sky-800 dark:bg-sky-900">
+    <>
+      <header className="bg-sky-800">
         <Header />
       </header>
       <section className="max-w-screen-xl w-11/12 mx-auto my-10 min-h-screen-fill flex flex-col gap-8">
@@ -16,6 +16,6 @@ export const PagesLayout = ({ children }: PagesLayoutProps) => {
       <footer className="bg-sky-800 p-6 text-white text-center">
         Desenvolvido de ❤ para uso interno da Aktie Now
       </footer>
-    </body>
+    </>
   )
 }
