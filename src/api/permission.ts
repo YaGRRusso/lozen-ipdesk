@@ -1,5 +1,5 @@
-import { AuthProps } from "../types/apiType";
-import { PermissionGroupsTS } from "../types/apiType";
+import { AuthProps } from '../types/apiType'
+import { PermissionGroupsTS } from '../types/apiType'
 
 export const permissionApi = {
   getPermissionGroups: async (
@@ -11,13 +11,13 @@ export const permissionApi = {
         {
           headers: {
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
         }
-      );
-      return res.json();
+      )
+      return res.json()
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
-};
+}

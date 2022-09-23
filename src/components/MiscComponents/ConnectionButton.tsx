@@ -8,6 +8,7 @@ export interface ConnectionButtonProps
 const ConnectionButton = ({ loading, ...rest }: ConnectionButtonProps) => {
   return (
     <button
+      title="Conectar"
       className={`${
         loading ? 'animate-spin' : ''
       } hover:bg-sky-100 transition-all border border-sky-800 rounded-full p-2 mx-auto block`}

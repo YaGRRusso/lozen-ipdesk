@@ -19,8 +19,10 @@ const ConvertButton = ({
   const [converted, setConverted] = useState(false)
 
   useEffect(() => {
-    if (active && !converted) {
+    if (active) {
       handleConvert()
+    } else {
+      setConverted(false)
     }
   }, [object.value, newOldIds])
 
@@ -39,6 +41,7 @@ const ConvertButton = ({
           )
         }
       }
+      console.log('oi')
       let parsedObject = object.value
       parsedObject[object.target] = temp
       object.setValue(parsedObject)
@@ -47,7 +50,11 @@ const ConvertButton = ({
   }
 
   return (
-    <div className={converted ? 'text-slate-800' : 'text-sky-900'} {...rest}>
+    <div
+      className={converted ? 'text-slate-800' : 'text-sky-900'}
+      title="Converter"
+      {...rest}
+    >
       {!converted && <ArrowsClockwise weight="bold" size={20} />}
       {converted && <Check weight="bold" size={20} />}
     </div>

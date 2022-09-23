@@ -8,6 +8,7 @@ export interface UploadButtonProps
 const UploadButton = ({ active, ...rest }: UploadButtonProps) => {
   return (
     <button
+      title="Upload"
       className={`${
         active ? '' : 'text-sky-900 pointer-events-none'
       } flex text-sm items-center gap-1 justify-center px-2 py-1 rounded hover:bg-sky-700 transition-all cursor-pointer`}

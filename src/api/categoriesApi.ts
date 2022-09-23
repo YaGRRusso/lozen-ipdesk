@@ -1,11 +1,11 @@
-import { AuthProps } from "../types/apiType";
-import { NewCategoryTS, CategoriesTS } from "../types/categoriesType";
+import { AuthProps } from '../types/apiType'
+import { NewCategoryTS, CategoriesTS } from '../types/categoriesType'
 
 export interface CreateCategoryProps {
-  name: string;
-  description: string;
-  locale: string;
-  position: number;
+  name: string
+  description: string
+  locale: string
+  position: number
 }
 
 export const categoriesApi = {
@@ -21,13 +21,13 @@ export const categoriesApi = {
         {
           headers: {
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
         }
-      );
-      return res.json();
+      )
+      return res.json()
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
   createCategory: async (
@@ -38,20 +38,20 @@ export const categoriesApi = {
       const res = await fetch(
         `https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories.json`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
           body: JSON.stringify({
             category,
           }),
         }
-      );
-      return res.json();
+      )
+      return res.json()
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
   deleteCategory: async (zd: AuthProps, id: number) => {
@@ -59,15 +59,15 @@ export const categoriesApi = {
       await fetch(
         `https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories/${id}`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
         }
-      );
+      )
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
-};
+}

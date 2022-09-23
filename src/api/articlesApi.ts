@@ -1,14 +1,14 @@
-import { AuthProps } from "../types/apiType";
-import { ArticlesTS, ArticleTS, NewArticleTS } from "../types/articleType";
+import { AuthProps } from '../types/apiType'
+import { ArticlesTS, ArticleTS, NewArticleTS } from '../types/articleType'
 
 export interface CreateArticleProps {
-  permission_group_id: number;
-  user_segment_id?: null;
-  section_id: number;
-  title: string;
-  description?: string;
-  body: string;
-  promoted?: boolean;
+  permission_group_id: number
+  user_segment_id?: null
+  section_id: number
+  title: string
+  description?: string
+  body: string
+  promoted?: boolean
 }
 
 export const articlesApi = {
@@ -24,13 +24,13 @@ export const articlesApi = {
         {
           headers: {
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
         }
-      );
-      return res.json();
+      )
+      return res.json()
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
   createArticle: async (
@@ -41,11 +41,11 @@ export const articlesApi = {
       const res = await fetch(
         `https://${zd.subdomain}.zendesk.com/api/v2/help_center/sections/${article.section_id}/articles.json`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
           body: JSON.stringify({
             article,
@@ -53,10 +53,10 @@ export const articlesApi = {
             promoted: true,
           }),
         }
-      );
-      return res.json();
+      )
+      return res.json()
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
   deleteArticle: async (zd: AuthProps, id: number) => {
@@ -64,15 +64,15 @@ export const articlesApi = {
       await fetch(
         `https://${zd.subdomain}.zendesk.com/api/v2/help_center/articles/${id}.json`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
         }
-      );
+      )
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
-};
+}

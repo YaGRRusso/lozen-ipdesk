@@ -1,12 +1,12 @@
-import { AuthProps } from "../types/apiType";
-import { NewSectionTS, SectionsTS } from "../types/sectionsType";
+import { AuthProps } from '../types/apiType'
+import { NewSectionTS, SectionsTS } from '../types/sectionsType'
 
 export interface CreateSectionProps {
-  category_id: number;
-  name: string;
-  description: string;
-  locale: string;
-  position: number;
+  category_id: number
+  name: string
+  description: string
+  locale: string
+  position: number
 }
 
 export const sectionsApi = {
@@ -22,13 +22,13 @@ export const sectionsApi = {
         {
           headers: {
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
         }
-      );
-      return res.json();
+      )
+      return res.json()
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
   createSection: async (
@@ -39,20 +39,20 @@ export const sectionsApi = {
       const res = await fetch(
         `https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories/${section.category_id}/sections.json`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
           body: JSON.stringify({
             section,
           }),
         }
-      );
-      return res.json();
+      )
+      return res.json()
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
   deleteSection: async (zd: AuthProps, id: number) => {
@@ -60,15 +60,15 @@ export const sectionsApi = {
       await fetch(
         `https://${zd.subdomain}.zendesk.com/api/v2/help_center/sections/${id}.json`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
             Authorization:
-              "Basic " + btoa(`${zd.email_address}:${zd.password}`),
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
           },
         }
-      );
+      )
     } catch (e) {
-      alert("Erro");
+      console.error(e)
     }
   },
-};
+}

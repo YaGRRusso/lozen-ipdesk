@@ -15,6 +15,7 @@ const HeaderPasswordInput = ({ ...rest }: HeaderPasswordInputProps) => {
         {...rest}
       />
       <button
+        title="Mostrar/Ocultar"
         className="hover:bg-gray-200 transition-all px-0.5 rounded absolute right-1"
         onClick={() => setShowingPass(!showingPass)}
       >

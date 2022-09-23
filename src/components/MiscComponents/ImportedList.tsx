@@ -27,6 +27,7 @@ const ImportedList = ({ data, ...rest }: ImportedListProps) => {
             </div>
             <div className="font-mono flex gap-1 items-center justify-start">
               <span
+                title="Copiar"
                 className="text-red-700 hover:bg-red-100 rounded cursor-pointer gap-1 flex items-center"
                 onClick={() =>
                   navigator.clipboard.writeText(item.oldId.toString())
@@ -37,6 +38,7 @@ const ImportedList = ({ data, ...rest }: ImportedListProps) => {
               </span>
               <CaretRight size={10} weight="bold" />
               <span
+                title="Copiar"
                 className="text-green-700 hover:bg-green-100 rounded cursor-pointer gap-1 flex items-center"
                 onClick={() =>
                   navigator.clipboard.writeText(item.newId.toString())

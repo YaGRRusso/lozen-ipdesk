@@ -50,13 +50,13 @@ const JsonImporter = ({
   const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
     if (!ev.target.files || !ev.target.files[0]) {
       if (object.setIds)
-        object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+        object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
       object.setValue(undefined)
       return
     }
     if (ev.target.files[0].type !== 'application/json') {
       if (object.setIds)
-        object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+        object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
       object.setValue({ error: 'Formato de arquivo inválido' })
       return
     }
@@ -66,7 +66,7 @@ const JsonImporter = ({
       const parsedJson = JSON.parse(e.target?.result as string)
       if (object.target in parsedJson) {
         if (object.setIds) {
-          object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+          object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
         }
         object.setValue(parsedJson)
       } else if (
@@ -78,7 +78,7 @@ const JsonImporter = ({
         object.setValue(undefined)
       } else {
         if (object.setIds) {
-          object.setIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+          object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
         }
         object.setValue({ error: 'Arquivo incorreto' })
       }

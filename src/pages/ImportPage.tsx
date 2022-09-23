@@ -25,7 +25,7 @@ const ImportPage = () => {
 
   const handleUploadCategories = async () => {
     setUploadingCategories(true)
-    setCategoriesIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+    setCategoriesIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
     if (categoriesFile?.categories && categoriesFile?.categories?.length > 1) {
       for (let i in categoriesFile?.categories) {
         const res = await createCategory({
@@ -35,10 +35,10 @@ const ImportPage = () => {
           position: categoriesFile?.categories[i].position,
         })
         if (res?.category?.id) {
-          setCategoriesIds((oldArray) => ({
-            ...oldArray,
+          setCategoriesIds((oldValue) => ({
+            ...oldValue,
             newOldIds: [
-              ...oldArray.newOldIds,
+              ...oldValue.newOldIds,
               {
                 oldId: categoriesFile?.categories[i].id,
                 newId: res.category.id,
@@ -47,8 +47,8 @@ const ImportPage = () => {
             ],
           }))
         } else {
-          setUploadingCategories(false)
-          return alert('error')
+          setUploadingArticles(false)
+          return
         }
       }
     }
@@ -57,7 +57,7 @@ const ImportPage = () => {
 
   const handleUploadSections = async () => {
     setUploadingSections(true)
-    setSectionsIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+    setSectionsIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
     if (sectionsFile?.sections && sectionsFile?.sections?.length > 1) {
       for (let i in sectionsFile?.sections) {
         const res = await createSection({
@@ -68,10 +68,10 @@ const ImportPage = () => {
           category_id: sectionsFile?.sections[i].category_id,
         })
         if (res?.section?.id) {
-          setSectionsIds((oldArray) => ({
-            ...oldArray,
+          setSectionsIds((oldValue) => ({
+            ...oldValue,
             newOldIds: [
-              ...oldArray.newOldIds,
+              ...oldValue.newOldIds,
               {
                 oldId: sectionsFile?.sections[i].id,
                 newId: res.section.id,
@@ -80,8 +80,8 @@ const ImportPage = () => {
             ],
           }))
         } else {
-          setUploadingSections(false)
-          return alert('error')
+          setUploadingArticles(false)
+          return
         }
       }
     }
@@ -90,7 +90,7 @@ const ImportPage = () => {
 
   const handleUploadArticles = async () => {
     setUploadingArticles(true)
-    setArticlesIds((oldArray) => ({ ...oldArray, newOldIds: [] }))
+    setArticlesIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
     if (articlesFile?.articles && articlesFile?.articles?.length > 1) {
       for (let i in articlesFile?.articles) {
         const res = await createArticle({
@@ -102,10 +102,10 @@ const ImportPage = () => {
           title: articlesFile?.articles[i].title,
         })
         if (res?.article?.id) {
-          setArticlesIds((oldArray) => ({
-            ...oldArray,
+          setArticlesIds((oldValue) => ({
+            ...oldValue,
             newOldIds: [
-              ...oldArray.newOldIds,
+              ...oldValue.newOldIds,
               {
                 oldId: articlesFile?.articles[i].id,
                 newId: res.article.id,
@@ -115,7 +115,7 @@ const ImportPage = () => {
           }))
         } else {
           setUploadingArticles(false)
-          return alert('error')
+          return
         }
       }
     }

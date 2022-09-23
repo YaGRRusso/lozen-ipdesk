@@ -118,17 +118,17 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
       if (createdCategory) {
         console.log(createdCategory)
         if (categories) {
-          const newList: CategoryTS[] = categories.categories
+          let newList: CategoryTS[] = categories.categories
           if (position) {
             newList.splice(position - 1, 0, createdCategory.category)
           } else {
             newList.unshift(createdCategory.category)
           }
-          setCategories({
-            ...categories,
+          setCategories((oldValue) => ({
+            ...(oldValue as CategoriesTS),
             categories: newList,
-            count: categories.count + 1,
-          })
+            count: (oldValue?.count as number) + 1,
+          }))
         }
         return createdCategory
       }
@@ -181,11 +181,11 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
           } else {
             newList.unshift(createdSection.section)
           }
-          setSections({
-            ...sections,
+          setSections((oldValue) => ({
+            ...(oldValue as SectionsTS),
             sections: newList,
-            count: sections.count + 1,
-          })
+            count: (oldValue?.count as number) + 1,
+          }))
         }
         return createdSection
       }
@@ -249,11 +249,11 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
           } else {
             newList.unshift(createdArticle.article)
           }
-          setArticles({
-            ...articles,
+          setArticles((oldValue) => ({
+            ...(oldValue as ArticlesTS),
             articles: newList,
-            count: articles.count + 1,
-          })
+            count: (oldValue?.count as number) + 1,
+          }))
         }
         return createdArticle
       }

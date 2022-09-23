@@ -34,6 +34,7 @@ const PaginationCounterButton = ({
   return (
     <strong className="flex items-center gap-1 justify-center" {...rest}>
       <span
+        title="Anterior"
         onClick={() => prevPage()}
         className={`${
           morePages.prev ? '' : 'pointer-events-none opacity-60'
@@ -43,6 +44,7 @@ const PaginationCounterButton = ({
       </span>
       {currentPage}/{maxPages}
       <span
+        title="Próximo"
         onClick={() => nextPage()}
         className={`${
           morePages.next ? '' : 'pointer-events-none opacity-60'

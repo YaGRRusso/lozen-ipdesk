@@ -59,6 +59,7 @@ const InfoTable = ({
             ))}
             <th className="w-16 px-2">
               <span
+                title="Recarregar"
                 className="flex cursor-pointer transition-all hover:bg-sky-700 py-1 text-sm items-center gap-1 justify-center border rounded"
                 onClick={() => {
                   refresh()
@@ -100,6 +101,7 @@ const InfoTable = ({
               <td className="p-2">
                 <div className="flex items-center gap-1">
                   <button
+                    title="Excluir"
                     className="hover:bg-red-300 p-1 rounded transition-all z-10"
                     onClick={() => {
                       deleteFunction(item.id as number)
@@ -108,6 +110,7 @@ const InfoTable = ({
                     <Trash size={22} />
                   </button>
                   <a
+                    title="Acessar"
                     className="hover:bg-sky-300 p-1 rounded transition-all z-10"
                     href={item.link}
                     target="_blank"
