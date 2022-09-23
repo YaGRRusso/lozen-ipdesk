@@ -3,7 +3,12 @@ import { randomGenerator } from '@helpers/randomGenerator'
 import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
 import { CreateCategoryProps } from '@api/categoriesApi'
-import { FormButton, FormInput, InfoTable } from '@components/index'
+import {
+  ConnectionButton,
+  FormButton,
+  FormInput,
+  InfoTable,
+} from '@components/index'
 
 const CategoryPage = () => {
   const {
@@ -97,6 +102,7 @@ const CategoryPage = () => {
           infoLoading={categoriesLoading}
         />
       )}
+      {!categories && <ConnectionButton />}
     </>
   )
 }

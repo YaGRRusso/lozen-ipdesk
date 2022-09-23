@@ -5,6 +5,7 @@ import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
 import { CreateArticleProps } from '@api/articlesApi'
 import {
+  ConnectionButton,
   FormButton,
   FormCheck,
   FormInput,
@@ -136,6 +137,7 @@ const ArticlePage = () => {
           infoLoading={articlesLoading}
         />
       )}
+      {!articles && <ConnectionButton />}
     </>
   )
 }

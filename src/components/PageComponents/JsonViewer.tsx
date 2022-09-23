@@ -37,7 +37,9 @@ const JsonViewer = ({
       </C.ContainerTitle>
       <C.ContainerBody limit {...rest}>
         {(loading || !object) && <ConnectionButton loading={loading} />}
-        {!loading && <Inspector table={false} data={object} expandLevel={3} />}
+        {!loading && object && (
+          <Inspector table={false} data={object} expandLevel={3} />
+        )}
       </C.ContainerBody>
     </C.Container>
   )

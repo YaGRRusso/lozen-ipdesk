@@ -3,7 +3,13 @@ import { randomGenerator } from '@helpers/randomGenerator'
 import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
 import { CreateSectionProps } from '@api/sectionsApi'
-import { FormButton, FormInput, FormSelect, InfoTable } from '@components/index'
+import {
+  ConnectionButton,
+  FormButton,
+  FormInput,
+  FormSelect,
+  InfoTable,
+} from '@components/index'
 
 const SectionPage = () => {
   const {
@@ -113,6 +119,7 @@ const SectionPage = () => {
           infoLoading={sectionsLoading}
         />
       )}
+      {!sections && <ConnectionButton />}
     </>
   )
 }
