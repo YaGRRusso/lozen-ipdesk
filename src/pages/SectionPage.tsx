@@ -3,13 +3,7 @@ import { randomGenerator } from '@helpers/randomGenerator'
 import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
 import { CreateSectionProps } from '@api/sectionsApi'
-import {
-  ConnectionButton,
-  FormButton,
-  FormInput,
-  FormSelect,
-  InfoTable,
-} from '@components/index'
+import { FormButton, FormInput, FormSelect, InfoTable } from '@components/index'
 
 const SectionPage = () => {
   const {
@@ -99,7 +93,7 @@ const SectionPage = () => {
         />
         <FormButton disabled={sectionsLoading} />
       </form>
-      {!sectionsLoading && sections && (
+      {sections && (
         <InfoTable
           titles={['Identificação', 'Nome', 'Categoria']}
           deleteFunction={handleDeleteSection}
@@ -116,10 +110,8 @@ const SectionPage = () => {
             value: currentPage,
             setValue: setCurrentPage,
           }}
+          infoLoading={sectionsLoading}
         />
-      )}
-      {(sectionsLoading || !sections) && (
-        <ConnectionButton loading={sectionsLoading} />
       )}
     </>
   )

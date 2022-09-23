@@ -3,12 +3,7 @@ import { randomGenerator } from '@helpers/randomGenerator'
 import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
 import { CreateCategoryProps } from '@api/categoriesApi'
-import {
-  ConnectionButton,
-  FormButton,
-  FormInput,
-  InfoTable,
-} from '@components/index'
+import { FormButton, FormInput, InfoTable } from '@components/index'
 
 const CategoryPage = () => {
   const {
@@ -83,7 +78,7 @@ const CategoryPage = () => {
         />
         <FormButton disabled={categoriesLoading} />
       </form>
-      {!categoriesLoading && categories && (
+      {categories && (
         <InfoTable
           titles={['Identificação', 'Nome']}
           deleteFunction={handleDeleteCategory}
@@ -99,10 +94,8 @@ const CategoryPage = () => {
             value: currentPage,
             setValue: setCurrentPage,
           }}
+          infoLoading={categoriesLoading}
         />
-      )}
-      {(categoriesLoading || !categories) && (
-        <ConnectionButton loading={categoriesLoading} />
       )}
     </>
   )

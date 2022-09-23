@@ -1,5 +1,5 @@
-import { AuthProps } from '../types/apiType'
-import { NewSectionTS, SectionsTS } from '../types/sectionsType'
+import { AuthProps } from '@customTypes/apiType'
+import { NewSectionTS, SectionsTS } from '@customTypes/sectionsType'
 
 export interface CreateSectionProps {
   category_id: number

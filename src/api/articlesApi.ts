@@ -1,6 +1,5 @@
-import { toast } from 'react-toastify'
-import { AuthProps } from '../types/apiType'
-import { ArticlesTS, ArticleTS, NewArticleTS } from '../types/articleType'
+import { AuthProps } from '@customTypes/apiType'
+import { ArticlesTS, NewArticleTS } from '@customTypes/articleType'
 
 export interface CreateArticleProps {
   permission_group_id: number

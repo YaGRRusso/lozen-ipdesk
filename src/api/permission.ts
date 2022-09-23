@@ -1,5 +1,5 @@
-import { AuthProps } from '../types/apiType'
-import { PermissionGroupsTS } from '../types/apiType'
+import { AuthProps } from '@customTypes/apiType'
+import { PermissionGroupsTS } from '@customTypes/apiType'
 
 export const permissionApi = {
   getPermissionGroups: async (

@@ -1,5 +1,5 @@
-import { AuthProps } from '../types/apiType'
-import { NewCategoryTS, CategoriesTS } from '../types/categoriesType'
+import { AuthProps } from '@customTypes/apiType'
+import { NewCategoryTS, CategoriesTS } from '@customTypes/categoriesType'
 
 export interface CreateCategoryProps {
   name: string

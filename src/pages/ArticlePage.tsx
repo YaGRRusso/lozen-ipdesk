@@ -5,7 +5,6 @@ import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
 import { CreateArticleProps } from '@api/articlesApi'
 import {
-  ConnectionButton,
   FormButton,
   FormCheck,
   FormInput,
@@ -116,7 +115,7 @@ const ArticlePage = () => {
         />
         <FormButton disabled={articlesLoading} />
       </form>
-      {!articlesLoading && articles && (
+      {articles && (
         <InfoTable
           titles={['Identificação', 'Nome', 'Section']}
           deleteFunction={handleDeleteArticle}
@@ -134,10 +133,8 @@ const ArticlePage = () => {
             parentId: item?.section_id,
             warning: item?.body.includes('img'),
           }))}
+          infoLoading={articlesLoading}
         />
-      )}
-      {(articlesLoading || !articles) && (
-        <ConnectionButton loading={articlesLoading} />
       )}
     </>
   )
