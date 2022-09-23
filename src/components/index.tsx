@@ -58,6 +58,8 @@ export type { ConvertButtonProps } from './MiscComponents/ConvertButton'
 export { default as UploadButton } from './MiscComponents/UploadButton'
 export type { UploadButtonProps } from './MiscComponents/UploadButton'
 
+export { default as ErrorToast } from './MiscComponents/ErrorToast'
+
 export { default as Header } from './PageComponents/Header'
 export type { HeaderProps } from './PageComponents/Header'
 

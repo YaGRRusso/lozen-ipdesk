@@ -2,6 +2,7 @@ import { JsonImporter } from '@components/index'
 import { useMemo, useState } from 'react'
 import { useImportContext } from '@context/ImportContext'
 import { useZendeskContext } from '@context/ZendeskContext'
+import { toast } from 'react-toastify'
 
 const ImportPage = () => {
   const { createCategory, createSection, createArticle } = useZendeskContext()
@@ -48,7 +49,8 @@ const ImportPage = () => {
           }))
         } else {
           setUploadingArticles(false)
-          return
+          toast.error(res?.error)
+          break
         }
       }
     }
@@ -80,8 +82,9 @@ const ImportPage = () => {
             ],
           }))
         } else {
-          setUploadingArticles(false)
-          return
+          setUploadingSections(false)
+          toast.error(res?.error)
+          break
         }
       }
     }
@@ -115,7 +118,8 @@ const ImportPage = () => {
           }))
         } else {
           setUploadingArticles(false)
-          return
+          toast.error(res?.error)
+          break
         }
       }
     }
