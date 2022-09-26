@@ -119,7 +119,7 @@ const SectionPage = () => {
           infoLoading={sectionsLoading}
         />
       )}
-      {!sections && <ConnectionButton />}
+      {!sections && <ConnectionButton loading={sectionsLoading} />}
     </>
   )
 }

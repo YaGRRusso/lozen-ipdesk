@@ -137,7 +137,7 @@ const ArticlePage = () => {
           infoLoading={articlesLoading}
         />
       )}
-      {!articles && <ConnectionButton />}
+      {!articles && <ConnectionButton loading={articlesLoading} />}
     </>
   )
 }

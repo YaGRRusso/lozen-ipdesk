@@ -102,7 +102,7 @@ const CategoryPage = () => {
           infoLoading={categoriesLoading}
         />
       )}
-      {!categories && <ConnectionButton />}
+      {!categories && <ConnectionButton loading={categoriesLoading} />}
     </>
   )
 }
