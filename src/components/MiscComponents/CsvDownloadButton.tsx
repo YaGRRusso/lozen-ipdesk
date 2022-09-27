@@ -36,7 +36,6 @@ const CsvDownloadButton = ({
   return (
     <a
       title="Download CSV"
-      onClick={() => console.log(object)}
       download={title.toLowerCase() + '.csv'}
       href={csvFile?.url}
       className={`${

@@ -41,7 +41,6 @@ const ConvertButton = ({
           )
         }
       }
-      console.log('oi')
       let parsedObject = object.value
       parsedObject[object.target] = temp
       object.setValue(parsedObject)

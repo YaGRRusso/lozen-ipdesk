@@ -34,7 +34,6 @@ const DownloadButton = ({
   return (
     <a
       title="Download"
-      onClick={() => console.log(object)}
       download={title.toLowerCase() + '.json'}
       href={jsonFile?.url}
       className={`${
