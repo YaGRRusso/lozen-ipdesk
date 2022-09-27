@@ -5,6 +5,7 @@ import {
   PaginationCounterButton,
 } from '@components/index'
 import * as C from '@styles/ContainerBox'
+import CsvDownloadButton from '@components/MiscComponents/CsvDownloadButton'
 
 export interface JsonViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
@@ -33,7 +34,10 @@ const JsonViewer = ({
           nextPage={nextPage}
           prevPage={prevPage}
         />
-        <DownloadButton object={object} title={title} />
+        <div className="flex gap-1 items-center">
+          <CsvDownloadButton object={object} title={title} responsive />
+          <DownloadButton object={object} title={title} responsive />
+        </div>
       </C.ContainerTitle>
       <C.ContainerBody limit {...rest}>
         {(loading || !object) && <ConnectionButton loading={loading} />}
