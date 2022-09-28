@@ -1,3 +1,4 @@
+import { useZendeskContext } from '@context/ZendeskContext'
 import { ArrowClockwise, ArrowSquareIn, Image, Trash } from 'phosphor-react'
 import { useMemo } from 'react'
 import ReactPaginate from 'react-paginate'
@@ -34,6 +35,8 @@ const InfoTable = ({
   infoLoading,
   ...rest
 }: InfoTableProps) => {
+  const { easyDelete } = useZendeskContext()
+
   const showPagination = useMemo(() => {
     if (totalPages && totalPages > 1 && currentPage) {
       return true
@@ -109,15 +112,17 @@ const InfoTable = ({
                 )}
                 <td className="p-2">
                   <div className="flex justify-center items-center gap-1">
-                    {/* <button
-                      title="Excluir"
-                      className="hover:bg-red-300 p-1 rounded transition-all z-10"
-                      onClick={() => {
-                        deleteFunction(item.id as number)
-                      }}
-                    >
-                      <Trash size={22} />
-                    </button> */}
+                    {easyDelete && (
+                      <button
+                        title="Excluir"
+                        className="hover:bg-red-300 p-1 rounded transition-all z-10"
+                        onClick={() => {
+                          deleteFunction(item.id as number)
+                        }}
+                      >
+                        <Trash size={22} />
+                      </button>
+                    )}
                     <a
                       title="Acessar"
                       className="hover:bg-sky-300 p-1 rounded transition-all z-10"

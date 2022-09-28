@@ -14,6 +14,9 @@ import { NewSectionTS, SectionsTS, SectionTS } from '@customTypes/sectionsType'
 import { useAuthContext } from './AuthContext'
 
 interface ZendeskContextProps {
+  easyDelete: boolean
+  setEasyDelete: (data: boolean) => void
+
   loadCategories: (page?: number) => Promise<void>
   deleteCategory: (id: number) => void
   createCategory: (
@@ -51,6 +54,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { loggedAccount } = useAuthContext()
+  const [easyDelete, setEasyDelete] = useState(false)
 
   const [categories, setCategories] = useState<CategoriesTS | undefined>()
   const [categoriesLoading, setCategoriesLoading] = useState(false)
@@ -263,6 +267,8 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <ZendeskContext.Provider
       value={{
+        easyDelete,
+        setEasyDelete,
         categories,
         categoriesLoading,
         loadCategories,
