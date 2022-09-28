@@ -61,10 +61,10 @@ const InfoTable = ({
                   {item}
                 </th>
               ))}
-              <th className="w-16 px-2">
+              <th className="w-20 p-2">
                 <span
                   title="Recarregar"
-                  className="flex cursor-pointer transition-all hover:bg-sky-700 py-1 text-sm items-center gap-1 justify-center border rounded"
+                  className="flex cursor-pointer w-full h-8 transition-all hover:bg-sky-700 p-1 text-sm items-center gap-1 justify-center border rounded"
                   onClick={() => {
                     refresh()
                     currentPage?.setValue(1)
@@ -74,7 +74,7 @@ const InfoTable = ({
                   <span className={infoLoading ? 'animate-spin' : ''}>
                     <ArrowClockwise
                       weight="bold"
-                      size={infoLoading ? 18 : 12}
+                      size={infoLoading ? 16 : 12}
                     />
                   </span>
                 </span>
@@ -95,7 +95,7 @@ const InfoTable = ({
                       {item.parentId}
                     </span>
                     <span className="sm:hidden">{item.name}</span>
-                    {item.id}
+                    <span className="text-sm sm:text-base">{item.id}</span>
                   </div>
                 </td>
                 <td className="p-2 hidden sm:table-cell">
@@ -108,8 +108,8 @@ const InfoTable = ({
                   <td className="p-2 hidden sm:table-cell">{item.parentId}</td>
                 )}
                 <td className="p-2">
-                  <div className="flex items-center gap-1">
-                    <button
+                  <div className="flex justify-center items-center gap-1">
+                    {/* <button
                       title="Excluir"
                       className="hover:bg-red-300 p-1 rounded transition-all z-10"
                       onClick={() => {
@@ -117,7 +117,7 @@ const InfoTable = ({
                       }}
                     >
                       <Trash size={22} />
-                    </button>
+                    </button> */}
                     <a
                       title="Acessar"
                       className="hover:bg-sky-300 p-1 rounded transition-all z-10"
