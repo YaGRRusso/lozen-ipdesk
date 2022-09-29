@@ -66,6 +66,9 @@ export { default as ErrorToast } from './MiscComponents/ErrorToast'
 export { default as Header } from './PageComponents/Header'
 export type { HeaderProps } from './PageComponents/Header'
 
+export { default as Footer } from './PageComponents/Footer'
+export type { FooterProps } from './PageComponents/Footer'
+
 export { default as InfoTable } from './PageComponents/InfoTable'
 export type { InfoTableProps } from './PageComponents/InfoTable'
 
