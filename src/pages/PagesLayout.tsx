@@ -17,9 +17,7 @@ export const PagesLayout = ({ children }: PagesLayoutProps) => {
       </section>
       <footer className="bg-sky-800 p-8 text-white gap-4 text-center flex flex-col items-center justify-center">
         Desenvolvido de ❤ para uso interno da Aktie Now
-        <span className="flex gap-2 text-sky-200 items-center justify-center">
-          <EasyDelete />
-        </span>
+        <EasyDelete />
       </footer>
     </>
   )
