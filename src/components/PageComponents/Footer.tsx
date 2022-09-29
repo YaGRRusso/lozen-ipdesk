@@ -1,4 +1,3 @@
-import { Heart } from 'phosphor-react'
 import { EasyDelete } from '..'
 
 export interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -10,11 +9,9 @@ const Footer = ({ ...rest }: FooterProps) => {
       {...rest}
     >
       <EasyDelete />
-      <div className="flex gap-1 mb-4 items-center justify-center">
+      <div className="mb-4">
         Desenvolvido de
-        <span className="animate-pulse text-red-500">
-          <Heart weight="fill" />
-        </span>
+        <span className="animate-pulse text-red-500"> ❤ </span>
         para uso interno da Aktie Now
       </div>
     </div>
