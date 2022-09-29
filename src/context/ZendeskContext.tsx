@@ -15,7 +15,7 @@ import { useAuthContext } from './AuthContext'
 
 interface ZendeskContextProps {
   easyDelete: boolean
-  setEasyDelete: (data: boolean) => void
+  setEasyDelete: React.Dispatch<React.SetStateAction<boolean>>
 
   loadCategories: (page?: number) => Promise<void>
   deleteCategory: (id: number) => void
