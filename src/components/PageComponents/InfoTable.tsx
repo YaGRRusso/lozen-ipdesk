@@ -102,14 +102,17 @@ const InfoTable = ({
                     <span className="sm:hidden text-xs opacity-70">
                       {item.parentId}
                     </span>
-                    <span className="sm:hidden">{item.name}</span>
+                    <span className="sm:hidden inline">
+                      {item.image && <Image size={15} className="inline" />}{' '}
+                      {item.name}
+                    </span>
                     <span className="text-sm sm:text-base">{item.id}</span>
                   </div>
                 </td>
                 <td className="p-2 hidden sm:table-cell">
-                  <span className="flex gap-1 items-center">
+                  <span className="inline">
+                    {item.image && <Image size={15} className="inline" />}{' '}
                     {item.name}
-                    {item.image && <Image size={14} />}
                   </span>
                 </td>
                 {item.parentId && (

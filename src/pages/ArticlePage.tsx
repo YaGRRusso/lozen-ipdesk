@@ -68,33 +68,35 @@ const ArticlePage = () => {
     deleteArticle(id)
   }
 
-  const tableParse = useMemo(() => {
+  const infoTableValue = useMemo(() => {
     const tableLines: InfoTableRowsProps[] = []
-    articles?.articles.map((item) => {
-      let warning = false
-      let image = false
-      const imageCheck = item.body.match(/<img([^>]*[^/])>/g)
-      if (imageCheck && loggedAccount) {
-        image = true
-        const imageUrl = imageCheck[0].match(
-          /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/g
-        )
-        if (imageUrl && !imageUrl[0].includes(loggedAccount.subdomain)) {
-          warning = true
+    if (articles?.articles) {
+      articles.articles.map((item) => {
+        let warning = false
+        let image = false
+        const imageCheck = item.body.match(/<img([^>]*[^/])>/g)
+        if (imageCheck && loggedAccount) {
+          image = true
+          const imageUrl = imageCheck[0].match(
+            /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/g
+          )
+          if (imageUrl && !imageUrl[0].includes(loggedAccount.subdomain)) {
+            warning = true
+          }
         }
-      }
 
-      tableLines.push({
-        id: item?.id,
-        name: item?.name,
-        link: item?.html_url,
-        parentId: item?.section_id,
-        warning,
-        image,
+        tableLines.push({
+          id: item?.id,
+          name: item?.name,
+          link: item?.html_url,
+          parentId: item?.section_id,
+          warning,
+          image,
+        })
       })
-    })
+    }
     return tableLines
-  }, [articles?.articles])
+  }, [articles])
 
   return (
     <>
@@ -156,7 +158,7 @@ const ArticlePage = () => {
           }}
           refresh={() => loadArticles()}
           totalPages={articles.page_count}
-          data={tableParse}
+          data={infoTableValue}
           infoLoading={articlesLoading}
         />
       )}
