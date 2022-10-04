@@ -4,6 +4,15 @@ import { useMemo } from 'react'
 import ReactPaginate from 'react-paginate'
 import NoData from '/assets/no-data.svg'
 
+export interface InfoTableRowsProps {
+  id: number
+  name: string
+  link: string
+  parentId?: number
+  warning?: boolean
+  image?: boolean
+}
+
 export interface InfoTableProps extends React.HTMLAttributes<HTMLTableElement> {
   titles: string[]
   count: number
@@ -14,13 +23,7 @@ export interface InfoTableProps extends React.HTMLAttributes<HTMLTableElement> {
   infoLoading: boolean
   refresh: () => void
   totalPages?: number
-  data: {
-    id: number
-    name: string
-    link: string
-    parentId?: number
-    warning?: boolean
-  }[]
+  data: InfoTableRowsProps[]
   deleteFunction: (id: number) => void
 }
 
@@ -88,8 +91,10 @@ const InfoTable = ({
             {data.map((item) => (
               <tr
                 className={`${
-                  item.warning ? 'bg-slate-50' : ''
-                } hover:bg-slate-100 transition-all text-slate-900`}
+                  item.warning
+                    ? 'bg-red-50 hover:bg-red-100 text-red-900'
+                    : 'hover:bg-slate-100 text-slate-900'
+                } transition-all`}
                 key={item.id}
               >
                 <td className="p-2">
@@ -104,7 +109,7 @@ const InfoTable = ({
                 <td className="p-2 hidden sm:table-cell">
                   <span className="flex gap-1 items-center">
                     {item.name}
-                    {item.warning && <Image size={14} />}
+                    {item.image && <Image size={14} />}
                   </span>
                 </td>
                 {item.parentId && (

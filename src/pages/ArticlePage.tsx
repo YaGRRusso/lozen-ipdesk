@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { randomGenerator } from '@helpers/randomGenerator'
 import { getPermissionList } from '@helpers/filter'
 import { useZendeskContext } from '@context/ZendeskContext'
@@ -14,6 +14,7 @@ import {
   InfoTable,
   InfoTooltip,
 } from '@components/index'
+import { InfoTableRowsProps } from '@components/PageComponents/InfoTable'
 
 const ArticlePage = () => {
   const {
@@ -66,6 +67,34 @@ const ArticlePage = () => {
   const handleDeleteArticle = (id: number) => {
     deleteArticle(id)
   }
+
+  const tableParse = useMemo(() => {
+    const tableLines: InfoTableRowsProps[] = []
+    articles?.articles.map((item) => {
+      let warning = false
+      let image = false
+      const imageCheck = item.body.match(/<img([^>]*[^/])>/g)
+      if (imageCheck && loggedAccount) {
+        image = true
+        const imageUrl = imageCheck[0].match(
+          /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/g
+        )
+        if (imageUrl && !imageUrl[0].includes(loggedAccount.subdomain)) {
+          warning = true
+        }
+      }
+
+      tableLines.push({
+        id: item?.id,
+        name: item?.name,
+        link: item?.html_url,
+        parentId: item?.section_id,
+        warning,
+        image,
+      })
+    })
+    return tableLines
+  }, [articles?.articles])
 
   return (
     <>
@@ -127,13 +156,7 @@ const ArticlePage = () => {
           }}
           refresh={() => loadArticles()}
           totalPages={articles.page_count}
-          data={articles.articles.map((item) => ({
-            id: item?.id,
-            name: item?.name,
-            link: item?.html_url,
-            parentId: item?.section_id,
-            warning: item?.body.includes('img'),
-          }))}
+          data={tableParse}
           infoLoading={articlesLoading}
         />
       )}
