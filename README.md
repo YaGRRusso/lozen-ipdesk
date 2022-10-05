@@ -24,6 +24,7 @@ O projeto ainda está em desenvolvimento e ainda haverão próximas atualizaçõ
 - [x] Armazenamento de dados em contexto para evitar requisições desnecessárias
 - [x] Importação e exportação de informações em JSON e CSV
 - [x] Conversão automática na referências de IDS em contas antigas para IDS em novas contas ao importar
+- [x] Identificação de artigos com imagens utilizando links externos à conta atual
 - [x] Tratamento de erros de frontend e backend
 - [ ] Conversor de CSV para JSON
 - [ ] Filtros, busca e ordenação em tabelas
