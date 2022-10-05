@@ -37,7 +37,7 @@ const PaginationCounterButton = ({
         title="Anterior"
         onClick={() => prevPage()}
         className={`${
-          morePages.prev ? '' : 'pointer-events-none opacity-60'
+          morePages.prev ? '' : 'pointer-events-none text-sky-900'
         } flex items-center justify-center p-1 rounded hover:bg-sky-700 transition-all cursor-pointer`}
       >
         <CaretLeft weight="bold" />
@@ -47,7 +47,7 @@ const PaginationCounterButton = ({
         title="Próximo"
         onClick={() => nextPage()}
         className={`${
-          morePages.next ? '' : 'pointer-events-none opacity-60'
+          morePages.next ? '' : 'pointer-events-none text-sky-900'
         } flex items-center justify-center p-1 rounded hover:bg-sky-700 transition-all cursor-pointer`}
       >
         <CaretRight weight="bold" />
