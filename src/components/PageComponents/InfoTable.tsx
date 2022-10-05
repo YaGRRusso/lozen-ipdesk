@@ -1,8 +1,7 @@
 import { useZendeskContext } from '@context/ZendeskContext'
 import { ArrowClockwise, ArrowSquareIn, Image, Trash } from 'phosphor-react'
-import { useMemo } from 'react'
-import ReactPaginate from 'react-paginate'
 import NoData from '/assets/no-data.svg'
+import { Pagination } from '@components/index'
 
 export interface InfoTableRowsProps {
   id: number
@@ -38,14 +37,6 @@ const InfoTable = ({
   ...rest
 }: InfoTableProps) => {
   const { easyDelete } = useZendeskContext()
-
-  const showPagination = useMemo(() => {
-    if (totalPages && totalPages > 1 && currentPage) {
-      return true
-    } else {
-      return false
-    }
-  }, [totalPages, currentPage])
 
   return (
     <>
@@ -155,20 +146,11 @@ const InfoTable = ({
           </div>
         )}
       </div>
-      {showPagination && (
-        <ReactPaginate
-          className="flex gap-1 items-center justify-evenly max-w-lg mx-auto"
-          activeClassName="pointer-events-none px-1 rounded bg-sky-800 text-white"
-          pageClassName="px-1 rounded transition-all hover:bg-gray-200"
-          nextClassName="hidden"
-          previousClassName="hidden"
-          pageCount={totalPages ?? 0}
-          forcePage={currentPage - 1}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={1}
-          onPageChange={(ev) => setCurrentPage(ev.selected + 1)}
-        />
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        pageChange={setCurrentPage}
+      />
     </>
   )
 }

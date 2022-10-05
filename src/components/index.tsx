@@ -47,6 +47,9 @@ export type { ImportedListProps } from './MiscComponents/ImportedList'
 export { default as InfoTooltip } from './MiscComponents/InfoTooltip'
 export type { InfoTooltipProps } from './MiscComponents/InfoTooltip'
 
+export { default as Pagination } from './MiscComponents/Pagination'
+export type { PaginationProps } from './MiscComponents/Pagination'
+
 export { default as PaginationCounterButton } from './MiscComponents/PaginationCounterButton'
 export type { PaginationCounterButtonProps } from './MiscComponents/PaginationCounterButton'
 
