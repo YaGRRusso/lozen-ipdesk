@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { randomGenerator } from '@helpers/randomGenerator'
 import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
@@ -9,6 +9,7 @@ import {
   FormInput,
   FormSelect,
   InfoTable,
+  InfoTableRowsProps,
 } from '@components/index'
 
 const SectionPage = () => {
@@ -57,9 +58,20 @@ const SectionPage = () => {
     setSectionPositionInput(0)
   }
 
-  const handleDeleteSection = (id: number) => {
-    deleteSection(id)
-  }
+  const infoTableValue = useMemo(() => {
+    const tableRows: InfoTableRowsProps[] = []
+    if (sections?.sections) {
+      sections.sections.map((item) => {
+        tableRows.push({
+          id: item?.id,
+          name: item?.name,
+          link: item?.html_url,
+          parentId: item?.category_id,
+        })
+      })
+    }
+    return tableRows
+  }, [sections])
 
   return (
     <>
@@ -102,20 +114,13 @@ const SectionPage = () => {
       {sections && (
         <InfoTable
           titles={['Identificação', 'Nome', 'Categoria']}
-          deleteFunction={handleDeleteSection}
+          deleteInfo={deleteSection}
           count={sections.count}
-          data={sections.sections.map((item) => ({
-            id: item?.id,
-            name: item?.name,
-            link: item?.html_url,
-            parentId: item?.category_id,
-          }))}
-          refresh={() => loadSections()}
+          data={infoTableValue}
+          refreshInfo={() => loadSections()}
           totalPages={sections.page_count}
-          currentPage={{
-            value: currentPage,
-            setValue: setCurrentPage,
-          }}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
           infoLoading={sectionsLoading}
         />
       )}

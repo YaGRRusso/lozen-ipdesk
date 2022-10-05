@@ -63,21 +63,21 @@ const ExportPage = () => {
         object={categories}
         prevPage={categoriesPagesButtons.prev}
         nextPage={categoriesPagesButtons.next}
-        loading={categoriesLoading}
+        infoLoading={categoriesLoading}
       />
       <JsonViewer
         title="Sections"
         object={sections}
         prevPage={sectionsPagesButtons.prev}
         nextPage={sectionsPagesButtons.next}
-        loading={sectionsLoading}
+        infoLoading={sectionsLoading}
       />
       <JsonViewer
         title="Articles"
         object={articles}
         prevPage={articlesPagesButtons.prev}
         nextPage={articlesPagesButtons.next}
-        loading={articlesLoading}
+        infoLoading={articlesLoading}
       />
     </>
   )

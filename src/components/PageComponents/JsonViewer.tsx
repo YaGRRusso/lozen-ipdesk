@@ -12,7 +12,7 @@ export interface JsonViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   object: any
   nextPage: () => void
   prevPage: () => void
-  loading: boolean
+  infoLoading: boolean
 }
 
 const JsonViewer = ({
@@ -20,7 +20,7 @@ const JsonViewer = ({
   object,
   nextPage,
   prevPage,
-  loading,
+  infoLoading,
   ...rest
 }: JsonViewerProps) => {
   return (
@@ -30,7 +30,7 @@ const JsonViewer = ({
         <PaginationCounterButton
           currentPage={object?.page}
           maxPages={object?.page_count}
-          loading={loading}
+          loading={infoLoading}
           nextPage={nextPage}
           prevPage={prevPage}
         />
@@ -40,8 +40,8 @@ const JsonViewer = ({
         </div>
       </C.ContainerTitle>
       <C.ContainerBody limit {...rest}>
-        {(loading || !object) && <ConnectionButton loading={loading} />}
-        {!loading && object && (
+        {(infoLoading || !object) && <ConnectionButton loading={infoLoading} />}
+        {!infoLoading && object && (
           <Inspector table={false} data={object} expandLevel={3} />
         )}
       </C.ContainerBody>

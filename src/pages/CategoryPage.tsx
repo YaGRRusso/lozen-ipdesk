@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { randomGenerator } from '@helpers/randomGenerator'
 import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
@@ -8,6 +8,7 @@ import {
   FormButton,
   FormInput,
   InfoTable,
+  InfoTableRowsProps,
 } from '@components/index'
 
 const CategoryPage = () => {
@@ -48,9 +49,19 @@ const CategoryPage = () => {
     setCategoryPositionInput(0)
   }
 
-  const handleDeleteCategory = (id: number) => {
-    deleteCategory(id)
-  }
+  const infoTableValue = useMemo(() => {
+    const tableRows: InfoTableRowsProps[] = []
+    if (categories?.categories) {
+      categories.categories.map((item) => {
+        tableRows.push({
+          id: item?.id,
+          name: item?.name,
+          link: item?.html_url,
+        })
+      })
+    }
+    return tableRows
+  }, [categories])
 
   return (
     <>
@@ -86,19 +97,13 @@ const CategoryPage = () => {
       {categories && (
         <InfoTable
           titles={['Identificação', 'Nome']}
-          deleteFunction={handleDeleteCategory}
+          deleteInfo={deleteCategory}
           count={categories.count}
-          data={categories.categories.map((item) => ({
-            id: item?.id,
-            name: item?.name,
-            link: item?.html_url,
-          }))}
-          refresh={() => loadCategories()}
+          data={infoTableValue}
+          refreshInfo={() => loadCategories()}
           totalPages={categories.page_count}
-          currentPage={{
-            value: currentPage,
-            setValue: setCurrentPage,
-          }}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
           infoLoading={categoriesLoading}
         />
       )}

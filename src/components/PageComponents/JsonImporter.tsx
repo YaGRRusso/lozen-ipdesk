@@ -7,11 +7,13 @@ import {
   ProgressBarProps,
   UploadButton,
   ConvertButton,
+  FormFile,
+  FileImportResponseProps,
 } from '@components/index'
 import { Inspector } from 'react-inspector'
 import * as C from '@styles/ContainerBox'
 import { NewOldIdProps } from '@context/ImportContext'
-import { useState } from 'react'
+import { useMemo } from 'react'
 
 export type ImportObjectProps = {
   value: any
@@ -23,20 +25,23 @@ export type ImportObjectProps = {
 
 export interface JsonImporterProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  uploadEvent: {
-    onClick: () => void
-    loading: boolean
-  }
+  uploadFunction: () => void
+  infoLoading: boolean
   title: string
   object: ImportObjectProps
   progress: ProgressBarProps
   importedListNewOldIds: NewOldIdProps
   parentNewOldIds?: NewOldIdProps
-  importedImagesList?: Pick<ImagesListProps, 'data'>
+  importedImagesList?:
+    | {
+        title: string
+      }[]
+    | undefined
 }
 
 const JsonImporter = ({
-  uploadEvent,
+  infoLoading,
+  uploadFunction,
   title,
   object,
   progress,
@@ -45,25 +50,23 @@ const JsonImporter = ({
   importedImagesList,
   ...rest
 }: JsonImporterProps) => {
-  const [dragOver, setDragOver] = useState(false)
-
-  const importJson = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    if (!ev.target.files || !ev.target.files[0]) {
+  const importJson = ({ file, error }: FileImportResponseProps) => {
+    if (error) {
+      if (object.setIds)
+        object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
+      object.setValue({ error })
+      return
+    }
+    if (file === null) {
       if (object.setIds)
         object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
       object.setValue(undefined)
       return
     }
-    if (ev.target.files[0].type !== 'application/json') {
-      if (object.setIds)
-        object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
-      object.setValue({ error: 'Formato de arquivo inválido' })
-      return
-    }
     const fileReader = new FileReader()
-    fileReader.readAsText(ev.target.files[0], 'UTF-8')
-    fileReader.onload = (e) => {
-      const parsedJson = JSON.parse(e.target?.result as string)
+    fileReader.readAsText(file, 'UTF-8')
+    fileReader.onload = (ev) => {
+      const parsedJson = JSON.parse(ev.target?.result as string)
       if (object.target in parsedJson) {
         if (object.setIds) {
           object.setIds((oldValue) => ({ ...oldValue, newOldIds: [] }))
@@ -85,53 +88,59 @@ const JsonImporter = ({
     }
   }
 
+  const activeConvertButton = useMemo(() => {
+    if (
+      object.value &&
+      !object.value.error &&
+      parentNewOldIds &&
+      parentNewOldIds?.newOldIds.length > 0
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }, [object.value, parentNewOldIds?.newOldIds])
+
+  const activeUploadButton = useMemo(() => {
+    if (object.value && !object.value.error && !infoLoading) {
+      return true
+    } else {
+      return false
+    }
+  }, [object.value, infoLoading])
+
   return (
     <C.Container>
       <C.ContainerTitle>
         <span>{title}</span>
         {parentNewOldIds?.newOldIds && (
           <ConvertButton
-            active={
-              object.value &&
-              !object.value.error &&
-              parentNewOldIds?.newOldIds.length > 0
-            }
+            active={activeConvertButton}
             newOldIds={parentNewOldIds}
             object={object}
           />
         )}
-        <UploadButton
-          active={object.value && !object.value.error && !uploadEvent.loading}
-          onClick={uploadEvent.onClick}
-        />
+        <UploadButton active={activeUploadButton} onClick={uploadFunction} />
       </C.ContainerTitle>
       <C.ContainerBody {...rest}>
-        <input
-          className={`${
-            dragOver
-              ? 'py-12 bg-slate-100 border-slate-400 text-slate-900'
-              : 'py-6'
-          } bg-slate-50 disabled:p-2 rounded disabled:pointer-events-none hover:bg-slate-100 cursor-pointer transition-all duration-300 border-dashed border-2 border-slate-300 hover:border-slate-400 text-slate-800 disabled:text-slate-400 hover:text-slate-900 w-full px-6`}
-          type="file"
-          disabled={uploadEvent.loading}
-          onChange={(ev) => importJson(ev)}
-          onDragEnter={() => setDragOver(true)}
-          onDragLeave={() => setDragOver(false)}
-          onDrop={() => setDragOver(false)}
+        <FormFile
+          fileImport={importJson}
+          infoLoading={infoLoading}
+          fileTypes={['application/json']}
         />
-        {object.value && !object.value.error && (
-          <Inspector table={false} data={object.value} />
-        )}
         {object.value && object.value.error && (
           <ErrorMessage message={object.value.error} />
+        )}
+        {object.value && !object.value.error && (
+          <Inspector table={false} data={object.value} />
         )}
         <ProgressBar current={progress.current} max={progress.max} />
         {importedListNewOldIds.newOldIds &&
           importedListNewOldIds.newOldIds.length > 0 && (
             <ImportedList data={importedListNewOldIds} />
           )}
-        {importedImagesList?.data && importedImagesList.data.length > 0 && (
-          <ImagesList data={importedImagesList.data} />
+        {importedImagesList && importedImagesList.length > 0 && (
+          <ImagesList data={importedImagesList} />
         )}
       </C.ContainerBody>
     </C.Container>

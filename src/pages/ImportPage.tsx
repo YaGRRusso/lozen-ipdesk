@@ -145,10 +145,8 @@ const ImportPage = () => {
           setIds: setCategoriesIds,
           target: 'categories',
         }}
-        uploadEvent={{
-          onClick: handleUploadCategories,
-          loading: uploadingCategories,
-        }}
+        infoLoading={uploadingCategories}
+        uploadFunction={handleUploadCategories}
         progress={{
           current: categoriesIds?.newOldIds?.length,
           max: categoriesFile?.categories?.length,
@@ -164,10 +162,8 @@ const ImportPage = () => {
           target: 'sections',
           parent: 'category_id',
         }}
-        uploadEvent={{
-          onClick: handleUploadSections,
-          loading: uploadingSections,
-        }}
+        infoLoading={uploadingSections}
+        uploadFunction={handleUploadSections}
         progress={{
           current: sectionsIds?.newOldIds?.length,
           max: sectionsFile?.sections?.length,
@@ -184,17 +180,15 @@ const ImportPage = () => {
           target: 'articles',
           parent: 'section_id',
         }}
-        uploadEvent={{
-          onClick: handleUploadArticles,
-          loading: uploadingArticles,
-        }}
+        infoLoading={uploadingArticles}
+        uploadFunction={handleUploadArticles}
         progress={{
           current: articlesIds?.newOldIds?.length,
           max: articlesFile?.articles?.length,
         }}
         importedListNewOldIds={articlesIds}
         parentNewOldIds={sectionsIds}
-        importedImagesList={{ data: articlesWithImg }}
+        importedImagesList={articlesWithImg}
       />
     </>
   )

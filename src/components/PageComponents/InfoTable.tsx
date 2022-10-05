@@ -15,27 +15,26 @@ export interface InfoTableRowsProps {
 
 export interface InfoTableProps extends React.HTMLAttributes<HTMLTableElement> {
   titles: string[]
-  count: number
-  currentPage?: {
-    value: number
-    setValue: React.Dispatch<React.SetStateAction<number>>
-  }
-  infoLoading: boolean
-  refresh: () => void
-  totalPages?: number
   data: InfoTableRowsProps[]
-  deleteFunction: (id: number) => void
+  count: number
+  infoLoading: boolean
+  refreshInfo: () => void
+  deleteInfo: (id: number) => void
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  currentPage: number
+  totalPages: number
 }
 
 const InfoTable = ({
   titles,
   data,
   count,
+  infoLoading,
+  refreshInfo,
+  deleteInfo,
+  setCurrentPage,
   currentPage,
   totalPages,
-  deleteFunction,
-  refresh,
-  infoLoading,
   ...rest
 }: InfoTableProps) => {
   const { easyDelete } = useZendeskContext()
@@ -72,8 +71,8 @@ const InfoTable = ({
                   title="Recarregar"
                   className="flex cursor-pointer w-full h-8 transition-all hover:bg-sky-700 p-1 text-sm items-center gap-1 justify-center border rounded"
                   onClick={() => {
-                    refresh()
-                    currentPage?.setValue(1)
+                    refreshInfo()
+                    setCurrentPage(1)
                   }}
                 >
                   <span className={infoLoading ? 'hidden' : ''}>{count}</span>
@@ -125,7 +124,7 @@ const InfoTable = ({
                         title="Excluir"
                         className="hover:bg-red-300 p-1 rounded transition-all z-10"
                         onClick={() => {
-                          deleteFunction(item.id as number)
+                          deleteInfo(item.id as number)
                         }}
                       >
                         <Trash size={22} />
@@ -156,7 +155,7 @@ const InfoTable = ({
           </div>
         )}
       </div>
-      {currentPage && showPagination && (
+      {showPagination && (
         <ReactPaginate
           className="flex gap-1 items-center justify-evenly max-w-lg mx-auto"
           activeClassName="pointer-events-none px-1 rounded bg-sky-800 text-white"
@@ -164,10 +163,10 @@ const InfoTable = ({
           nextClassName="hidden"
           previousClassName="hidden"
           pageCount={totalPages ?? 0}
-          forcePage={currentPage.value - 1}
+          forcePage={currentPage - 1}
           pageRangeDisplayed={3}
           marginPagesDisplayed={1}
-          onPageChange={(ev) => currentPage.setValue(ev.selected + 1)}
+          onPageChange={(ev) => setCurrentPage(ev.selected + 1)}
         />
       )}
     </>

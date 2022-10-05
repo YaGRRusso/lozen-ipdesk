@@ -7,6 +7,10 @@ export type { FormCheckProps } from './FormInputs/FormCheck'
 export { default as FormInput } from './FormInputs/FormInput'
 export type { FormInputProps } from './FormInputs/FormInput'
 
+export { default as FormFile } from './FormInputs/FormFile'
+export type { FormFileProps } from './FormInputs/FormFile'
+export type { FileImportResponseProps } from './FormInputs/FormFile'
+
 export { default as FormSelect } from './FormInputs/FormSelect'
 export type { FormSelectProps } from './FormInputs/FormSelect'
 
@@ -71,6 +75,7 @@ export type { FooterProps } from './PageComponents/Footer'
 
 export { default as InfoTable } from './PageComponents/InfoTable'
 export type { InfoTableProps } from './PageComponents/InfoTable'
+export type { InfoTableRowsProps } from './PageComponents/InfoTable'
 
 export { default as JsonImporter } from './PageComponents/JsonImporter'
 export type { JsonImporterProps } from './PageComponents/JsonImporter'

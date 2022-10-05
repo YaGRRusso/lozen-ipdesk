@@ -13,8 +13,8 @@ import {
   FormTextAreaInput,
   InfoTable,
   InfoTooltip,
+  InfoTableRowsProps,
 } from '@components/index'
-import { InfoTableRowsProps } from '@components/PageComponents/InfoTable'
 
 const ArticlePage = () => {
   const {
@@ -64,12 +64,8 @@ const ArticlePage = () => {
     setArticlePromotedInput(false)
   }
 
-  const handleDeleteArticle = (id: number) => {
-    deleteArticle(id)
-  }
-
   const infoTableValue = useMemo(() => {
-    const tableLines: InfoTableRowsProps[] = []
+    const tableRows: InfoTableRowsProps[] = []
     if (articles?.articles) {
       articles.articles.map((item) => {
         let warning = false
@@ -85,7 +81,7 @@ const ArticlePage = () => {
           }
         }
 
-        tableLines.push({
+        tableRows.push({
           id: item?.id,
           name: item?.name,
           link: item?.html_url,
@@ -95,7 +91,7 @@ const ArticlePage = () => {
         })
       })
     }
-    return tableLines
+    return tableRows
   }, [articles])
 
   return (
@@ -106,10 +102,7 @@ const ArticlePage = () => {
           handleCreateArticle(ev)
         }}
       >
-        <h2
-          onClick={() => console.log(articles)}
-          className="text-2xl mb-5 text-sky-800 font-semibold flex gap-2 items-center justify-center"
-        >
+        <h2 className="text-2xl mb-5 text-sky-800 font-semibold flex gap-2 items-center justify-center">
           Criar Article
           <InfoTooltip title="O Zendesk não disponibiliza a lista de permission id, é necessário que haja pelo menos 1 artigo pré-cadastrado" />
         </h2>
@@ -150,13 +143,11 @@ const ArticlePage = () => {
       {articles && (
         <InfoTable
           titles={['Identificação', 'Nome', 'Section']}
-          deleteFunction={handleDeleteArticle}
+          deleteInfo={deleteArticle}
           count={articles.count}
-          currentPage={{
-            value: currentPage,
-            setValue: setCurrentPage,
-          }}
-          refresh={() => loadArticles()}
+          currentPage={currentPage}
+          refreshInfo={() => loadArticles()}
+          setCurrentPage={setCurrentPage}
           totalPages={articles.page_count}
           data={infoTableValue}
           infoLoading={articlesLoading}
