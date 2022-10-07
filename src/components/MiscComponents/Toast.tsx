@@ -1,7 +1,7 @@
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const ErrorToast = () => {
+const Toast = () => {
   return (
     <ToastContainer
       position="top-center"
@@ -13,4 +13,4 @@ const ErrorToast = () => {
   )
 }
 
-export default ErrorToast
+export default Toast

@@ -34,7 +34,7 @@ O projeto ainda está em desenvolvimento e ainda haverão próximas atualizaçõ
 
 Por conta do sistema utilizar a API do Zendesk através de um endereço externo, é inevitável o problema de CORS, para driblar isso é preciso instalar uma extensão de navegador que desabilita o CORS temporariamente para que a conexão funcione, recomendo e utilizo a extensão [Allow CORS: Access-Control-Allow-Origin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf).
 
-## 🚀 Instalando o Lozen-Ipdesk
+## 🚀 Instalando o Lozen Ipdesk
 
 Para instalar o Lozen Ipdesk, siga estas etapas:
 
@@ -45,7 +45,7 @@ Para instalar o Lozen Ipdesk, siga estas etapas:
 npm install
 ```
 
-## 💻 Usando o Lozen-Ipdesk
+## 💻 Usando o Lozen Ipdesk
 
 Para usar Lozen Ipdesk, siga estas etapas:
 

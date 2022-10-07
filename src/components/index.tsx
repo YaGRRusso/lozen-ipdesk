@@ -7,6 +7,9 @@ export type { FormCheckProps } from './FormInputs/FormCheck'
 export { default as FormInput } from './FormInputs/FormInput'
 export type { FormInputProps } from './FormInputs/FormInput'
 
+export { default as FormSearch } from './FormInputs/FormSearch'
+export type { FormSearchProps } from './FormInputs/FormSearch'
+
 export { default as FormFile } from './FormInputs/FormFile'
 export type { FormFileProps } from './FormInputs/FormFile'
 export type { FileImportResponseProps } from './FormInputs/FormFile'
@@ -68,7 +71,7 @@ export type { UploadButtonProps } from './MiscComponents/UploadButton'
 export { default as EasyDelete } from './MiscComponents/EasyDelete'
 export type { EasyDeleteProps } from './MiscComponents/EasyDelete'
 
-export { default as ErrorToast } from './MiscComponents/ErrorToast'
+export { default as Toast } from './MiscComponents/Toast'
 
 export { default as Header } from './PageComponents/Header'
 export type { HeaderProps } from './PageComponents/Header'
