@@ -1,11 +1,5 @@
 import { useZendeskContext } from '@context/ZendeskContext'
-import {
-  ArrowClockwise,
-  ArrowSquareIn,
-  Image,
-  MagnifyingGlass,
-  Trash,
-} from 'phosphor-react'
+import { ArrowClockwise, ArrowSquareIn, Image, Trash } from 'phosphor-react'
 import NoData from '/assets/no-data.svg'
 import { Pagination, FormSearch } from '@components/index'
 
@@ -46,7 +40,6 @@ const InfoTable = ({
 
   return (
     <div className="flex flex-col gap-4">
-      {/* <FormSearch /> */}
       <div className="shadow rounded">
         <table
           className="w-full border-separate border-spacing-0 rounded overflow-hidden"

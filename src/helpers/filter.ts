@@ -1,4 +1,5 @@
-import { ArticlesTS } from '../types/articleType'
+import { InfoTableRowsProps } from '@components/index'
+import { ArticlesTS, ArticleTS } from '../types/articleType'
 
 export type PermissionListTS = {
   id?: number
@@ -22,4 +23,37 @@ export const getPermissionList = (
     )
     return filteredList
   }
+}
+
+export const articlesWithImages = (
+  articlesList: ArticleTS[],
+  subdomain: string
+) => {
+  const tableRows: InfoTableRowsProps[] = []
+  if (articlesList) {
+    articlesList.map((item) => {
+      let warning = false
+      let image = false
+      const imageCheck = item.body.match(/<img([^>]*[^/])>/g)
+      if (imageCheck && subdomain) {
+        image = true
+        const imageUrl = imageCheck[0].match(
+          /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/g
+        )
+        if (imageUrl && !imageUrl[0].includes(subdomain)) {
+          warning = true
+        }
+      }
+
+      tableRows.push({
+        id: item?.id,
+        name: item?.name,
+        link: item?.html_url,
+        parentId: item?.section_id,
+        warning,
+        image,
+      })
+    })
+  }
+  return tableRows
 }

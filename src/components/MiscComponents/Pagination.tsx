@@ -43,6 +43,7 @@ const Pagination = ({
           nextLabel="›"
           previousClassName="hidden px-2 font-bold text-sky-800 rounded transition-all hover:bg-gray-200 xs:block"
           previousLabel="‹"
+          disabledClassName="pointer-events-none opacity-40"
           pageCount={paginationNumbers.count}
           forcePage={paginationNumbers.current}
           pageRangeDisplayed={5}

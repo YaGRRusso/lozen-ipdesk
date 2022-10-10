@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { randomGenerator } from '@helpers/randomGenerator'
-import { getPermissionList } from '@helpers/filter'
+import { articlesWithImages, getPermissionList } from '@helpers/filter'
 import { useZendeskContext } from '@context/ZendeskContext'
 import { useAuthContext } from '@context/AuthContext'
 import { CreateArticleProps } from '@api/articlesApi'
@@ -14,7 +14,10 @@ import {
   InfoTable,
   InfoTooltip,
   InfoTableRowsProps,
+  FormSearch,
 } from '@components/index'
+import { searchApi } from '@api/searchApi'
+import { SearchTS } from '@customTypes/apiType'
 
 const ArticlePage = () => {
   const {
@@ -27,6 +30,7 @@ const ArticlePage = () => {
     createArticle,
   } = useZendeskContext()
   const { loggedAccount } = useAuthContext()
+  const [filteredArticles, setFilteredArticles] = useState<SearchTS>()
 
   const [articleBodyInput, setArticleBodyInput] = useState('')
   const [articleSectionInput, setArticleSectionInput] = useState('')
@@ -64,35 +68,32 @@ const ArticlePage = () => {
     setArticlePromotedInput(false)
   }
 
-  const infoTableValue = useMemo(() => {
-    const tableRows: InfoTableRowsProps[] = []
-    if (articles?.articles) {
-      articles.articles.map((item) => {
-        let warning = false
-        let image = false
-        const imageCheck = item.body.match(/<img([^>]*[^/])>/g)
-        if (imageCheck && loggedAccount) {
-          image = true
-          const imageUrl = imageCheck[0].match(
-            /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/g
-          )
-          if (imageUrl && !imageUrl[0].includes(loggedAccount.subdomain)) {
-            warning = true
-          }
-        }
-
-        tableRows.push({
-          id: item?.id,
-          name: item?.name,
-          link: item?.html_url,
-          parentId: item?.section_id,
-          warning,
-          image,
-        })
-      })
+  const handleSearchArticle = async (query: string) => {
+    if (loggedAccount) {
+      setCurrentPage(1)
+      if (query) {
+        const searchResult = await searchApi.getSearch(loggedAccount, query)
+        setFilteredArticles(searchResult)
+      } else {
+        setFilteredArticles(undefined)
+      }
     }
-    return tableRows
-  }, [articles])
+  }
+
+  const infoTableValue = useMemo(() => {
+    if (filteredArticles && loggedAccount) {
+      return articlesWithImages(
+        filteredArticles.results,
+        loggedAccount?.subdomain
+      )
+    }
+
+    if (articles && loggedAccount) {
+      return articlesWithImages(articles.articles, loggedAccount?.subdomain)
+    }
+
+    return []
+  }, [articles, filteredArticles])
 
   return (
     <>
@@ -140,20 +141,23 @@ const ArticlePage = () => {
         />
         <FormButton disabled={articlesLoading} />
       </form>
-      {articles && (
-        <InfoTable
-          titles={['Identificação', 'Nome', 'Section']}
-          deleteInfo={deleteArticle}
-          count={articles.count}
-          currentPage={currentPage}
-          refreshInfo={() => loadArticles()}
-          setCurrentPage={setCurrentPage}
-          totalPages={articles.page_count}
-          data={infoTableValue}
-          infoLoading={articlesLoading}
-        />
-      )}
-      {!articles && <ConnectionButton loading={articlesLoading} />}
+      <div className="flex flex-col gap-2">
+        <FormSearch handleSearch={handleSearchArticle} />
+        {articles && (
+          <InfoTable
+            titles={['Identificação', 'Nome', 'Section']}
+            deleteInfo={deleteArticle}
+            count={filteredArticles?.count ?? articles.count}
+            currentPage={currentPage}
+            refreshInfo={() => loadArticles()}
+            setCurrentPage={setCurrentPage}
+            totalPages={filteredArticles?.page_count ?? articles.page_count}
+            data={infoTableValue}
+            infoLoading={articlesLoading}
+          />
+        )}
+        {!articles && <ConnectionButton loading={articlesLoading} />}
+      </div>
     </>
   )
 }

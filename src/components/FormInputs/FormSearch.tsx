@@ -1,12 +1,20 @@
 import { MagnifyingGlass } from 'phosphor-react'
+import { useEffect, useState } from 'react'
 
 export interface FormSearchProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  handleSearch: (query: string) => void
+}
 
-const FormSearch = ({ ...rest }: FormSearchProps) => {
-  const handleSearch = (text: string) => {
-    console.log(text)
-  }
+const FormSearch = ({ handleSearch, ...rest }: FormSearchProps) => {
+  const [searchValue, setSearchValue] = useState('')
+
+  useEffect(() => {
+    const searchDebounce = setTimeout(() => {
+      handleSearch(searchValue)
+    }, 1200)
+    return () => clearTimeout(searchDebounce)
+  }, [searchValue])
 
   return (
     <div className="flex flex-row gap-2 justify-end items-center text-slate-900">
@@ -18,7 +26,8 @@ const FormSearch = ({ ...rest }: FormSearchProps) => {
           className="bg-transparent border border-sky-900 rounded px-2 py-1
           block text-ellipsis w-full"
           type="text"
-          onChange={(ev) => handleSearch(ev.target.value)}
+          value={searchValue}
+          onChange={(ev) => setSearchValue(ev.target.value)}
           {...rest}
         />
         <button className="absolute right-2">
