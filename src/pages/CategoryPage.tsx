@@ -24,6 +24,8 @@ const CategoryPage = () => {
   const [categoryNameInput, setCategoryNameInput] = useState('')
   const [categoryDescInput, setCategoryDescInput] = useState('')
   const [categoryPositionInput, setCategoryPositionInput] = useState(0)
+  const [categoryCreateCount, setCategoryCreateCount] = useState(1)
+
   const [currentPage, setCurrentPage] = useState(categories?.page ?? 1)
 
   const loadZendeskInfo = async () => {
@@ -36,17 +38,21 @@ const CategoryPage = () => {
 
   const handleCreateCategory = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
-    let newCategory: CreateCategoryProps = {
-      name: categoryNameInput || randomGenerator.title(),
-      description: categoryDescInput || randomGenerator.description(),
-      locale: loggedAccount?.locale || 'pt-br',
-      position: categoryPositionInput || 0,
+
+    for (let i = 0; i < categoryCreateCount; i++) {
+      let newCategory: CreateCategoryProps = {
+        name: categoryNameInput || randomGenerator.title(),
+        description: categoryDescInput || randomGenerator.description(),
+        locale: loggedAccount?.locale || 'pt-br',
+        position: categoryPositionInput || 0,
+      }
+      await createCategory(newCategory, categoryPositionInput)
     }
-    createCategory(newCategory, categoryPositionInput)
 
     setCategoryNameInput('')
     setCategoryDescInput('')
     setCategoryPositionInput(0)
+    setCategoryCreateCount(1)
   }
 
   const infoTableValue = useMemo(() => {
@@ -92,7 +98,18 @@ const CategoryPage = () => {
           onChange={(ev) => setCategoryPositionInput(parseInt(ev.target.value))}
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
-        <FormButton disabled={categoriesLoading} />
+        <div className="flex w-full justify-center items-center gap-1 mt-8">
+          <FormButton disabled={categoriesLoading} />
+          <FormInput
+            placeholder="quantidade..."
+            type="number"
+            min="1"
+            max="999"
+            value={categoryCreateCount}
+            sm
+            onChange={(ev) => setCategoryCreateCount(parseInt(ev.target.value))}
+          />
+        </div>
       </form>
       {categories && (
         <InfoTable

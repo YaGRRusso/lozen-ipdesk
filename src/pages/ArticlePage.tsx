@@ -14,6 +14,7 @@ import {
   InfoTable,
   InfoTooltip,
   FormSearch,
+  FormCounter,
 } from '@components/index'
 import { searchApi } from '@api/searchApi'
 import { SearchTS } from '@customTypes/apiType'
@@ -38,6 +39,7 @@ const ArticlePage = () => {
   const [articlePermissionInputAlt, setArticlePermissionInputAlt] = useState('')
   const [articleTitleInput, setArticleTitleInput] = useState('')
   const [articlePromotedInput, setArticlePromotedInput] = useState(false)
+  const [articleCreateCount, setArticleCreateCount] = useState(1)
   const [currentPage, setCurrentPage] = useState(articles?.page ?? 1)
 
   const loadZendeskInfo = async () => {
@@ -55,19 +57,22 @@ const ArticlePage = () => {
       ? parseInt(articlePermissionInputAlt)
       : parseInt(articlePermissionInput)
 
-    let newArticle: CreateArticleProps = {
-      permission_group_id: permissionId,
-      user_segment_id: null,
-      section_id: parseInt(articleSectionInput),
-      title: articleTitleInput || randomGenerator.title(),
-      body: articleBodyInput || randomGenerator.body(),
-      promoted: articlePromotedInput,
+    for (let i = 0; i < articleCreateCount; i++) {
+      let newArticle: CreateArticleProps = {
+        permission_group_id: permissionId,
+        user_segment_id: null,
+        section_id: parseInt(articleSectionInput),
+        title: articleTitleInput || randomGenerator.title(),
+        body: articleBodyInput || randomGenerator.body(),
+        promoted: articlePromotedInput,
+      }
+      await createArticle(newArticle)
     }
-    createArticle(newArticle)
 
     setArticleTitleInput('')
     setArticleBodyInput('')
     setArticlePromotedInput(false)
+    setArticleCreateCount(1)
   }
 
   const handleSearchArticle = async (query: string) => {
@@ -161,7 +166,13 @@ const ArticlePage = () => {
           onChange={() => setArticlePromotedInput(!articlePromotedInput)}
           checked={articlePromotedInput}
         />
-        <FormButton disabled={articlesLoading} />
+        <div className="flex w-full justify-center items-center gap-1 mt-8">
+          <FormButton disabled={articlesLoading} />
+          <FormCounter
+            value={articleCreateCount}
+            onChange={(ev) => setArticleCreateCount(parseInt(ev.target.value))}
+          />
+        </div>
       </form>
       <div className="flex flex-col gap-2">
         <FormSearch handleSearch={handleSearchArticle} />

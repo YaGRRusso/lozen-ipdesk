@@ -7,6 +7,9 @@ export type { FormCheckProps } from './FormInputs/FormCheck'
 export { default as FormInput } from './FormInputs/FormInput'
 export type { FormInputProps } from './FormInputs/FormInput'
 
+export { default as FormCounter } from './FormInputs/FormCounter'
+export type { FormCounterProps } from './FormInputs/FormCounter'
+
 export { default as FormSearch } from './FormInputs/FormSearch'
 export type { FormSearchProps } from './FormInputs/FormSearch'
 

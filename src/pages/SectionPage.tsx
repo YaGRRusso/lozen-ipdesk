@@ -28,6 +28,7 @@ const SectionPage = () => {
   const [sectionNameInput, setSectionNameInput] = useState('')
   const [sectionDescInput, setSectionDescInput] = useState('')
   const [sectionPositionInput, setSectionPositionInput] = useState(0)
+  const [sectionCreateCount, setSectionCreateCount] = useState(1)
   const [currentPage, setCurrentPage] = useState(sections?.page ?? 1)
 
   const loadZendeskInfo = async () => {
@@ -44,18 +45,21 @@ const SectionPage = () => {
   const handleCreateSection = async (ev: FormEvent<HTMLElement>) => {
     ev.preventDefault()
 
-    let newSection: CreateSectionProps = {
-      category_id: parseInt(sectionCategoryInput),
-      name: sectionNameInput || randomGenerator.title(),
-      description: sectionDescInput || randomGenerator.description(),
-      locale: loggedAccount?.locale || 'pt-br',
-      position: sectionPositionInput || 0,
+    for (let i = 0; i < sectionCreateCount; i++) {
+      let newSection: CreateSectionProps = {
+        category_id: parseInt(sectionCategoryInput),
+        name: sectionNameInput || randomGenerator.title(),
+        description: sectionDescInput || randomGenerator.description(),
+        locale: loggedAccount?.locale || 'pt-br',
+        position: sectionPositionInput || 0,
+      }
+      await createSection(newSection, sectionPositionInput)
     }
-    createSection(newSection, sectionPositionInput)
 
     setSectionNameInput('')
     setSectionDescInput('')
     setSectionPositionInput(0)
+    setSectionCreateCount(1)
   }
 
   const infoTableValue = useMemo(() => {
@@ -109,7 +113,18 @@ const SectionPage = () => {
           onChange={(ev) => setSectionPositionInput(parseInt(ev.target.value))}
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
-        <FormButton disabled={sectionsLoading} />
+        <div className="flex w-full justify-center items-center gap-1 mt-8">
+          <FormButton disabled={sectionsLoading} />
+          <FormInput
+            placeholder="quantidade..."
+            type="number"
+            min="1"
+            max="999"
+            value={sectionCreateCount}
+            sm
+            onChange={(ev) => setSectionCreateCount(parseInt(ev.target.value))}
+          />
+        </div>
       </form>
       {sections && (
         <InfoTable
