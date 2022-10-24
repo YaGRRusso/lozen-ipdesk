@@ -105,6 +105,8 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         })
       }
       await categoriesApi.deleteCategory(loggedAccount, id)
+      setSections(undefined)
+      setArticles(undefined)
     }
   }
 
@@ -165,6 +167,7 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         })
       }
       await sectionsApi.deleteSection(loggedAccount, id)
+      setArticles(undefined)
     }
   }
 

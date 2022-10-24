@@ -13,11 +13,11 @@ import {
   FormTextAreaInput,
   InfoTable,
   InfoTooltip,
-  InfoTableRowsProps,
   FormSearch,
 } from '@components/index'
 import { searchApi } from '@api/searchApi'
 import { SearchTS } from '@customTypes/apiType'
+import { MagnifyingGlass } from 'phosphor-react'
 
 const ArticlePage = () => {
   const {
@@ -36,7 +36,6 @@ const ArticlePage = () => {
   const [articleSectionInput, setArticleSectionInput] = useState('')
   const [articlePermissionInput, setArticlePermissionInput] = useState('')
   const [articleTitleInput, setArticleTitleInput] = useState('')
-  const [articleDescInput, setArticleDescInput] = useState('')
   const [articlePromotedInput, setArticlePromotedInput] = useState(false)
   const [currentPage, setCurrentPage] = useState(articles?.page ?? 1)
 
@@ -56,14 +55,12 @@ const ArticlePage = () => {
       user_segment_id: null,
       section_id: parseInt(articleSectionInput),
       title: articleTitleInput || randomGenerator.title(),
-      description: articleDescInput || randomGenerator.description(),
       body: articleBodyInput || randomGenerator.body(),
       promoted: articlePromotedInput,
     }
     createArticle(newArticle)
 
     setArticleTitleInput('')
-    setArticleDescInput('')
     setArticleBodyInput('')
     setArticlePromotedInput(false)
   }
@@ -105,13 +102,22 @@ const ArticlePage = () => {
       >
         <h2 className="text-2xl mb-5 text-sky-800 font-semibold flex gap-2 items-center justify-center">
           Criar Article
-          <InfoTooltip title="O Zendesk não disponibiliza a lista de permission id, é necessário que haja pelo menos 1 artigo pré-cadastrado" />
+          <a
+            href={`https://${loggedAccount?.subdomain}.zendesk.com/api/v2/guide/permission_groups.json`}
+            target="_blank"
+          >
+            <InfoTooltip
+              icon={<MagnifyingGlass size={20} weight="bold" />}
+              title="O Zendesk não disponibiliza via API a lista de PERMISSION_ID, caso o ID que procura não esteja disponível no SELECT, clique aqui para consultar externamente a lista completa de PERMISSION_ID e inserir MANUALMENTE o ID desejado"
+            />
+          </a>
         </h2>
         <FormSelect
           value={articlePermissionInput}
           onChange={(ev) => setArticlePermissionInput(ev.target.value)}
           options={getPermissionList(articles)}
           placeholder="permission ID pertencente... (deve estar conectado)"
+          manually
           required
         />
         <FormSelect
@@ -125,11 +131,6 @@ const ArticlePage = () => {
           placeholder="nome... (deixe vazio para gerar aleatoriamente)"
           value={articleTitleInput}
           onChange={(ev) => setArticleTitleInput(ev.target.value)}
-        />
-        <FormInput
-          placeholder="descrição... (deixe vazio para gerar aleatoriamente)"
-          value={articleDescInput}
-          onChange={(ev) => setArticleDescInput(ev.target.value)}
         />
         <FormTextAreaInput
           value={articleBodyInput}

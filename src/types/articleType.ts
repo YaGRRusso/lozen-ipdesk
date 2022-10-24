@@ -1,6 +1,6 @@
 export type ArticleTS = {
   author_id: number
-  body: string
+  body?: string
   comments_disabled: boolean
   created_at: string
   draft: boolean

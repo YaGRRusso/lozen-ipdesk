@@ -34,7 +34,7 @@ export const articlesWithImages = (
     articlesList.map((item) => {
       let warning = false
       let image = false
-      const imageCheck = item.body.match(/<img([^>]*[^/])>/g)
+      const imageCheck = item.body?.match(/<img([^>]*[^/])>/g)
       if (imageCheck && subdomain) {
         image = true
         const imageUrl = imageCheck[0].match(

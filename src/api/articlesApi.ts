@@ -6,7 +6,6 @@ export interface CreateArticleProps {
   user_segment_id?: null
   section_id: number
   title: string
-  description?: string
   body: string
   promoted?: boolean
 }
