@@ -97,7 +97,7 @@ const ImportPage = () => {
     if (articlesFile?.articles && articlesFile?.articles?.length > 1) {
       for (let i in articlesFile?.articles) {
         const res = await createArticle({
-          body: articlesFile?.articles[i].body,
+          body: articlesFile?.articles[i].body ?? '',
           permission_group_id: articlesFile?.articles[i].permission_group_id,
           user_segment_id: null,
           promoted: articlesFile?.articles[i].promoted,
@@ -128,7 +128,7 @@ const ImportPage = () => {
 
   const articlesWithImg = useMemo(() => {
     const filteredArticles = articlesFile?.articles?.filter((item) =>
-      item.body.includes('img')
+      item.body?.includes('img')
     )
     return filteredArticles?.map((item) => ({
       title: item.title,
