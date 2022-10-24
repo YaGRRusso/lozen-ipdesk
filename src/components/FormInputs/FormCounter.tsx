@@ -16,7 +16,7 @@ const FormCounter = ({ ...rest }: FormCounterProps) => {
     if (rest.onChange) {
       let newValue = ev
       if (!newValue.target.value) newValue.target.value = '1'
-      newValue.target.value = newValue.target.value.slice(-3)
+      newValue.target.value = newValue.target.value.slice(-2)
       rest.onChange(newValue)
     }
   }
@@ -28,7 +28,7 @@ const FormCounter = ({ ...rest }: FormCounterProps) => {
          block max-w-screen-md text-ellipsis"
       type="number"
       min="1"
-      max="999"
+      max="99"
       {...rest}
       onChange={handleChange}
     />

@@ -6,6 +6,7 @@ import { CreateCategoryProps } from '@api/categoriesApi'
 import {
   ConnectionButton,
   FormButton,
+  FormCounter,
   FormInput,
   InfoTable,
   InfoTableRowsProps,
@@ -100,13 +101,8 @@ const CategoryPage = () => {
         />
         <div className="flex w-full justify-center items-center gap-1 mt-8">
           <FormButton disabled={categoriesLoading} />
-          <FormInput
-            placeholder="quantidade..."
-            type="number"
-            min="1"
-            max="999"
+          <FormCounter
             value={categoryCreateCount}
-            sm
             onChange={(ev) => setCategoryCreateCount(parseInt(ev.target.value))}
           />
         </div>

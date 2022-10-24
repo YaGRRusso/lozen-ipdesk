@@ -6,6 +6,7 @@ import { CreateSectionProps } from '@api/sectionsApi'
 import {
   ConnectionButton,
   FormButton,
+  FormCounter,
   FormInput,
   FormSelect,
   InfoTable,
@@ -115,13 +116,8 @@ const SectionPage = () => {
         />
         <div className="flex w-full justify-center items-center gap-1 mt-8">
           <FormButton disabled={sectionsLoading} />
-          <FormInput
-            placeholder="quantidade..."
-            type="number"
-            min="1"
-            max="999"
+          <FormCounter
             value={sectionCreateCount}
-            sm
             onChange={(ev) => setSectionCreateCount(parseInt(ev.target.value))}
           />
         </div>
