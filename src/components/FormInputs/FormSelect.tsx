@@ -6,9 +6,15 @@ import { SectionTS } from '@customTypes/sectionsType'
 export interface FormSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options?: CategoryTS[] | SectionTS[] | PermissionListTS[]
+  manually?: boolean
 }
 
-const FormSelect = ({ options, placeholder, ...rest }: FormSelectProps) => {
+const FormSelect = ({
+  options,
+  placeholder,
+  manually,
+  ...rest
+}: FormSelectProps) => {
   return (
     <select
       className="bg-transparent border border-sky-800 rounded px-2 py-1 invalid:border-red-600
@@ -23,6 +29,11 @@ const FormSelect = ({ options, placeholder, ...rest }: FormSelectProps) => {
           {item.name ?? item.id}
         </option>
       ))}
+      {manually && (
+        <option className="text-black bg-slate-200" value="manually">
+          Digitar manualmente...
+        </option>
+      )}
     </select>
   )
 }

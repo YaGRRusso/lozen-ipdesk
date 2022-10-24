@@ -35,6 +35,7 @@ const ArticlePage = () => {
   const [articleBodyInput, setArticleBodyInput] = useState('')
   const [articleSectionInput, setArticleSectionInput] = useState('')
   const [articlePermissionInput, setArticlePermissionInput] = useState('')
+  const [articlePermissionInputAlt, setArticlePermissionInputAlt] = useState('')
   const [articleTitleInput, setArticleTitleInput] = useState('')
   const [articlePromotedInput, setArticlePromotedInput] = useState(false)
   const [currentPage, setCurrentPage] = useState(articles?.page ?? 1)
@@ -50,8 +51,12 @@ const ArticlePage = () => {
   const handleCreateArticle = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
 
+    let permissionId = manuallySection
+      ? parseInt(articlePermissionInputAlt)
+      : parseInt(articlePermissionInput)
+
     let newArticle: CreateArticleProps = {
-      permission_group_id: parseInt(articlePermissionInput),
+      permission_group_id: permissionId,
       user_segment_id: null,
       section_id: parseInt(articleSectionInput),
       title: articleTitleInput || randomGenerator.title(),
@@ -76,6 +81,14 @@ const ArticlePage = () => {
       }
     }
   }
+
+  const manuallySection = useMemo(() => {
+    if (articlePermissionInput !== 'manually') {
+      return false
+    } else {
+      return true
+    }
+  }, [articlePermissionInput])
 
   const infoTableValue = useMemo(() => {
     if (filteredArticles && loggedAccount) {
@@ -117,9 +130,17 @@ const ArticlePage = () => {
           onChange={(ev) => setArticlePermissionInput(ev.target.value)}
           options={getPermissionList(articles)}
           placeholder="permission ID pertencente... (deve estar conectado)"
-          manually
           required
+          manually
         />
+        {manuallySection && (
+          <FormInput
+            placeholder="permission ID pertencente..."
+            value={articlePermissionInputAlt}
+            onChange={(ev) => setArticlePermissionInputAlt(ev.target.value)}
+            required
+          />
+        )}
         <FormSelect
           value={articleSectionInput}
           onChange={(ev) => setArticleSectionInput(ev.target.value)}

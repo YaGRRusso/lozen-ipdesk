@@ -12,6 +12,7 @@ import {
 } from '@customTypes/categoriesType'
 import { NewSectionTS, SectionsTS, SectionTS } from '@customTypes/sectionsType'
 import { useAuthContext } from './AuthContext'
+import { toast } from 'react-toastify'
 
 interface ZendeskContextProps {
   easyDelete: boolean
@@ -121,6 +122,10 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         data
       )
       setCategoriesLoading(false)
+      if (createdCategory && createdCategory.error) {
+        toast.error(createdCategory.error)
+        return
+      }
       if (createdCategory) {
         console.log(createdCategory)
         if (categories) {
@@ -179,6 +184,10 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         data
       )
       setSectionsLoading(false)
+      if (createdSection && createdSection.error) {
+        toast.error(createdSection.error)
+        return
+      }
       if (createdSection) {
         console.log(createdSection)
         if (sections) {
@@ -247,6 +256,10 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
         data
       )
       setArticlesLoading(false)
+      if (createdArticle && createdArticle.error) {
+        toast.error(createdArticle.error)
+        return
+      }
       if (createdArticle) {
         console.log(createdArticle)
         if (articles) {
