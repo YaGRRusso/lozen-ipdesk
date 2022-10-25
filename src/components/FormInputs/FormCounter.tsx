@@ -26,7 +26,7 @@ const FormCounter = ({ ...rest }: FormCounterProps) => {
     <input
       style={{ width: `${counterSize}ch` }}
       className="bg-transparent text-center border border-sky-800 rounded px-2 py-1 invalid:border-red-600
-         block max-w-screen-md text-ellipsis"
+         block max-w-screen-md text-ellipsis text-sky-800"
       type="number"
       min="1"
       max="100"

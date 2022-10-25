@@ -42,18 +42,6 @@ const Header = ({ ...rest }: HeaderProps) => {
         <div className="flex flex-1 gap-3 text-black flex-col">
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <HeaderTextInput
-              placeholder="digite seu email..."
-              value={email_address}
-              onChange={(ev) => setEmail(ev.target.value)}
-            />
-            <HeaderPasswordInput
-              placeholder="digite sua senha..."
-              value={password}
-              onChange={(ev) => setPassword(ev.target.value)}
-            />
-          </div>
-          <div className="flex items-center justify-center gap-3 flex-wrap">
-            <HeaderTextInput
               placeholder="digite seu subdomínio..."
               value={subdomain}
               onChange={(ev) => setSubdomain(ev.target.value)}
@@ -68,6 +56,18 @@ const Header = ({ ...rest }: HeaderProps) => {
                 { value: 'pt-br', name: 'Português' },
                 { value: 'en-us', name: 'Inglês' },
               ]}
+            />
+          </div>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <HeaderTextInput
+              placeholder="digite seu email..."
+              value={email_address}
+              onChange={(ev) => setEmail(ev.target.value)}
+            />
+            <HeaderPasswordInput
+              placeholder="digite sua senha..."
+              value={password}
+              onChange={(ev) => setPassword(ev.target.value)}
             />
           </div>
           <div className="flex items-center justify-center gap-3 flex-wrap">

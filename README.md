@@ -27,6 +27,7 @@ O projeto ainda está em desenvolvimento e ainda haverão próximas atualizaçõ
 - [x] Identificação de artigos com imagens utilizando links externos à conta atual
 - [x] Tratamento de erros de frontend e backend
 - [x] Busca e paginação em tabelas
+- [x] Listagem externa de informações e opção de digitar dados manualmente em select inputs
 - [ ] Conversor de CSV para JSON
 - [ ] Modo escuro
 
