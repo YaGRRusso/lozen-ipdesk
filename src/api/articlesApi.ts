@@ -19,7 +19,7 @@ export const articlesApi = {
       const res = await fetch(
         `https://${zd.subdomain}.zendesk.com/api/v2/help_center/${
           zd.locale
-        }/articles.json?page=${page || 1}&per_page=30`,
+        }/articles.json?page=${page || 1}&per_page=100`,
         {
           headers: {
             Authorization:
