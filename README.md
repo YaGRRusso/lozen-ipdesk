@@ -26,9 +26,10 @@ O projeto ainda está em desenvolvimento e ainda haverão próximas atualizaçõ
 - [x] Conversão automática na referências de IDS em contas antigas para IDS em novas contas ao importar
 - [x] Identificação de artigos com imagens utilizando links externos à conta atual
 - [x] Tratamento de erros de frontend e backend
-- [x] Busca e paginação em tabelas
+- [x] Busca, limite de itens e paginação em tabelas
 - [x] Listagem externa de informações e opção de digitar dados manualmente em select inputs
 - [ ] Conversor de CSV para JSON
+- [ ] Integração i18n
 - [ ] Modo escuro
 
 ## ⚠️ Problema de CORS
