@@ -126,7 +126,7 @@ const ArticlePage = () => {
           >
             <InfoTooltip
               icon={<MagnifyingGlass size={20} weight="bold" />}
-              title="O Zendesk não disponibiliza via API a lista de PERMISSION_ID, caso o ID que procura não esteja disponível no SELECT, clique aqui para consultar externamente a lista completa de PERMISSION_ID e inserir MANUALMENTE o ID desejado"
+              title="Clique aqui para acessar externamente os permission ids (deve estar previamente logado na instância Zendesk via theming)"
             />
           </a>
         </h2>

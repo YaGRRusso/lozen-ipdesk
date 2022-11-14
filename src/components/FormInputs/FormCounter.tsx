@@ -22,15 +22,31 @@ const FormCounter = ({ ...rest }: FormCounterProps) => {
     }
   }
 
+  // const handleWheel = (ev: WheelEvent) => {
+  //   ev.preventDefault()
+  //   ev.stopPropagation()
+  //   return false
+  // }
+
+  // const handleMouseIn = () => {
+  //   document.body.addEventListener('wheel', handleWheel, { passive: false })
+  // }
+
+  // const handleMouseOut = () => {
+  //   document.body.removeEventListener('wheel', handleWheel)
+  // }
+
   return (
     <input
       style={{ width: `${counterSize}ch` }}
-      className="bg-transparent text-center border border-sky-800 rounded px-2 py-1 invalid:border-red-600
+      className="no-spin bg-transparent text-center border border-sky-800 rounded px-2 py-1 invalid:border-red-600
          block max-w-screen-md text-ellipsis text-sky-800"
       type="number"
       min="1"
       max="100"
       onBlur={handleBlur}
+      // onMouseEnter={handleMouseIn}
+      // onMouseLeave={handleMouseOut}
       {...rest}
     />
   )

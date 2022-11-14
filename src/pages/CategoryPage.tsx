@@ -24,8 +24,8 @@ const CategoryPage = () => {
 
   const [categoryNameInput, setCategoryNameInput] = useState('')
   const [categoryDescInput, setCategoryDescInput] = useState('')
-  const [categoryPositionInput, setCategoryPositionInput] = useState('')
-  const [categoryCreateCount, setCategoryCreateCount] = useState('1')
+  const [categoryPositionInput, setCategoryPositionInput] = useState(0)
+  const [categoryCreateCount, setCategoryCreateCount] = useState(1)
 
   const [currentPage, setCurrentPage] = useState(categories?.page ?? 1)
 
@@ -40,20 +40,20 @@ const CategoryPage = () => {
   const handleCreateCategory = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
 
-    for (let i = 0; i < parseInt(categoryCreateCount); i++) {
+    for (let i = 0; i < categoryCreateCount; i++) {
       let newCategory: CreateCategoryProps = {
         name: categoryNameInput || randomGenerator.title(),
         description: categoryDescInput || randomGenerator.description(),
         locale: loggedAccount?.locale || 'pt-br',
-        position: parseInt(categoryPositionInput) || 0,
+        position: categoryPositionInput || 0,
       }
-      await createCategory(newCategory, parseInt(categoryPositionInput))
+      await createCategory(newCategory, categoryPositionInput)
     }
 
     setCategoryNameInput('')
     setCategoryDescInput('')
-    setCategoryPositionInput('0')
-    setCategoryCreateCount('1')
+    setCategoryPositionInput(0)
+    setCategoryCreateCount(1)
   }
 
   const infoTableValue = useMemo(() => {
@@ -96,14 +96,14 @@ const CategoryPage = () => {
           max={categories ? categories.count + 1 : 1}
           value={categoryPositionInput || ''}
           type="number"
-          onChange={(ev) => setCategoryPositionInput(ev.target.value)}
+          onChange={(ev) => setCategoryPositionInput(parseInt(ev.target.value))}
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
         <div className="flex w-full justify-center items-center gap-1 mt-8">
           <FormButton disabled={categoriesLoading} />
           <FormCounter
             value={categoryCreateCount}
-            onChange={(ev) => setCategoryCreateCount(ev.target.value)}
+            onChange={(ev) => setCategoryCreateCount(parseInt(ev.target.value))}
           />
         </div>
       </form>

@@ -28,7 +28,7 @@ const SectionPage = () => {
   const [sectionCategoryInput, setSectionCategoryInput] = useState('')
   const [sectionNameInput, setSectionNameInput] = useState('')
   const [sectionDescInput, setSectionDescInput] = useState('')
-  const [sectionPositionInput, setSectionPositionInput] = useState(0)
+  const [sectionPositionInput, setSectionPositionInput] = useState('')
   const [sectionCreateCount, setSectionCreateCount] = useState(1)
   const [currentPage, setCurrentPage] = useState(sections?.page ?? 1)
 
@@ -52,14 +52,14 @@ const SectionPage = () => {
         name: sectionNameInput || randomGenerator.title(),
         description: sectionDescInput || randomGenerator.description(),
         locale: loggedAccount?.locale || 'pt-br',
-        position: sectionPositionInput || 0,
+        position: parseInt(sectionPositionInput) || 0,
       }
-      await createSection(newSection, sectionPositionInput)
+      await createSection(newSection, parseInt(sectionPositionInput))
     }
 
     setSectionNameInput('')
     setSectionDescInput('')
-    setSectionPositionInput(0)
+    setSectionPositionInput('')
     setSectionCreateCount(1)
   }
 
@@ -111,7 +111,7 @@ const SectionPage = () => {
           min={1}
           max={sections ? sections.count + 1 : 1}
           value={sectionPositionInput || ''}
-          onChange={(ev) => setSectionPositionInput(parseInt(ev.target.value))}
+          onChange={(ev) => setSectionPositionInput(ev.target.value)}
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
         <div className="flex w-full justify-center items-center gap-1 mt-8">
