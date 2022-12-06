@@ -30,6 +30,7 @@ const SectionPage = () => {
   const [sectionDescInput, setSectionDescInput] = useState('')
   const [sectionPositionInput, setSectionPositionInput] = useState('')
   const [sectionCreateCount, setSectionCreateCount] = useState(1)
+  const [sectionsCreatedCount, setSectionsCreatedCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(sections?.page ?? 1)
 
   const loadZendeskInfo = async () => {
@@ -55,12 +56,13 @@ const SectionPage = () => {
         position: parseInt(sectionPositionInput) || 0,
       }
       await createSection(newSection, parseInt(sectionPositionInput))
+      setSectionsCreatedCount(i + 1)
     }
 
     setSectionNameInput('')
     setSectionDescInput('')
     setSectionPositionInput('')
-    setSectionCreateCount(1)
+    setSectionsCreatedCount(0)
   }
 
   const infoTableValue = useMemo(() => {
@@ -115,10 +117,15 @@ const SectionPage = () => {
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
         <div className="flex w-full justify-center items-center gap-1 mt-8">
-          <FormButton disabled={sectionsLoading} />
+          <FormButton
+            disabled={sectionsLoading}
+            createTarget={sectionCreateCount}
+            createProgress={sectionsCreatedCount}
+          />
           <FormCounter
             value={sectionCreateCount}
             onChange={(ev) => setSectionCreateCount(parseInt(ev.target.value))}
+            disabled={sectionsLoading}
           />
         </div>
       </form>

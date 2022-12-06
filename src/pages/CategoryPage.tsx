@@ -26,6 +26,7 @@ const CategoryPage = () => {
   const [categoryDescInput, setCategoryDescInput] = useState('')
   const [categoryPositionInput, setCategoryPositionInput] = useState(0)
   const [categoryCreateCount, setCategoryCreateCount] = useState(1)
+  const [categoriesCreatedCount, setCategoriesCreatedCount] = useState(0)
 
   const [currentPage, setCurrentPage] = useState(categories?.page ?? 1)
 
@@ -48,12 +49,13 @@ const CategoryPage = () => {
         position: categoryPositionInput || 0,
       }
       await createCategory(newCategory, categoryPositionInput)
+      setCategoriesCreatedCount(i + 1)
     }
 
     setCategoryNameInput('')
     setCategoryDescInput('')
     setCategoryPositionInput(0)
-    setCategoryCreateCount(1)
+    setCategoriesCreatedCount(0)
   }
 
   const infoTableValue = useMemo(() => {
@@ -100,10 +102,15 @@ const CategoryPage = () => {
           placeholder="posição... (deixe vazio para criar no início da lista)"
         />
         <div className="flex w-full justify-center items-center gap-1 mt-8">
-          <FormButton disabled={categoriesLoading} />
+          <FormButton
+            disabled={categoriesLoading}
+            createTarget={categoryCreateCount}
+            createProgress={categoriesCreatedCount}
+          />
           <FormCounter
             value={categoryCreateCount}
             onChange={(ev) => setCategoryCreateCount(parseInt(ev.target.value))}
+            disabled={categoriesLoading}
           />
         </div>
       </form>

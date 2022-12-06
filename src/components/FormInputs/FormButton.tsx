@@ -1,13 +1,30 @@
-export interface FormButtonProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+import { useMemo } from 'react'
 
-const FormButton = ({ ...rest }: FormButtonProps) => {
+export interface FormButtonProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  createTarget: number
+  createProgress: number
+}
+
+const FormButton = ({
+  createTarget,
+  createProgress,
+  ...rest
+}: FormButtonProps) => {
+  const inputName = useMemo(() => {
+    if (createProgress && createTarget) {
+      return `Criar (${createProgress}/${createTarget})`
+    } else {
+      return 'Criar'
+    }
+  }, [createTarget, createProgress])
+
   return (
     <input
       className="bg-transparent border rounded px-2 py-1 cursor-pointer transition-all w-full max-w-xs border-sky-800
-         text-sky-800 hover:bg-sky-800 hover:text-white disabled:opacity-75 disabled:cursor-default"
+         text-sky-800 enabled:hover:bg-sky-800 enabled:hover:text-white disabled:opacity-75 disabled:cursor-default"
       type="submit"
-      value="Criar"
+      value={inputName}
       {...rest}
     />
   )

@@ -40,6 +40,7 @@ const ArticlePage = () => {
   const [articleTitleInput, setArticleTitleInput] = useState('')
   const [articlePromotedInput, setArticlePromotedInput] = useState(false)
   const [articleCreateCount, setArticleCreateCount] = useState(1)
+  const [articlesCreatedCount, setArticlesCreatedCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(articles?.page ?? 1)
 
   const loadZendeskInfo = async () => {
@@ -67,12 +68,13 @@ const ArticlePage = () => {
         promoted: articlePromotedInput,
       }
       await createArticle(newArticle)
+      setArticlesCreatedCount(i + 1)
     }
 
     setArticleTitleInput('')
     setArticleBodyInput('')
     setArticlePromotedInput(false)
-    setArticleCreateCount(1)
+    setArticlesCreatedCount(0)
   }
 
   const handleSearchArticle = async (query: string) => {
@@ -167,10 +169,16 @@ const ArticlePage = () => {
           checked={articlePromotedInput}
         />
         <div className="flex w-full justify-center items-center gap-1 mt-8">
-          <FormButton disabled={articlesLoading} />
+          <FormButton
+            disabled={articlesLoading}
+            createProgress={articlesCreatedCount}
+            createTarget={articleCreateCount}
+          />
           <FormCounter
             value={articleCreateCount}
             onChange={(ev) => setArticleCreateCount(parseInt(ev.target.value))}
+            onFocus={(ev) => ev.target.select()}
+            disabled={articlesLoading}
           />
         </div>
       </form>
