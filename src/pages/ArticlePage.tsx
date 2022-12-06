@@ -120,7 +120,7 @@ const ArticlePage = () => {
           handleCreateArticle(ev)
         }}
       >
-        <h2 className="text-2xl mb-5 text-sky-800 font-semibold flex gap-2 items-center justify-center">
+        <h2 className="text-2xl dark:text-sky-700 mb-5 text-sky-800 font-semibold flex gap-2 items-center justify-center">
           Criar Article
           <a
             href={`https://${loggedAccount?.subdomain}.zendesk.com/api/v2/guide/permission_groups.json`}

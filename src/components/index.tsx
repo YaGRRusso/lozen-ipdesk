@@ -35,6 +35,9 @@ export type { HeaderSelectInputProps } from './HeaderInputs/HeaderSelectInput'
 export { default as HeaderTextInput } from './HeaderInputs/HeaderTextInput'
 export type { HeaderTextInputProps } from './HeaderInputs/HeaderTextInput'
 
+export { default as DarkMode } from './MiscComponents/DarkMode'
+export type { DarkModeProps } from './MiscComponents/DarkMode'
+
 export { default as DownloadButton } from './MiscComponents/DownloadButton'
 export type { DownloadButtonProps } from './MiscComponents/DownloadButton'
 

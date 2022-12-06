@@ -3,7 +3,7 @@ export interface FormCheckProps
 
 const FormCheck = ({ ...rest }: FormCheckProps) => {
   return (
-    <label className="flex gap-2">
+    <label className="flex dark:text-slate-200 gap-2">
       <span>Promoted: </span>
       <input type="checkbox" {...rest} />
     </label>

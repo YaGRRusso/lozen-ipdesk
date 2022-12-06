@@ -40,12 +40,12 @@ const InfoTable = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="shadow rounded">
+      <div className="shadow dark:shadow-slate-700 rounded">
         <table
           className="w-full border-separate border-spacing-0 rounded overflow-hidden"
           {...rest}
         >
-          <thead className="bg-sky-800 text-white text-left">
+          <thead className="bg-sky-800 dark:bg-sky-900 text-white text-left">
             <tr>
               {titles.map((item, index) => (
                 <th
@@ -82,8 +82,8 @@ const InfoTable = ({
               <tr
                 className={`${
                   item.warning
-                    ? 'bg-red-50 hover:bg-red-100 text-red-900'
-                    : 'hover:bg-slate-100 text-slate-900'
+                    ? 'bg-red-50 dark:bg-red-800 dark:hover:bg-red-800 hover:bg-red-100 text-red-900'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-gray-300'
                 } transition-all`}
                 key={item.id}
               >
@@ -136,7 +136,7 @@ const InfoTable = ({
           </tbody>
         </table>
         {data.length < 1 && (
-          <div className="flex text-sky-900 font-semibold justify-center max-h-14 max-w-xs mx-auto text-sm gap-4 items-center py-20 px-6">
+          <div className="flex text-sky-900 dark:text-white font-semibold justify-center max-h-14 max-w-xs mx-auto text-sm gap-4 items-center py-20 px-6">
             <span className="flex-1 flex justify-center">
               <img className="h-24" src={NoData} alt="No data found" />
             </span>

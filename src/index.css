@@ -18,6 +18,7 @@ input::file-selector-button {
   border: 1px solid rgb(203, 213, 225);
   border-radius: 0.25rem;
   color: currentColor;
+  background-color: transparent;
   font-size: 0.925rem;
   cursor: pointer;
   transition-property: all;

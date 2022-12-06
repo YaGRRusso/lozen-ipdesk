@@ -110,40 +110,42 @@ const JsonImporter = ({
   }, [object.value, infoLoading])
 
   return (
-    <C.Container>
-      <C.ContainerTitle>
-        <span>{title}</span>
-        {parentNewOldIds?.newOldIds && (
-          <ConvertButton
-            active={activeConvertButton}
-            newOldIds={parentNewOldIds}
-            object={object}
-          />
-        )}
-        <UploadButton active={activeUploadButton} onClick={uploadFunction} />
-      </C.ContainerTitle>
-      <C.ContainerBody {...rest}>
-        <FormFile
-          fileImport={importJson}
-          infoLoading={infoLoading}
-          fileTypes={['application/json']}
-        />
-        {object.value && object.value.error && (
-          <ErrorMessage message={object.value.error} />
-        )}
-        {object.value && !object.value.error && (
-          <Inspector table={false} data={object.value} />
-        )}
-        <ProgressBar current={progress.current} max={progress.max} />
-        {importedListNewOldIds.newOldIds &&
-          importedListNewOldIds.newOldIds.length > 0 && (
-            <ImportedList data={importedListNewOldIds} />
+    <div className="dark:shadow dark:shadow-slate-600">
+      <C.Container>
+        <C.ContainerTitle>
+          <span>{title}</span>
+          {parentNewOldIds?.newOldIds && (
+            <ConvertButton
+              active={activeConvertButton}
+              newOldIds={parentNewOldIds}
+              object={object}
+            />
           )}
-        {importedImagesList && importedImagesList.length > 0 && (
-          <ImagesList data={importedImagesList} />
-        )}
-      </C.ContainerBody>
-    </C.Container>
+          <UploadButton active={activeUploadButton} onClick={uploadFunction} />
+        </C.ContainerTitle>
+        <C.ContainerBody {...rest}>
+          <FormFile
+            fileImport={importJson}
+            infoLoading={infoLoading}
+            fileTypes={['application/json']}
+          />
+          {object.value && object.value.error && (
+            <ErrorMessage message={object.value.error} />
+          )}
+          {object.value && !object.value.error && (
+            <Inspector table={false} data={object.value} />
+          )}
+          <ProgressBar current={progress.current} max={progress.max} />
+          {importedListNewOldIds.newOldIds &&
+            importedListNewOldIds.newOldIds.length > 0 && (
+              <ImportedList data={importedListNewOldIds} />
+            )}
+          {importedImagesList && importedImagesList.length > 0 && (
+            <ImagesList data={importedImagesList} />
+          )}
+        </C.ContainerBody>
+      </C.Container>
+    </div>
   )
 }
 

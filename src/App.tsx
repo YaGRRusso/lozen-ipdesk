@@ -1,8 +1,8 @@
-import { AuthProvider } from "./context/AuthContext";
-import { ImportProvider } from "./context/ImportContext";
-import { ZendeskProvider } from "./context/ZendeskContext";
-import { PagesLayout } from "./pages/PagesLayout";
-import { RouteList } from "./router";
+import { AuthProvider } from './context/AuthContext'
+import { ImportProvider } from './context/ImportContext'
+import { ZendeskProvider } from './context/ZendeskContext'
+import { PagesLayout } from './pages/PagesLayout'
+import { RouteList } from './router'
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
         </ImportProvider>
       </ZendeskProvider>
     </AuthProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

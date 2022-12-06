@@ -80,7 +80,7 @@ const CategoryPage = () => {
           handleCreateCategory(ev)
         }}
       >
-        <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
+        <h2 className="text-2xl mb-5 text-sky-800 dark:text-sky-700 font-semibold">
           Criar Categoria
         </h2>
         <FormInput

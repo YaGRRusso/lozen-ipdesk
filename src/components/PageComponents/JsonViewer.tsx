@@ -39,12 +39,16 @@ const JsonViewer = ({
           <DownloadButton object={object} title={title} responsive />
         </div>
       </C.ContainerTitle>
-      <C.ContainerBody limit {...rest}>
-        {(infoLoading || !object) && <ConnectionButton loading={infoLoading} />}
-        {!infoLoading && object && (
-          <Inspector table={false} data={object} expandLevel={3} />
-        )}
-      </C.ContainerBody>
+      <div className="bg-white dark:invert-[90%]">
+        <C.ContainerBody limit {...rest}>
+          {(infoLoading || !object) && (
+            <ConnectionButton loading={infoLoading} />
+          )}
+          {!infoLoading && object && (
+            <Inspector table={false} data={object} expandLevel={3} />
+          )}
+        </C.ContainerBody>
+      </div>
     </C.Container>
   )
 }

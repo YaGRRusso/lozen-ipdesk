@@ -17,7 +17,7 @@ const FormSearch = ({ handleSearch, ...rest }: FormSearchProps) => {
   }, [searchValue])
 
   return (
-    <div className="flex flex-row gap-2 justify-end items-center text-slate-900">
+    <div className="flex dark:text-slate-200 flex-row gap-2 justify-end items-center text-slate-900">
       <span className="text-xs font-medium uppercase hidden xs:block">
         Pesquisar
       </span>

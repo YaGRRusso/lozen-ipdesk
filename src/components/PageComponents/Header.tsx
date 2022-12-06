@@ -75,7 +75,7 @@ const Header = ({ ...rest }: HeaderProps) => {
           </div>
         </div>
       </div>
-      <nav className="bg-sky-900">
+      <nav className="bg-sky-900 dark:bg-sky-800">
         <HeaderList
           data={[
             { name: 'Categorias', local: '/' },

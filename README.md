@@ -28,9 +28,9 @@ O projeto ainda está em desenvolvimento e ainda haverão próximas atualizaçõ
 - [x] Tratamento de erros de frontend e backend
 - [x] Busca, limite de itens e paginação em tabelas
 - [x] Listagem externa de informações e opção de digitar dados manualmente em select inputs
+- [x] Modo escuro
 - [ ] Conversor de CSV para JSON
 - [ ] Integração i18n
-- [ ] Modo escuro
 
 ## ⚠️ Problema de CORS
 

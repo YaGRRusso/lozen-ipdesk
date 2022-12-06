@@ -36,7 +36,7 @@ const Pagination = ({
     <>
       {paginationNumbers?.show && (
         <ReactPaginate
-          className="flex gap-1 items-center justify-evenly max-w-lg mx-auto"
+          className="flex gap-1 dark:text-sky-700 items-center justify-evenly max-w-lg mx-auto"
           activeClassName="pointer-events-none rounded bg-sky-800 text-white"
           pageClassName="px-1 xs:px-2 rounded transition-all hover:bg-gray-200"
           nextClassName="hidden px-2 font-bold text-sky-800 rounded transition-all hover:bg-gray-200 xs:block"

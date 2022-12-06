@@ -2,6 +2,8 @@ import { ArticlesTS, ArticleTS } from './articleType'
 import { CategoriesTS } from './categoriesType'
 import { SectionsTS } from './sectionsType'
 
+export type ThemeProps = 'dark' | 'light'
+
 export type AuthProps = {
   subdomain: string
   email_address: string

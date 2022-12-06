@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useState } from 'react'
-import { AuthProps } from '@customTypes/apiType'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { AuthProps, ThemeProps } from '@customTypes/apiType'
 
 interface AuthContextProps {
   loggedAccount: AuthProps | undefined
   setLoggedAccount: (data: AuthProps) => void
+  theme: ThemeProps
+  setTheme: (data: ThemeProps) => void
 }
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
@@ -46,6 +48,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [account, setAccount] = useState<AuthProps | undefined>(initialData())
+  const [theme, setTheme] = useState<ThemeProps>('light')
+
+  useEffect(() => {
+    let localTheme = localStorage.getItem('lozenTheme')
+
+    if (!localTheme) {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        localTheme = 'dark'
+      } else {
+        localTheme = 'light'
+      }
+      localStorage.setItem('lozenTheme', localTheme)
+    }
+
+    setTheme(localTheme as ThemeProps)
+  }, [])
+
+  const handleChangeTheme = (data: ThemeProps) => {
+    setTheme(data)
+    localStorage.setItem('lozenTheme', data)
+  }
 
   const setLoggedAccount = (data: AuthProps) => {
     localStorage.setItem('lozenUser', JSON.stringify(data))
@@ -57,6 +80,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         loggedAccount: account,
         setLoggedAccount,
+        setTheme: handleChangeTheme,
+        theme,
       }}
     >
       {children}

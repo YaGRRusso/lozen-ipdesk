@@ -88,7 +88,7 @@ const SectionPage = () => {
           handleCreateSection(ev)
         }}
       >
-        <h2 className="text-2xl mb-5 text-sky-800 font-semibold">
+        <h2 className="text-2xl dark:text-sky-700 mb-5 text-sky-800 font-semibold">
           Criar Section
         </h2>
         <FormSelect

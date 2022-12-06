@@ -21,7 +21,7 @@ const InfoTooltip = ({ title, icon, ...rest }: InfoTooltipProps) => {
         <div
           ref={setTooltipRef}
           {...getTooltipProps({ className: 'tooltip-container' })}
-          className="flex text-center rounded bg-slate-900 py-2 px-4 text-slate-200 z-50 max-w-xs"
+          className="flex text-center rounded bg-slate-900 shadow shadow-slate-600 py-2 px-4 text-slate-200 z-50 max-w-xs"
           {...rest}
         >
           <span className="text-xs">{title}</span>
