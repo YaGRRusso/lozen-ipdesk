@@ -12,8 +12,8 @@ export interface ImagesListProps
 
 const ImagesList = ({ data, ...rest }: ImagesListProps) => {
   return (
-    <div className="relative bg-slate-50 rounded border">
-      <div className="p-1 text-xs uppercase font-semibold bg-gray-100 border-b">
+    <div className="relative bg-slate-50 rounded border dark:border-sky-800 dark:bg-slate-800 dark:text-slate-200">
+      <div className="p-1 text-xs uppercase font-semibold bg-gray-100 border-b dark:border-sky-800 dark:bg-slate-800 dark:text-slate-200">
         Artigos com Imagens
       </div>
       <ul
@@ -23,7 +23,7 @@ const ImagesList = ({ data, ...rest }: ImagesListProps) => {
         {data?.map((item, index) => (
           <li
             key={index}
-            className="flex items-center text-xs gap-1 w-full border-b border-gray-200 py-2 last:border-none"
+            className="flex items-center dark:border-sky-800 text-xs gap-1 w-full border-b border-gray-200 py-2 last:border-none"
           >
             <Image />
             {item.title}

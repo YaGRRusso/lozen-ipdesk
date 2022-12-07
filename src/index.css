@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.jodit-workplace ol,
-.jodit-workplace ul,
-.jodit-workplace menu {
-  list-style: initial;
-  list-style-position: inside;
-}
-
-.jodit-workplace a {
-  color: #075985;
-}
-
 input::-webkit-file-upload-button,
 input::file-selector-button {
   border: 1px solid rgb(203, 213, 225);
@@ -37,4 +26,41 @@ input::file-selector-button:hover {
   -webkit-appearance: none;
   -moz-appearance: textfield;
   margin: 0;
+}
+
+.jodit-workplace ol,
+.jodit-workplace ul,
+.jodit-workplace menu {
+  list-style: initial;
+  list-style-position: inside;
+}
+
+.jodit-workplace a {
+  color: #075985;
+}
+
+.jodit-ui-block button {
+  background-color: #0c4a6e !important;
+}
+
+.dark .jodit,
+.dark .jodit-toolbar__box,
+.dark .jodit-status-bar {
+  background-color: #0c4a6e;
+  border-color: #075985;
+  color: #e2e8f0;
+}
+
+.dark .jodit {
+  background-color: #0f172a;
+}
+
+.dark .jodit-xpath__item,
+.dark .jodit-toolbar-button__trigger,
+.dark .jodit-toolbar-button__icon {
+  filter: brightness(0) invert(1);
+}
+
+.dark .json-inspector * {
+  background-color: #0f172a;
 }

@@ -9,8 +9,8 @@ export interface ImportedListProps
 
 const ImportedList = ({ data, ...rest }: ImportedListProps) => {
   return (
-    <div className="relative bg-slate-50 rounded border">
-      <div className="p-1 text-xs uppercase font-semibold bg-gray-100 border-b">
+    <div className="relative bg-slate-50 rounded border dark:border-sky-800 dark:bg-slate-800 dark:text-slate-200">
+      <div className="p-1 text-xs uppercase font-semibold bg-gray-100 border-b dark:border-sky-800 dark:bg-slate-800 dark:text-slate-200">
         Novos IDs
       </div>
       <ul
@@ -20,7 +20,7 @@ const ImportedList = ({ data, ...rest }: ImportedListProps) => {
         {data?.newOldIds?.map((item) => (
           <li
             key={item.newId}
-            className="flex flex-col w-full border-b border-gray-200 py-2 last:border-none"
+            className="flex flex-col dark:border-sky-800 w-full border-b border-gray-200 py-2 last:border-none"
           >
             <div className="text-xs whitespace-nowrap overflow-hidden overflow-ellipsis max-w-xs">
               {item?.title}

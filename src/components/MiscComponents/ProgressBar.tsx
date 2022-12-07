@@ -17,14 +17,15 @@ const ProgressBar = ({ current, max, ...rest }: ProgressBarProps) => {
 
   return (
     <div
-      className={`${max ? '' : 'hidden'}
-      h-4 sm:mx-6 flex w-auto bg-sky-100 rounded`}
+      className={`${
+        max ? '' : 'hidden'
+      } h-4 sm:mx-6 flex w-auto dark:bg-slate-800 bg-sky-100 rounded`}
       {...rest}
     >
       <div
         style={{ width: progressPercentage + '%' }}
-        className={`${progressPercentage ? 'px-2' : ''}
-         bg-sky-800 transition-all duration-1000 flex rounded gap-1 justify-end items-center text-white text-xs font-bold`}
+        className={`${progressPercentage ? 'px-2' : 'opacity-0'}
+      bg-sky-800 transition-all duration-1000 flex rounded gap-1 justify-end items-center text-white text-xs font-bold`}
       >
         <CheckCircle weight="bold" />
         <span>

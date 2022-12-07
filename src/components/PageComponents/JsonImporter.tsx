@@ -14,6 +14,7 @@ import { Inspector } from 'react-inspector'
 import * as C from '@styles/ContainerBox'
 import { NewOldIdProps } from '@context/ImportContext'
 import { useMemo } from 'react'
+import { useAuthContext } from '@context/AuthContext'
 
 export type ImportObjectProps = {
   value: any
@@ -50,6 +51,8 @@ const JsonImporter = ({
   importedImagesList,
   ...rest
 }: JsonImporterProps) => {
+  const { theme } = useAuthContext()
+
   const importJson = ({ file, error }: FileImportResponseProps) => {
     if (error) {
       if (object.setIds)
@@ -133,7 +136,13 @@ const JsonImporter = ({
             <ErrorMessage message={object.value.error} />
           )}
           {object.value && !object.value.error && (
-            <Inspector table={false} data={object.value} />
+            <div className="json-inspector">
+              <Inspector
+                table={false}
+                data={object.value}
+                theme={theme === 'dark' ? 'chromeDark' : 'chromeLight'}
+              />
+            </div>
           )}
           <ProgressBar current={progress.current} max={progress.max} />
           {importedListNewOldIds.newOldIds &&

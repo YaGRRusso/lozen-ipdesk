@@ -20,13 +20,14 @@ const joditConfig = {
     'print',
     'about',
   ],
+  // theme: 'dark',
 }
 
 const FormTextAreaInput = ({ ...rest }: FormTextAreaInputProps) => {
   const joditRef = useRef<JoditEditor | null>(null)
 
   return (
-    <div className="max-w-screen-md w-full list-disc rounded bg-white dark:invert-[90%]">
+    <div className="max-w-screen-md w-full list-disc rounded bg-white">
       <JoditEditor ref={joditRef} config={joditConfig} {...rest} />
     </div>
   )
