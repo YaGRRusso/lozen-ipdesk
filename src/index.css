@@ -44,8 +44,9 @@ input::file-selector-button:hover {
 }
 
 .dark .jodit,
+.dark .jodit-status-bar,
 .dark .jodit-toolbar__box,
-.dark .jodit-status-bar {
+.dark .jodit-toolbar__box:not(:empty) {
   background-color: #0c4a6e;
   border-color: #075985;
   color: #e2e8f0;

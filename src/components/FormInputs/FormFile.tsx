@@ -23,7 +23,6 @@ const FormFile = ({
   const handleFileParse = (ev: React.ChangeEvent<HTMLInputElement>) => {
     if (ev.target.files && ev.target.files[0]) {
       const currentFile = ev.target.files[0]
-      console.log(currentFile.type)
       if (!fileTypes.includes(currentFile.type)) {
         fileImport({
           file: null,
