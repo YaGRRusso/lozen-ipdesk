@@ -52,6 +52,10 @@ input::file-selector-button:hover {
   color: #e2e8f0;
 }
 
+.dark .jodit-container:not(.jodit_inline) {
+  border-color: #075985;
+}
+
 .dark .jodit {
   background-color: #0f172a;
 }
