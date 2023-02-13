@@ -27,7 +27,7 @@ export const getPermissionList = (
 
 export const articlesWithImages = (
   articlesList: ArticleTS[],
-  subdomain: string
+  domain: string
 ) => {
   const tableRows: InfoTableRowsProps[] = []
   if (articlesList) {
@@ -35,12 +35,12 @@ export const articlesWithImages = (
       let warning = false
       let image = false
       const imageCheck = item.body?.match(/<img([^>]*[^/])>/g)
-      if (imageCheck && subdomain) {
+      if (imageCheck && domain) {
         image = true
         const imageUrl = imageCheck[0].match(
           /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/g
         )
-        if (imageUrl && !imageUrl[0].includes(subdomain)) {
+        if (imageUrl && !imageUrl[0].includes(domain)) {
           warning = true
         }
       }

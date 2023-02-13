@@ -99,14 +99,11 @@ const ArticlePage = () => {
 
   const infoTableValue = useMemo(() => {
     if (filteredArticles && loggedAccount) {
-      return articlesWithImages(
-        filteredArticles.results,
-        loggedAccount?.subdomain
-      )
+      return articlesWithImages(filteredArticles.results, loggedAccount?.domain)
     }
 
     if (articles && loggedAccount) {
-      return articlesWithImages(articles.articles, loggedAccount?.subdomain)
+      return articlesWithImages(articles.articles, loggedAccount?.domain)
     }
 
     return []
@@ -123,7 +120,7 @@ const ArticlePage = () => {
         <h2 className="text-2xl dark:text-sky-700 mb-5 text-sky-800 font-semibold flex gap-2 items-center justify-center">
           Criar Article
           <a
-            href={`https://${loggedAccount?.subdomain}.zendesk.com/api/v2/guide/permission_groups.json`}
+            href={`https://${loggedAccount?.domain}/api/v2/guide/permission_groups.json`}
             target="_blank"
           >
             <InfoTooltip

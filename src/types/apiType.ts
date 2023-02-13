@@ -5,7 +5,7 @@ import { SectionsTS } from './sectionsType'
 export type ThemeProps = 'dark' | 'light'
 
 export type AuthProps = {
-  subdomain: string
+  domain: string
   email_address: string
   password: string
   locale: 'pt-br' | 'en-us'

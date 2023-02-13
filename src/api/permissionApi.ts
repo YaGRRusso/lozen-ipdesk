@@ -7,7 +7,7 @@ export const permissionApi = {
   ): Promise<PermissionGroupsTS | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/guide/permission_groups.json`,
+        `https://${zd.domain}/api/v2/guide/permission_groups.json`,
         {
           headers: {
             Authorization:

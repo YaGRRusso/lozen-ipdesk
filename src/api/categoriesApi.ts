@@ -15,7 +15,7 @@ export const categoriesApi = {
   ): Promise<CategoriesTS | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/help_center/${
+        `https://${zd.domain}/api/v2/help_center/${
           zd.locale
         }/categories.json?page=${page || 1}&per_page=100`,
         {
@@ -36,7 +36,7 @@ export const categoriesApi = {
   ): Promise<NewCategoryTS | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories.json`,
+        `https://${zd.domain}/api/v2/help_center/categories.json`,
         {
           method: 'POST',
           headers: {
@@ -56,16 +56,12 @@ export const categoriesApi = {
   },
   deleteCategory: async (zd: AuthProps, id: number) => {
     try {
-      await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/help_center/categories/${id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization:
-              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
-          },
-        }
-      )
+      await fetch(`https://${zd.domain}/api/v2/help_center/categories/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
+        },
+      })
     } catch (e) {
       console.error(e)
     }

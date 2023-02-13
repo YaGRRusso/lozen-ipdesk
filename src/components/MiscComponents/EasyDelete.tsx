@@ -20,7 +20,7 @@ const EasyDelete = ({ ...rest }: EasyDeleteProps) => {
 
   const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
-    if (popupText === loggedAccount?.subdomain) {
+    if (popupText.replace(/(^\w+:|^)\/\//, '') === loggedAccount?.domain) {
       setEasyDelete(true)
     }
     handleClosePopup()
@@ -36,8 +36,10 @@ const EasyDelete = ({ ...rest }: EasyDeleteProps) => {
 
   const inputColor = useMemo(() => {
     if (!popupText) return 'bg-sky-50'
-    return popupText === loggedAccount?.subdomain ? 'bg-green-50' : 'bg-red-50'
-  }, [popupText, loggedAccount?.subdomain])
+    return popupText.replace(/(^\w+:|^)\/\//, '') === loggedAccount?.domain
+      ? 'bg-green-50'
+      : 'bg-red-50'
+  }, [popupText, loggedAccount?.domain])
 
   return (
     <div className="relative flex items-start justify-center ">
@@ -54,7 +56,7 @@ const EasyDelete = ({ ...rest }: EasyDeleteProps) => {
                 className="absolute right-0 cursor-pointer transition-all hover:text-sky-800"
               />
               <form onSubmit={(ev) => handleSubmit(ev)}>
-                <label>Confirme o Subdomínio:</label>
+                <label>Confirme o Domínio:</label>
                 <input
                   value={popupText}
                   onChange={(ev) => setPopupText(ev.target.value)}

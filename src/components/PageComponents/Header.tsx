@@ -17,14 +17,15 @@ const Header = ({ ...rest }: HeaderProps) => {
     loggedAccount?.email_address ?? '' ?? ''
   )
   const [password, setPassword] = useState(loggedAccount?.password ?? '')
-  const [subdomain, setSubdomain] = useState(loggedAccount?.subdomain ?? '')
+  const [domain, setDomain] = useState(loggedAccount?.domain ?? '')
   const [locale, setLocale] = useState(loggedAccount?.locale ?? 'pt-br')
 
   const handleLogin = () => {
     setLoggedAccount({
       email_address,
       password,
-      subdomain,
+      // Remove o HTTPS:// do domínio, o que o torna opcional podendo passar tanto "https://dominio.com" ou apenas "domínio.com"
+      domain: domain.replace(/(^\w+:|^)\/\//, ''),
       locale,
     })
   }
@@ -42,9 +43,9 @@ const Header = ({ ...rest }: HeaderProps) => {
         <div className="flex flex-1 gap-3 text-black flex-col">
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <HeaderTextInput
-              placeholder="digite seu subdomínio..."
-              value={subdomain}
-              onChange={(ev) => setSubdomain(ev.target.value)}
+              placeholder="digite seu domínio..."
+              value={domain}
+              onChange={(ev) => setDomain(ev.target.value)}
             />
             <HeaderSelectInput
               value={locale}
@@ -54,7 +55,7 @@ const Header = ({ ...rest }: HeaderProps) => {
               }}
               options={[
                 { value: 'pt-br', name: 'Português' },
-                { value: 'en-us', name: 'Inglês' },
+                { value: 'en-us', name: 'English' },
               ]}
             />
           </div>

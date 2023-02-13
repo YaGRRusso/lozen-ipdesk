@@ -7,7 +7,7 @@ export const searchApi = {
   ): Promise<SearchTS | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/help_center/articles/search?query=${query}`,
+        `https://${zd.domain}/api/v2/help_center/articles/search?query=${query}`,
         {
           headers: {
             Authorization:

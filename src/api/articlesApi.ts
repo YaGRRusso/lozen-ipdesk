@@ -17,7 +17,7 @@ export const articlesApi = {
   ): Promise<ArticlesTS | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/help_center/${
+        `https://${zd.domain}/api/v2/help_center/${
           zd.locale
         }/articles.json?page=${page || 1}&per_page=100`,
         {
@@ -38,7 +38,7 @@ export const articlesApi = {
   ): Promise<NewArticleTS | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/help_center/sections/${article.section_id}/articles.json`,
+        `https://${zd.domain}/api/v2/help_center/sections/${article.section_id}/articles.json`,
         {
           method: 'POST',
           headers: {
@@ -61,7 +61,7 @@ export const articlesApi = {
   deleteArticle: async (zd: AuthProps, id: number) => {
     try {
       await fetch(
-        `https://${zd.subdomain}.zendesk.com/api/v2/help_center/articles/${id}.json`,
+        `https://${zd.domain}/api/v2/help_center/articles/${id}.json`,
         {
           method: 'DELETE',
           headers: {

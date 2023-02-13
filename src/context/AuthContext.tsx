@@ -14,7 +14,7 @@ const initialData = (): AuthProps | undefined => {
   const envAccount = {
     email_address: import.meta.env.VITE_EMAIL,
     password: import.meta.env.VITE_PASSWORD,
-    subdomain: import.meta.env.VITE_SUBDOMAIN,
+    domain: import.meta.env.VITE_domain,
     locale: import.meta.env.VITE_LOCALE,
   }
   const localAccount = localStorage.getItem('lozenUser')
@@ -22,13 +22,13 @@ const initialData = (): AuthProps | undefined => {
   if (
     envAccount.email_address &&
     envAccount.password &&
-    envAccount.subdomain &&
+    envAccount.domain &&
     envAccount.locale
   ) {
     return {
       email_address: envAccount.email_address,
       password: envAccount.password,
-      subdomain: envAccount.subdomain,
+      domain: envAccount.domain,
       locale: envAccount.locale,
     }
   }
@@ -38,7 +38,7 @@ const initialData = (): AuthProps | undefined => {
     return {
       email_address: parsedLocalAccount.email_address,
       password: parsedLocalAccount.password,
-      subdomain: parsedLocalAccount.subdomain,
+      domain: parsedLocalAccount.domain,
       locale: parsedLocalAccount.locale,
     }
   }
