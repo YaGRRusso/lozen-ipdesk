@@ -82,7 +82,7 @@ const InfoTable = ({
               <tr
                 className={`${
                   item.warning
-                    ? 'bg-red-50 dark:bg-red-800 dark:hover:bg-red-800 hover:bg-red-100 text-red-900'
+                    ? 'bg-red-50 dark:bg-red-900 hover:bg-red-100 dark:hover:bg-red-800 text-red-900 dark:text-red-100'
                     : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-gray-300'
                 } transition-all`}
                 key={item.id}
