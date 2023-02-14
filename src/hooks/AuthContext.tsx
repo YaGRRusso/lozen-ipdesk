@@ -14,9 +14,10 @@ const initialData = (): AuthProps | undefined => {
   const envAccount = {
     email_address: import.meta.env.VITE_EMAIL,
     password: import.meta.env.VITE_PASSWORD,
-    domain: import.meta.env.VITE_domain,
+    domain: import.meta.env.VITE_DOMAIN,
     locale: import.meta.env.VITE_LOCALE,
   }
+
   const localAccount = localStorage.getItem('lozenUser')
 
   if (
