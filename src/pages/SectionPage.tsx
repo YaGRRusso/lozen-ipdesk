@@ -1,8 +1,8 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { randomGenerator } from '@helpers/randomGenerator'
-import { useZendeskContext } from '@context/ZendeskContext'
-import { useAuthContext } from '@context/AuthContext'
-import { CreateSectionProps } from '@api/sectionsApi'
+import { useZendeskContext } from '@hooks/ZendeskContext'
+import { useAuthContext } from '@hooks/AuthContext'
+import { CreateSectionProps } from 'src/services/sectionsApi'
 import {
   ConnectionButton,
   FormButton,
@@ -11,7 +11,7 @@ import {
   FormSelect,
   InfoTable,
   InfoTableRowsProps,
-} from '@components/index'
+} from '@components'
 
 const SectionPage = () => {
   const {

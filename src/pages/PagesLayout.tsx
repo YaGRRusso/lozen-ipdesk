@@ -1,5 +1,5 @@
-import { Toast, Footer, Header } from '@components/index'
-import { useAuthContext } from '@context/AuthContext'
+import { Toast, Footer, Header } from '@components'
+import { useAuthContext } from '@hooks/AuthContext'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 

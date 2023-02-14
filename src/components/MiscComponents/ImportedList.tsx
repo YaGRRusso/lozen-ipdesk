@@ -1,6 +1,6 @@
 import { CaretRight, CopySimple } from 'phosphor-react'
-import DownloadButton from '@components/MiscComponents/DownloadButton'
-import { NewOldIdProps } from '@context/ImportContext'
+import { DownloadButton } from '@components'
+import { NewOldIdProps } from '@hooks/ImportContext'
 
 export interface ImportedListProps
   extends React.HTMLAttributes<HTMLUListElement> {

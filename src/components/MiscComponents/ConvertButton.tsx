@@ -1,5 +1,5 @@
-import { ImportObjectProps } from '@components/PageComponents/JsonImporter'
-import { NewOldIdProps } from '@context/ImportContext'
+import { ImportObjectProps } from '@components'
+import { NewOldIdProps } from '@hooks/ImportContext'
 import { ArrowsClockwise, Check } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 

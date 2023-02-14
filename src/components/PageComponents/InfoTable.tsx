@@ -1,7 +1,7 @@
-import { useZendeskContext } from '@context/ZendeskContext'
+import { useZendeskContext } from '@hooks/ZendeskContext'
 import { ArrowClockwise, ArrowSquareIn, Image, Trash } from 'phosphor-react'
 import NoData from '/assets/no-data.svg'
-import { Pagination, FormSearch } from '@components/index'
+import { Pagination } from '@components'
 
 export interface InfoTableRowsProps {
   id: number

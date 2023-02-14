@@ -1,4 +1,4 @@
-import { useAuthContext } from '@context/AuthContext'
+import { useAuthContext } from '@hooks/AuthContext'
 import { Moon, Sun } from 'phosphor-react'
 
 export interface DarkModeProps

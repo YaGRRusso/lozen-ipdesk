@@ -1,4 +1,4 @@
-import { InfoTableRowsProps } from '@components/index'
+import { InfoTableRowsProps } from '@components'
 import { ArticlesTS, ArticleTS } from '../types/articleType'
 
 export type PermissionListTS = {

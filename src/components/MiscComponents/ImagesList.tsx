@@ -1,5 +1,5 @@
 import { Image } from 'phosphor-react'
-import DownloadButton from '@components/MiscComponents/DownloadButton'
+import { DownloadButton } from '@components'
 
 export interface ImagesListProps
   extends React.HTMLAttributes<HTMLUListElement> {

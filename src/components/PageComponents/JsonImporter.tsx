@@ -1,7 +1,6 @@
 import {
   ErrorMessage,
   ImagesList,
-  ImagesListProps,
   ImportedList,
   ProgressBar,
   ProgressBarProps,
@@ -9,12 +8,12 @@ import {
   ConvertButton,
   FormFile,
   FileImportResponseProps,
-} from '@components/index'
+} from '@components'
 import { Inspector } from 'react-inspector'
 import * as C from '@styles/ContainerBox'
-import { NewOldIdProps } from '@context/ImportContext'
+import { NewOldIdProps } from '@hooks/ImportContext'
 import { useMemo } from 'react'
-import { useAuthContext } from '@context/AuthContext'
+import { useAuthContext } from '@hooks/AuthContext'
 
 export type ImportObjectProps = {
   value: any

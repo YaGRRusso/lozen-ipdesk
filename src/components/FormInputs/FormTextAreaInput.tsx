@@ -1,11 +1,11 @@
 import JoditEditor, { JoditProps } from 'jodit-react'
+import { Config } from 'jodit/types/config'
 import { useRef } from 'react'
 
 export interface FormTextAreaInputProps extends JoditProps {}
 
 const joditConfig = {
   readonly: false,
-  minWidth: 'auto',
   removeButtons: [
     'eraser',
     'font',
@@ -21,7 +21,7 @@ const joditConfig = {
     'about',
   ],
   // theme: 'dark',
-}
+} as Config
 
 const FormTextAreaInput = ({ ...rest }: FormTextAreaInputProps) => {
   const joditRef = useRef<JoditEditor | null>(null)

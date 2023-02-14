@@ -1,7 +1,7 @@
-import { JsonViewer } from '@components/index'
+import { JsonViewer } from '@components'
 import { useEffect } from 'react'
-import { useAuthContext } from '@context/AuthContext'
-import { useZendeskContext } from '@context/ZendeskContext'
+import { useAuthContext } from '@hooks/AuthContext'
+import { useZendeskContext } from '@hooks/ZendeskContext'
 
 const ExportPage = () => {
   const {

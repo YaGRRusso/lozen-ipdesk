@@ -1,5 +1,5 @@
-import { useAuthContext } from '@context/AuthContext'
-import { useZendeskContext } from '@context/ZendeskContext'
+import { useAuthContext } from '@hooks/AuthContext'
+import { useZendeskContext } from '@hooks/ZendeskContext'
 import { LockOpen, Lock, X } from 'phosphor-react'
 import { useMemo, useState } from 'react'
 

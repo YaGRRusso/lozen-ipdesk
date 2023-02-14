@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { articlesApi, CreateArticleProps } from '@api/articlesApi'
-import { categoriesApi, CreateCategoryProps } from '@api/categoriesApi'
-import { CreateSectionProps, sectionsApi } from '@api/sectionsApi'
-import { permissionApi } from '@api/permissionApi'
+import { articlesApi, CreateArticleProps } from 'src/services/articlesApi'
+import { categoriesApi, CreateCategoryProps } from 'src/services/categoriesApi'
+import { CreateSectionProps, sectionsApi } from 'src/services/sectionsApi'
+import { permissionApi } from 'src/services/permissionApi'
 import { ArticlesTS, ArticleTS, NewArticleTS } from '@customTypes/articleType'
 import { PermissionGroupsTS } from '@customTypes/apiType'
 import {

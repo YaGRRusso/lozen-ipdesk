@@ -1,8 +1,8 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { randomGenerator } from '@helpers/randomGenerator'
-import { useZendeskContext } from '@context/ZendeskContext'
-import { useAuthContext } from '@context/AuthContext'
-import { CreateCategoryProps } from '@api/categoriesApi'
+import { useZendeskContext } from '@hooks/ZendeskContext'
+import { useAuthContext } from '@hooks/AuthContext'
+import { CreateCategoryProps } from 'src/services/categoriesApi'
 import {
   ConnectionButton,
   FormButton,
@@ -10,7 +10,7 @@ import {
   FormInput,
   InfoTable,
   InfoTableRowsProps,
-} from '@components/index'
+} from '@components'
 
 const CategoryPage = () => {
   const {

@@ -1,7 +1,7 @@
-import { JsonImporter } from '@components/index'
+import { JsonImporter } from '@components'
 import { useMemo, useState } from 'react'
-import { useImportContext } from '@context/ImportContext'
-import { useZendeskContext } from '@context/ZendeskContext'
+import { useImportContext } from '@hooks/ImportContext'
+import { useZendeskContext } from '@hooks/ZendeskContext'
 import { toast } from 'react-toastify'
 
 const ImportPage = () => {

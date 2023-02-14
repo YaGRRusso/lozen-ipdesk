@@ -1,9 +1,9 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { randomGenerator } from '@helpers/randomGenerator'
 import { articlesWithImages, getPermissionList } from '@helpers/filter'
-import { useZendeskContext } from '@context/ZendeskContext'
-import { useAuthContext } from '@context/AuthContext'
-import { CreateArticleProps } from '@api/articlesApi'
+import { useZendeskContext } from '@hooks/ZendeskContext'
+import { useAuthContext } from '@hooks/AuthContext'
+import { CreateArticleProps } from 'src/services/articlesApi'
 import {
   ConnectionButton,
   FormButton,
@@ -15,8 +15,8 @@ import {
   InfoTooltip,
   FormSearch,
   FormCounter,
-} from '@components/index'
-import { searchApi } from '@api/searchApi'
+} from '@components'
+import { searchApi } from 'src/services/searchApi'
 import { SearchTS } from '@customTypes/apiType'
 import { MagnifyingGlass } from 'phosphor-react'
 

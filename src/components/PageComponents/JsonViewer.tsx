@@ -3,10 +3,10 @@ import {
   ConnectionButton,
   DownloadButton,
   PaginationCounterButton,
-} from '@components/index'
+} from '@components'
 import * as C from '@styles/ContainerBox'
-import CsvDownloadButton from '@components/MiscComponents/CsvDownloadButton'
-import { useAuthContext } from '@context/AuthContext'
+import { CsvDownloadButton } from '@components'
+import { useAuthContext } from '@hooks/AuthContext'
 
 export interface JsonViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string

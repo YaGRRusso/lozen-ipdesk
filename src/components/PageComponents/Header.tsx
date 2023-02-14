@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuthContext } from '@context/AuthContext'
+import { useAuthContext } from '@hooks/AuthContext'
 import {
   HeaderList,
   HeaderLoginButton,
@@ -7,7 +7,7 @@ import {
   HeaderSelectInput,
   HeaderTextInput,
   InfoTooltip,
-} from '@components/index'
+} from '@components'
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 

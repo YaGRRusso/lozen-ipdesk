@@ -7,9 +7,9 @@
     "^@customTypes/(.*)$",
     "^@helpers/(.*)$",
     "^@pages/(.*)$",
-    "^@api/(.*)$",
+    "^@services/(.*)$",
     "^@styles/(.*)$",
-    "^@context/(.*)$",
+    "^@hooks/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
