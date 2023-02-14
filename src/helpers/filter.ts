@@ -1,17 +1,17 @@
 import { InfoTableRowsProps } from '@components'
-import { ArticlesTS, ArticleTS } from '../types/articleType'
+import { ArticlesProps, ArticleProps } from '../types/ArticleType'
 
-export type PermissionListTS = {
+export type PermissionListProps = {
   id?: number
   name?: string
 }
 
 export const getPermissionList = (
-  articlesObj: ArticlesTS | null | undefined
-): PermissionListTS[] | undefined => {
+  articlesObj: ArticlesProps | null | undefined
+): PermissionListProps[] | undefined => {
   if (articlesObj) {
     const { articles } = articlesObj
-    const listId = articles.reduce((acc: PermissionListTS[], current) => {
+    const listId = articles.reduce((acc: PermissionListProps[], current) => {
       acc.push({
         name: current?.permission_group_id.toString(),
         id: current?.permission_group_id,
@@ -26,7 +26,7 @@ export const getPermissionList = (
 }
 
 export const articlesWithImages = (
-  articlesList: ArticleTS[],
+  articlesList: ArticleProps[],
   domain: string
 ) => {
   const tableRows: InfoTableRowsProps[] = []

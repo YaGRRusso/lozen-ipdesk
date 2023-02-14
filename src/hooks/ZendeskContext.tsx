@@ -3,14 +3,22 @@ import { articlesApi, CreateArticleProps } from 'src/services/articlesApi'
 import { categoriesApi, CreateCategoryProps } from 'src/services/categoriesApi'
 import { CreateSectionProps, sectionsApi } from 'src/services/sectionsApi'
 import { permissionApi } from 'src/services/permissionApi'
-import { ArticlesTS, ArticleTS, NewArticleTS } from '@customTypes/articleType'
-import { PermissionGroupsTS } from '@customTypes/apiType'
 import {
-  CategoriesTS,
-  CategoryTS,
-  NewCategoryTS,
-} from '@customTypes/categoriesType'
-import { NewSectionTS, SectionsTS, SectionTS } from '@customTypes/sectionsType'
+  ArticlesProps,
+  ArticleProps,
+  NewArticleProps,
+} from '@customTypes/ArticleType'
+import { PermissionGroupsProps } from '@customTypes/ApiType'
+import {
+  CategoriesProps,
+  CategoryProps,
+  NewCategoryProps,
+} from '@customTypes/CategoriesType'
+import {
+  NewSectionProps,
+  SectionsProps,
+  SectionProps,
+} from '@customTypes/SectionsType'
 import { useAuthContext } from './AuthContext'
 import { toast } from 'react-toastify'
 
@@ -23,8 +31,8 @@ interface ZendeskContextProps {
   createCategory: (
     data: CreateCategoryProps,
     position?: number
-  ) => Promise<NewCategoryTS | undefined>
-  categories: CategoriesTS | undefined
+  ) => Promise<NewCategoryProps | undefined>
+  categories: CategoriesProps | undefined
   categoriesLoading: boolean
 
   loadSections: (page?: number) => Promise<void>
@@ -32,18 +40,20 @@ interface ZendeskContextProps {
   createSection: (
     data: CreateSectionProps,
     position?: number
-  ) => Promise<NewSectionTS | undefined>
-  sections: SectionsTS | undefined
+  ) => Promise<NewSectionProps | undefined>
+  sections: SectionsProps | undefined
   sectionsLoading: boolean
 
   loadPermission: () => Promise<void>
-  permission: PermissionGroupsTS | undefined
+  permission: PermissionGroupsProps | undefined
   permissionLoading: boolean
 
   loadArticles: (page?: number) => Promise<void>
   deleteArticle: (id: number) => void
-  createArticle: (data: CreateArticleProps) => Promise<NewArticleTS | undefined>
-  articles: ArticlesTS | undefined
+  createArticle: (
+    data: CreateArticleProps
+  ) => Promise<NewArticleProps | undefined>
+  articles: ArticlesProps | undefined
   articlesLoading: boolean
 }
 
@@ -57,16 +67,18 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
   const { loggedAccount } = useAuthContext()
   const [easyDelete, setEasyDelete] = useState(false)
 
-  const [categories, setCategories] = useState<CategoriesTS | undefined>()
+  const [categories, setCategories] = useState<CategoriesProps | undefined>()
   const [categoriesLoading, setCategoriesLoading] = useState(false)
 
-  const [sections, setSections] = useState<SectionsTS | undefined>()
+  const [sections, setSections] = useState<SectionsProps | undefined>()
   const [sectionsLoading, setSectionsLoading] = useState(false)
 
-  const [permission, setPermission] = useState<PermissionGroupsTS | undefined>()
+  const [permission, setPermission] = useState<
+    PermissionGroupsProps | undefined
+  >()
   const [permissionLoading, setPermissionLoading] = useState(false)
 
-  const [articles, setArticles] = useState<ArticlesTS | undefined>()
+  const [articles, setArticles] = useState<ArticlesProps | undefined>()
   const [articlesLoading, setArticlesLoading] = useState(false)
 
   const clearZendeskContext = () => {
@@ -129,14 +141,14 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
       if (createdCategory) {
         console.log(createdCategory)
         if (categories) {
-          let newList: CategoryTS[] = categories.categories
+          let newList: CategoryProps[] = categories.categories
           if (position) {
             newList.splice(position - 1, 0, createdCategory.category)
           } else {
             newList.unshift(createdCategory.category)
           }
           setCategories((oldValue) => ({
-            ...(oldValue as CategoriesTS),
+            ...(oldValue as CategoriesProps),
             categories: newList,
             count: (oldValue?.count as number) + 1,
           }))
@@ -191,14 +203,14 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
       if (createdSection) {
         console.log(createdSection)
         if (sections) {
-          const newList: SectionTS[] = sections.sections
+          const newList: SectionProps[] = sections.sections
           if (position) {
             newList.splice(position - 1, 0, createdSection.section)
           } else {
             newList.unshift(createdSection.section)
           }
           setSections((oldValue) => ({
-            ...(oldValue as SectionsTS),
+            ...(oldValue as SectionsProps),
             sections: newList,
             count: (oldValue?.count as number) + 1,
           }))
@@ -263,14 +275,14 @@ export const ZendeskProvider: React.FC<{ children: React.ReactNode }> = ({
       if (createdArticle) {
         console.log(createdArticle)
         if (articles) {
-          const newList: ArticleTS[] = articles.articles
+          const newList: ArticleProps[] = articles.articles
           if (position) {
             newList.splice(position - 1, 0, createdArticle.article)
           } else {
             newList.unshift(createdArticle.article)
           }
           setArticles((oldValue) => ({
-            ...(oldValue as ArticlesTS),
+            ...(oldValue as ArticlesProps),
             articles: newList,
             count: (oldValue?.count as number) + 1,
           }))

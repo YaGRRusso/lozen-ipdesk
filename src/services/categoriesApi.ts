@@ -1,5 +1,5 @@
-import { AuthProps } from '@customTypes/apiType'
-import { NewCategoryTS, CategoriesTS } from '@customTypes/categoriesType'
+import { AuthProps } from '@customTypes/ApiType'
+import { NewCategoryProps, CategoriesProps } from '@customTypes/CategoriesType'
 
 export interface CreateCategoryProps {
   name: string
@@ -12,7 +12,7 @@ export const categoriesApi = {
   getCategories: async (
     zd: AuthProps,
     page?: number
-  ): Promise<CategoriesTS | undefined> => {
+  ): Promise<CategoriesProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/help_center/${
@@ -33,7 +33,7 @@ export const categoriesApi = {
   createCategory: async (
     zd: AuthProps,
     category: CreateCategoryProps
-  ): Promise<NewCategoryTS | undefined> => {
+  ): Promise<NewCategoryProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/help_center/categories.json`,

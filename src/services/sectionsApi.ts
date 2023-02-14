@@ -1,5 +1,5 @@
-import { AuthProps } from '@customTypes/apiType'
-import { NewSectionTS, SectionsTS } from '@customTypes/sectionsType'
+import { AuthProps } from '@customTypes/ApiType'
+import { NewSectionProps, SectionsProps } from '@customTypes/SectionsType'
 
 export interface CreateSectionProps {
   category_id: number
@@ -13,7 +13,7 @@ export const sectionsApi = {
   getSections: async (
     zd: AuthProps,
     page?: number
-  ): Promise<SectionsTS | undefined> => {
+  ): Promise<SectionsProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/help_center/${
@@ -34,7 +34,7 @@ export const sectionsApi = {
   createSection: async (
     zd: AuthProps,
     section: CreateSectionProps
-  ): Promise<NewSectionTS | undefined> => {
+  ): Promise<NewSectionProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/help_center/categories/${section.category_id}/sections.json`,

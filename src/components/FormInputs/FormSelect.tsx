@@ -1,11 +1,11 @@
 import React from 'react'
-import { PermissionListTS } from '@helpers/filter'
-import { CategoryTS } from '@customTypes/categoriesType'
-import { SectionTS } from '@customTypes/sectionsType'
+import { PermissionListProps } from '@helpers/filter'
+import { CategoryProps } from '@customTypes/CategoriesType'
+import { SectionProps } from '@customTypes/SectionsType'
 
 export interface FormSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  options?: CategoryTS[] | SectionTS[] | PermissionListTS[]
+  options?: CategoryProps[] | SectionProps[] | PermissionListProps[]
   manually?: boolean
 }
 

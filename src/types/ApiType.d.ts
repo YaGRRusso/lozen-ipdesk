@@ -1,17 +1,17 @@
-import { ArticlesTS, ArticleTS } from './articleType'
-import { CategoriesTS } from './categoriesType'
-import { SectionsTS } from './sectionsType'
+import { ArticlesProps, ArticleProps } from './ArticleType'
+import { CategoriesProps } from './CategoriesType'
+import { SectionsProps } from './SectionsType'
 
 export type ThemeProps = 'dark' | 'light'
 
-export type AuthProps = {
+export interface AuthProps {
   domain: string
   email_address: string
   password: string
   locale: 'pt-br' | 'en-us'
 }
 
-export type PermissionGroupsTS = {
+export interface PermissionGroupsProps {
   count: number
   page_count: number
   per_page: number
@@ -29,17 +29,17 @@ export type PermissionGroupsTS = {
   }[]
 }
 
-export type SearchTS = {
+export interface SearchProps {
   count: number
   next_page: string
   page: number
   page_count: number
   per_page: number
   previous_page: string
-  results: ArticleTS[]
+  results: ArticleProps[]
 }
 
-export type ApiTS = {
+export interface ApiProps {
   category_id?: number
   section_id?: number
   id?: number
@@ -52,8 +52,8 @@ export type ApiTS = {
   user_segment_id?: number | null
 }
 
-export type ApiContextTS = {
-  categories?: CategoriesTS | null
-  sections?: SectionsTS | null
-  articles?: ArticlesTS | null
+export interface ApiContextProps {
+  categories?: CategoriesProps | null
+  sections?: SectionsProps | null
+  articles?: ArticlesProps | null
 }

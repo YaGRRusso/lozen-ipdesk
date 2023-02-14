@@ -1,5 +1,5 @@
-import { AuthProps } from '@customTypes/apiType'
-import { ArticlesTS, NewArticleTS } from '@customTypes/articleType'
+import { AuthProps } from '@customTypes/ApiType'
+import { ArticlesProps, NewArticleProps } from '@customTypes/ArticleType'
 
 export interface CreateArticleProps {
   permission_group_id: number
@@ -14,7 +14,7 @@ export const articlesApi = {
   getArticles: async (
     zd: AuthProps,
     page?: number
-  ): Promise<ArticlesTS | undefined> => {
+  ): Promise<ArticlesProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/help_center/${
@@ -35,7 +35,7 @@ export const articlesApi = {
   createArticle: async (
     zd: AuthProps,
     article: CreateArticleProps
-  ): Promise<NewArticleTS | undefined> => {
+  ): Promise<NewArticleProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/help_center/sections/${article.section_id}/articles.json`,

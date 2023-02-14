@@ -1,4 +1,4 @@
-export type ArticleTS = {
+export interface ArticleProps {
   author_id: number
   body?: string
   comments_disabled: boolean
@@ -25,13 +25,13 @@ export type ArticleTS = {
   vote_sum: number
 }
 
-export type NewArticleTS = {
-  article: ArticleTS
+export interface NewArticleProps {
+  article: ArticleProps
   error?: string
 }
 
-export type ArticlesTS = {
-  articles: ArticleTS[]
+export interface ArticlesProps {
+  articles: ArticleProps[]
   count: number
   next_page: string
   page: number

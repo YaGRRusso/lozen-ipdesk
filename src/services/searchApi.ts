@@ -1,10 +1,10 @@
-import { AuthProps, SearchTS } from '@customTypes/apiType'
+import { AuthProps, SearchProps } from '@customTypes/ApiType'
 
 export const searchApi = {
   getSearch: async (
     zd: AuthProps,
     query: string
-  ): Promise<SearchTS | undefined> => {
+  ): Promise<SearchProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/help_center/articles/search?query=${query}`,

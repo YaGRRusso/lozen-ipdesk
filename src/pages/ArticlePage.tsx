@@ -17,7 +17,7 @@ import {
   FormCounter,
 } from '@components'
 import { searchApi } from 'src/services/searchApi'
-import { SearchTS } from '@customTypes/apiType'
+import { SearchProps } from '@customTypes/ApiType'
 import { MagnifyingGlass } from 'phosphor-react'
 
 const ArticlePage = () => {
@@ -31,7 +31,7 @@ const ArticlePage = () => {
     createArticle,
   } = useZendeskContext()
   const { loggedAccount } = useAuthContext()
-  const [filteredArticles, setFilteredArticles] = useState<SearchTS>()
+  const [filteredArticles, setFilteredArticles] = useState<SearchProps>()
 
   const [articleBodyInput, setArticleBodyInput] = useState('')
   const [articleSectionInput, setArticleSectionInput] = useState('')

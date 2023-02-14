@@ -1,30 +1,34 @@
-export type CategoryTS = {
+export interface SectionProps {
+  category_id: number
   created_at: string
   description: string
   html_url: string
   id: number
-  locale: 'pt-br' | 'en-us'
+  locale: string
   name: string
   outdated: boolean
+  parent_section_id: null | number
   position: number
+  sorting: 'manual'
   source_locale: 'pt-br' | 'en-us'
+  theme_template: string
   updated_at: string
   url: string
 }
 
-export type NewCategoryTS = {
-  category: CategoryTS
+export interface NewSectionProps {
+  section: SectionProps
   error?: string
 }
 
-export type CategoriesTS = {
-  categories: CategoryTS[]
+export interface SectionsProps {
+  sections: SectionProps[]
   count: number
-  next_page: string | null
+  next_page: null | string
   page: number
   page_count: number
   per_page: number
-  previous_page: string | null
+  previous_page: null | string
   sort_by: 'position'
   sort_order: 'asc' | 'desc'
 }

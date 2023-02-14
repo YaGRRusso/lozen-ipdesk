@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { AuthProps, ThemeProps } from '@customTypes/apiType'
+import { AuthProps, ThemeProps } from '@customTypes/ApiType'
 
 interface AuthContextProps {
   loggedAccount: AuthProps | undefined

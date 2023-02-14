@@ -1,10 +1,9 @@
-import { AuthProps } from '@customTypes/apiType'
-import { PermissionGroupsTS } from '@customTypes/apiType'
+import { AuthProps, PermissionGroupsProps } from '@customTypes/ApiType'
 
 export const permissionApi = {
   getPermissionGroups: async (
     zd: AuthProps
-  ): Promise<PermissionGroupsTS | undefined> => {
+  ): Promise<PermissionGroupsProps | undefined> => {
     try {
       const res = await fetch(
         `https://${zd.domain}/api/v2/guide/permission_groups.json`,

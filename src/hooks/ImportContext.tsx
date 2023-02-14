@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-import { CategoriesTS } from '@customTypes/categoriesType'
-import { SectionsTS } from '@customTypes/sectionsType'
-import { ArticlesTS } from '@customTypes/articleType'
+import { CategoriesProps } from '@customTypes/CategoriesType'
+import { SectionsProps } from '@customTypes/SectionsType'
+import { ArticlesProps } from '@customTypes/ArticleType'
 import { useAuthContext } from './AuthContext'
 
 export type NewOldIdProps = {
@@ -15,20 +15,24 @@ export type NewOldIdProps = {
 }
 
 interface ImportContextProps {
-  categoriesFile: CategoriesTS | undefined
+  categoriesFile: CategoriesProps | undefined
   setCategoriesFile: React.Dispatch<
-    React.SetStateAction<CategoriesTS | undefined>
+    React.SetStateAction<CategoriesProps | undefined>
   >
   categoriesIds: NewOldIdProps
   setCategoriesIds: React.Dispatch<React.SetStateAction<NewOldIdProps>>
 
-  sectionsFile: SectionsTS | undefined
-  setSectionsFile: React.Dispatch<React.SetStateAction<SectionsTS | undefined>>
+  sectionsFile: SectionsProps | undefined
+  setSectionsFile: React.Dispatch<
+    React.SetStateAction<SectionsProps | undefined>
+  >
   sectionsIds: NewOldIdProps
   setSectionsIds: React.Dispatch<React.SetStateAction<NewOldIdProps>>
 
-  articlesFile: ArticlesTS | undefined
-  setArticlesFile: React.Dispatch<React.SetStateAction<ArticlesTS | undefined>>
+  articlesFile: ArticlesProps | undefined
+  setArticlesFile: React.Dispatch<
+    React.SetStateAction<ArticlesProps | undefined>
+  >
   articlesIds: NewOldIdProps
   setArticlesIds: React.Dispatch<React.SetStateAction<NewOldIdProps>>
 }
@@ -42,19 +46,19 @@ export const ImportProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { loggedAccount } = useAuthContext()
 
-  const [categoriesFile, setCategoriesFile] = useState<CategoriesTS>()
+  const [categoriesFile, setCategoriesFile] = useState<CategoriesProps>()
   const [categoriesIds, setCategoriesIds] = useState<NewOldIdProps>({
     newOldIds: [],
     target: 'categories',
   })
 
-  const [sectionsFile, setSectionsFile] = useState<SectionsTS>()
+  const [sectionsFile, setSectionsFile] = useState<SectionsProps>()
   const [sectionsIds, setSectionsIds] = useState<NewOldIdProps>({
     newOldIds: [],
     target: 'sections',
   })
 
-  const [articlesFile, setArticlesFile] = useState<ArticlesTS>()
+  const [articlesFile, setArticlesFile] = useState<ArticlesProps>()
   const [articlesIds, setArticlesIds] = useState<NewOldIdProps>({
     newOldIds: [],
     target: 'articles',
