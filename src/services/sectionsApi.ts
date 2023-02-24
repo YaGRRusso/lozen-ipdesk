@@ -37,7 +37,7 @@ export const sectionsApi = {
   ): Promise<NewSectionProps | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.domain}/api/v2/help_center/categories/${section.category_id}/sections.json`,
+        `https://${zd.domain}/api/v2/help_center/${zd.locale}/categories/${section.category_id}/sections.json`,
         {
           method: 'POST',
           headers: {
@@ -58,7 +58,7 @@ export const sectionsApi = {
   deleteSection: async (zd: AuthProps, id: number) => {
     try {
       await fetch(
-        `https://${zd.domain}/api/v2/help_center/sections/${id}.json`,
+        `https://${zd.domain}/api/v2/help_center/${zd.locale}/sections/${id}.json`,
         {
           method: 'DELETE',
           headers: {

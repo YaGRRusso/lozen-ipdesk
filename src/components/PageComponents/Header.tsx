@@ -4,18 +4,17 @@ import {
   HeaderList,
   HeaderLoginButton,
   HeaderPasswordInput,
-  HeaderSelectInput,
+  // HeaderSelectInput,
   HeaderTextInput,
   InfoTooltip,
 } from '@components'
+import { removeDomainProtocol } from '@helpers/filter'
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Header = ({ ...rest }: HeaderProps) => {
   const { loggedAccount, setLoggedAccount } = useAuthContext()
-  const [email_address, setEmail] = useState(
-    loggedAccount?.email_address ?? '' ?? ''
-  )
+  const [email_address, setEmail] = useState(loggedAccount?.email_address ?? '')
   const [password, setPassword] = useState(loggedAccount?.password ?? '')
   const [domain, setDomain] = useState(loggedAccount?.domain ?? '')
   const [locale, setLocale] = useState(loggedAccount?.locale ?? 'pt-br')
@@ -24,8 +23,7 @@ const Header = ({ ...rest }: HeaderProps) => {
     setLoggedAccount({
       email_address,
       password,
-      // Remove o HTTPS:// do domínio, o que o torna opcional podendo passar tanto "https://dominio.com" ou apenas "domínio.com"
-      domain: domain.replace(/(^\w+:|^)\/\//, ''),
+      domain: removeDomainProtocol(domain),
       locale,
     })
   }
@@ -47,7 +45,7 @@ const Header = ({ ...rest }: HeaderProps) => {
               value={domain}
               onChange={(ev) => setDomain(ev.target.value)}
             />
-            <HeaderSelectInput
+            {/* <HeaderSelectInput
               value={locale}
               onChange={(ev) => {
                 if (ev.target.value === 'pt-br' || ev.target.value === 'en-us')
@@ -57,6 +55,11 @@ const Header = ({ ...rest }: HeaderProps) => {
                 { value: 'pt-br', name: 'Português' },
                 { value: 'en-us', name: 'English' },
               ]}
+            /> */}
+            <HeaderTextInput
+              placeholder="digite seu locale..."
+              value={locale}
+              onChange={(ev) => setLocale(ev.target.value)}
             />
           </div>
           <div className="flex items-center justify-center gap-3 flex-wrap">

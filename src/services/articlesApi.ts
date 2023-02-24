@@ -38,7 +38,7 @@ export const articlesApi = {
   ): Promise<NewArticleProps | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.domain}/api/v2/help_center/sections/${article.section_id}/articles.json`,
+        `https://${zd.domain}/api/v2/help_center/${zd.locale}/sections/${article.section_id}/articles.json`,
         {
           method: 'POST',
           headers: {
@@ -49,7 +49,6 @@ export const articlesApi = {
           body: JSON.stringify({
             article,
             notify_subscribers: false,
-            promoted: true,
           }),
         }
       )
@@ -61,7 +60,7 @@ export const articlesApi = {
   deleteArticle: async (zd: AuthProps, id: number) => {
     try {
       await fetch(
-        `https://${zd.domain}/api/v2/help_center/articles/${id}.json`,
+        `https://${zd.domain}/api/v2/help_center/${zd.locale}/articles/${id}.json`,
         {
           method: 'DELETE',
           headers: {

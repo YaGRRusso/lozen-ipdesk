@@ -57,3 +57,8 @@ export const articlesWithImages = (
   }
   return tableRows
 }
+
+export const removeDomainProtocol = (domain: string): string => {
+  // Remove o HTTPS:// do domínio, o que o torna opcional podendo passar tanto "https://dominio.com" ou apenas "domínio.com"
+  return domain.replace(/(^\w+:|^)\/\//, '')
+}

@@ -36,7 +36,7 @@ export const categoriesApi = {
   ): Promise<NewCategoryProps | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.domain}/api/v2/help_center/categories.json`,
+        `https://${zd.domain}/api/v2/help_center/${zd.locale}/categories.json`,
         {
           method: 'POST',
           headers: {
@@ -56,12 +56,16 @@ export const categoriesApi = {
   },
   deleteCategory: async (zd: AuthProps, id: number) => {
     try {
-      await fetch(`https://${zd.domain}/api/v2/help_center/categories/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: 'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
-        },
-      })
+      await fetch(
+        `https://${zd.domain}/api/v2/help_center/${zd.locale}/categories/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization:
+              'Basic ' + btoa(`${zd.email_address}:${zd.password}`),
+          },
+        }
+      )
     } catch (e) {
       console.error(e)
     }

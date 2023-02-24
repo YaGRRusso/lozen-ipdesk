@@ -8,7 +8,8 @@ export interface AuthProps {
   domain: string
   email_address: string
   password: string
-  locale: 'pt-br' | 'en-us'
+  // locale: 'pt-br' | 'en-us'
+  locale: string
 }
 
 export interface PermissionGroupsProps {

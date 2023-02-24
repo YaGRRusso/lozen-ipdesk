@@ -7,7 +7,7 @@ export const searchApi = {
   ): Promise<SearchProps | undefined> => {
     try {
       const res = await fetch(
-        `https://${zd.domain}/api/v2/help_center/articles/search?query=${query}`,
+        `https://${zd.domain}/api/v2/help_center/${zd.locale}/articles/search?query=${query}`,
         {
           headers: {
             Authorization:

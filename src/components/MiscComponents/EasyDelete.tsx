@@ -1,3 +1,4 @@
+import { removeDomainProtocol } from '@helpers/filter'
 import { useAuthContext } from '@hooks/AuthContext'
 import { useZendeskContext } from '@hooks/ZendeskContext'
 import { LockOpen, Lock, X } from 'phosphor-react'
@@ -20,7 +21,7 @@ const EasyDelete = ({ ...rest }: EasyDeleteProps) => {
 
   const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
-    if (popupText.replace(/(^\w+:|^)\/\//, '') === loggedAccount?.domain) {
+    if (removeDomainProtocol(popupText) === loggedAccount?.domain) {
       setEasyDelete(true)
     }
     handleClosePopup()
@@ -36,7 +37,7 @@ const EasyDelete = ({ ...rest }: EasyDeleteProps) => {
 
   const inputColor = useMemo(() => {
     if (!popupText) return 'bg-sky-50'
-    return popupText.replace(/(^\w+:|^)\/\//, '') === loggedAccount?.domain
+    return removeDomainProtocol(popupText) === loggedAccount?.domain
       ? 'bg-green-50'
       : 'bg-red-50'
   }, [popupText, loggedAccount?.domain])

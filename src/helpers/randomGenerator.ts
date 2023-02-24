@@ -1,7 +1,4 @@
 import Chance from 'chance'
-import { ArticleProps } from '../types/ArticleType'
-import { CategoryProps } from '../types/CategoriesType'
-import { SectionProps } from '../types/SectionsType'
 
 const chance = new Chance()
 const between = (min: number, max: number) => {
