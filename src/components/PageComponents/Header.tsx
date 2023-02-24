@@ -9,6 +9,7 @@ import {
   InfoTooltip,
 } from '@components'
 import { removeDomainProtocol } from '@helpers/filter'
+import { Envelope, Globe, Key, Translate, User } from 'phosphor-react'
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -44,6 +45,7 @@ const Header = ({ ...rest }: HeaderProps) => {
               placeholder="digite seu domínio..."
               value={domain}
               onChange={(ev) => setDomain(ev.target.value)}
+              icon={<Globe />}
             />
             {/* <HeaderSelectInput
               value={locale}
@@ -57,9 +59,10 @@ const Header = ({ ...rest }: HeaderProps) => {
               ]}
             /> */}
             <HeaderTextInput
-              placeholder="digite seu locale..."
+              placeholder="digite seu local..."
               value={locale}
               onChange={(ev) => setLocale(ev.target.value)}
+              icon={<Translate />}
             />
           </div>
           <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -67,11 +70,13 @@ const Header = ({ ...rest }: HeaderProps) => {
               placeholder="digite seu email..."
               value={email_address}
               onChange={(ev) => setEmail(ev.target.value)}
+              icon={<Envelope />}
             />
             <HeaderPasswordInput
               placeholder="digite sua senha..."
               value={password}
               onChange={(ev) => setPassword(ev.target.value)}
+              icon={<Key />}
             />
           </div>
           <div className="flex items-center justify-center gap-3 flex-wrap">
